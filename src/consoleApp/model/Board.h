@@ -12,6 +12,7 @@ class Board {
     Position refPosition;
 
 private:
+    void initialize(int difficulty = 0);
     void clearLine(int line);
     void moveLinesDown(int line);
 
