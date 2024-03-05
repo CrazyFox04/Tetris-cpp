@@ -8,6 +8,7 @@ project(tetris_test)
 # Define test source files
 set(TEST_SOURCES
         testMain.cpp
+        Position.cpp
 )
 
 # Create the tests main executable
