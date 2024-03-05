@@ -2,13 +2,14 @@
 #define TETRIS_DEV4_PROJET_BAG_H
 
 #include <vector>
+#include <forward_list>
 #include "Tetromino.h"
 
 class Bag {
 private:
     static Bag instance;
-    Tetromino *possibleTetrominos;
-    std::vector <Tetromino> bag;
+    std::forward_list<Tetromino> possibleTetrominos;
+    std::vector<Tetromino> bag;
 
     Bag();
     void shuffle();

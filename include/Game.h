@@ -3,8 +3,9 @@
 
 #include "Board.h"
 #include "Bag.h"
+#include "Direction.hpp"
 
-class Game {
+class Game : public GameControler {
     Board board;
     Bag bag;
     int score;
@@ -19,9 +20,9 @@ private:
 public:
     Game();
     void play();
-    void moveActiveTetromino(Direction direction);
-    void rotateActiveTetromino(Direction direction);
-    void dropActiveTetromino();
+    void moveActiveTetromino(Direction direction) override;
+    void rotateActiveTetromino(Direction direction) override;
+    void dropActiveTetromino() override;
 };
 
 

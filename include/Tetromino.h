@@ -6,13 +6,13 @@
 
 class Tetromino {
     int id;
-    Position refPosition;
+    static Position refPosition;
     Position center;
     std::vector<Position> cells;
 
 public:
-    Tetromino();
-    Tetromino(int id);
+    Tetromino(Tetromino& tetromino);
+    Tetromino(int id, Position center, std::vector<Position> cells, int rotationState);
     void rotateClockwise();
     void rotateCounterClockwise();
     void move(int dx, int dy);

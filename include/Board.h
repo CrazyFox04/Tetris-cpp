@@ -3,12 +3,13 @@
 
 #include <vector>
 #include "Tetromino.h"
+#include "Direction.hpp"
 
 class Board {
     int width;
     int height;
     std::vector<Tetromino> tetrominos;
-    bool occupied[][];
+    bool occupied[1][1];
     Position refPosition;
 
 private:
@@ -27,7 +28,6 @@ public:
     bool isLineComplete(int line);
     int removeCompleteLines();
     bool isGameOver();
-
 };
 
 #endif //TETRIS_DEV4_PROJET_BOARD_H
