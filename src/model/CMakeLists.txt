@@ -5,7 +5,7 @@ project(tetris_model)
 
 # C++ sources files of the tetris_model
 set(SOURCES
-     # TODO : add it here
+        Position.cpp
 )
 
 # Create the model library that public can use
