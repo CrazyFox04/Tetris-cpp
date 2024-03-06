@@ -5,6 +5,7 @@ project(tetris_model)
 
 # C++ sources files of the tetris_model
 set(SOURCES
+        Direction.cpp
         Position.cpp
 )
 

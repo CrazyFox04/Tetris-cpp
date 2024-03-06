@@ -5,7 +5,7 @@
 #ifndef GAMECONTROLER_H
 #define GAMECONTROLER_H
 
-#include "Direction.hpp"
+#include "Direction.h"
 
 class GameControler {
 public:

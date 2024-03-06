@@ -1,6 +1,6 @@
 #ifndef TETRIS_DEV4_PROJET_POSITION_H
 #define TETRIS_DEV4_PROJET_POSITION_H
-#include "Direction.hpp"
+#include "Direction.h"
 
 class Position {
     int x;
@@ -16,5 +16,4 @@ Position operator+(const Position &position, const Direction2D& direction);
 Position operator+(const Direction2D& direction, const Position &position);
 Position operator-(const Position &position, const Direction2D& direction);
 Position operator-(const Direction2D& direction, const Position &position);
-
 #endif //TETRIS_DEV4_PROJET_POSITION_H
