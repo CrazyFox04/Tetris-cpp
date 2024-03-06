@@ -9,6 +9,7 @@ project(tetris_test)
 set(TEST_SOURCES
         testMain.cpp
         Position.cpp
+        Tetromino.cpp
 )
 
 # Create the tests main executable
