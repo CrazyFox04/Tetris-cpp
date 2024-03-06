@@ -7,6 +7,7 @@ project(tetris_model)
 set(SOURCES
         Direction.cpp
         Position.cpp
+        Tetromino.cpp
 )
 
 # Create the model library that public can use
