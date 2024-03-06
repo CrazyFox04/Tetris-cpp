@@ -16,4 +16,5 @@ Position operator+(const Position &position, const Direction2D& direction);
 Position operator+(const Direction2D& direction, const Position &position);
 Position operator-(const Position &position, const Direction2D& direction);
 Position operator-(const Direction2D& direction, const Position &position);
+bool operator==(const Position &position, const Position &position2);
 #endif //TETRIS_DEV4_PROJET_POSITION_H
