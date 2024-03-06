@@ -3,7 +3,7 @@
 
 #include "Board.h"
 #include "Bag.h"
-#include "Direction.hpp"
+#include "Direction.h"
 
 class Game : public GameControler {
     Board board;

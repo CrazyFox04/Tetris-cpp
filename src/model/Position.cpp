@@ -2,7 +2,7 @@
 // Created by Enzo Renard on 05/03/2024.
 //
 #include "Position.h"
-#include "Direction.hpp"
+#include "Direction.h"
 #include <utility>
 
 Position::Position(int x, int y) : x(x), y(y) {}

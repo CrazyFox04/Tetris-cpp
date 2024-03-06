@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "Tetromino.h"
-#include "Direction.hpp"
+#include "Direction.h"
 
 class Board {
     int width;
