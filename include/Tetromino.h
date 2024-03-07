@@ -17,6 +17,7 @@ public:
     void rotateClockwise();
     void rotateCounterClockwise();
     void move(int dx, int dy);
+    void set_relative_cells(const std::vector<Position>& newCells);
 };
 
 #endif //TETRIS_DEV4_PROJET_TETROMINO_H

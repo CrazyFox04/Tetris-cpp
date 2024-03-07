@@ -44,3 +44,7 @@ std::vector<Position> Tetromino::get_relative_cells() const {
 Position Tetromino::get_ref_position() const {
     return {refPosition.get_x(), refPosition.get_y()};
 }
+
+void Tetromino::set_relative_cells(const std::vector<Position>& newCells) {
+    cells = newCells;
+}

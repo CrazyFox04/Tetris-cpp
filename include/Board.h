@@ -9,7 +9,7 @@ class Board {
     int width;
     int height;
     std::vector<Tetromino> tetrominos;
-    bool occupied[1][1];
+    std::vector<std::vector<bool>> occupied;
     Position refPosition;
 
 private:
@@ -22,7 +22,7 @@ public:
     Board(int width, int height, int difficulty); // difficulty will determinate the percentage of occupied cells
     void addTetromino(Tetromino tetromino);
     void moveActiveTetromino(Direction2D direction);
-    void rotateActiveTetromino(Direction direction);
+    void rotateActiveTetromino(Rotation rotation);
     bool isOutside(int row, int column);
     bool isOccupied(int row, int column);
     bool isLineComplete(int line);
