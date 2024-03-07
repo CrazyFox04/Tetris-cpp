@@ -20,7 +20,7 @@ private:
 public:
     Game();
     void play();
-    void moveActiveTetromino(Direction direction) override;
+    void moveActiveTetromino(Direction2D direction) override;
     void rotateActiveTetromino(Direction direction) override;
     void dropActiveTetromino() override;
 };

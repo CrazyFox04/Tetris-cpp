@@ -8,6 +8,9 @@ set(SOURCES
         Direction.cpp
         Position.cpp
         Tetromino.cpp
+        Bag.cpp
+        Board.cpp
+        Game.cpp
 )
 
 # Create the model library that public can use
