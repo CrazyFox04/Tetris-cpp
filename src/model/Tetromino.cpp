@@ -24,7 +24,7 @@ void Tetromino::rotateCounterClockwise() {
 }
 
 void Tetromino::move(int dx, int dy) {
-    refPosition = Position(refPosition.get_x() + dx, refPosition.get_y() + dy);
+    refPosition += Direction2D(dx, dy);
 }
 
 int Tetromino::get_id() const {

@@ -23,9 +23,9 @@ public:
     void addTetromino(Tetromino tetromino);
     void moveActiveTetromino(Direction2D direction);
     void rotateActiveTetromino(Rotation rotation);
-    bool isOutside(int row, int column);
-    bool isOccupied(int row, int column);
-    bool isLineComplete(int line);
+    bool isOutside(int row, int column) const;
+    bool isOccupied(int row, int column) const;
+    bool isLineComplete(int line) const;
     int removeCompleteLines();
     bool isGameOver();
 };

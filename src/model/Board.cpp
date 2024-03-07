@@ -64,15 +64,16 @@ class Board {
     }
 
     void Board::moveActiveTetromino(Direction2D direction) {
-        for (auto &cell: tetrominos.back().get_relative_cells()) {
-            int newX = cell.get_x() + direction.first;
-            int newY = cell.get_y() + direction.second;
+        auto& activeTetromino = tetrominos.back();
+        auto cells = activeTetromino.get_relative_cells();
 
-            if (isOutside(newX, newY) || isOccupied(newX, newY)) {
+        for (const auto &cell : cells) {
+            Position newPos = cell + direction;
+            if (isOutside(newPos.get_x(), newPos.get_y()) || isOccupied(newPos.get_x(), newPos.get_y())) {
                 return;
             }
         }
-        tetrominos.back().move(direction.first, direction.second);
+        activeTetromino.move(direction.first, direction.second);
     }
 
     void Board::rotateActiveTetromino(Rotation rotation) {
@@ -110,27 +111,27 @@ class Board {
          }
     }
 
-    bool Board::isOutside(int row, int column) {
+    bool Board::isOutside(int row, int column) const {
         return row < 0 || row >= height || column < 0 || column >= width;
     }
 
-    bool Board::isOccupied(int row, int column) {
+    bool Board::isOccupied(int row, int column) const {
         return occupied[row][column];
     }
 
     int Board::removeCompleteLines() {
         int linesRemoved = 0;
-        for (int i = 0; i < height; i++) {
-            if (isLineComplete(i)) {
-                clearLine(i);
-                moveLinesDown(i);
+        for (int y = 0; y < height; ++y) {
+            if (isLineComplete(y)) {
+                clearLine(y);
+                moveLinesDown(y);
                 linesRemoved++;
             }
         }
         return linesRemoved;
     }
 
-bool Board::isLineComplete(int line) {
+bool Board::isLineComplete(int line) const {
     for (int j = 0; j < width; j++) {
         if (!occupied[line][j]) {
             return false;
@@ -143,12 +144,30 @@ void Board::clearLine(int line) {
     for (int j = 0; j < width; j++) {
         occupied[line][j] = false;
     }
+
+    for (auto &tetro: tetrominos) {
+        std::vector<Position> cells = tetro.get_relative_cells();
+        cells.erase(std::remove_if(cells.begin(), cells.end(), [line](const Position &pos) {
+                        return pos.get_y() == line;
+                    }),
+                    cells.end()
+        );
+        tetro.set_relative_cells(cells);
+    }
 }
 
-void Board::moveLinesDown(int line) {
-    for (int i = line; i < height - 1; i++) {
-        for (int j = 0; j < width; j++) {
-            occupied[i][j] = occupied[i + 1][j];
+void Board::moveLinesDown(int clearedline) {
+    for (int y = clearedline; y > 0; --y) {
+        for (int x = 0; x < width; ++x) {
+            occupied[y][x] = occupied[y - 1][x];
+        }
+    }
+    Direction2D down(0, 1);
+    for (auto& tetromino : tetrominos) {
+        for (auto& cell : tetromino.get_relative_cells()) {
+            if (cell.get_y() < clearedline) {
+                cell += down;
+            }
         }
     }
 }
