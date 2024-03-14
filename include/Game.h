@@ -1,11 +1,21 @@
 #ifndef TETRIS_DEV4_PROJET_GAME_H
 #define TETRIS_DEV4_PROJET_GAME_H
 
+#include "Invoker.h"
+#include "MoveDownCommand.h"
+#include "MoveLeftCommand.h"
+#include "MoveRightCommand.h"
+#include "RotateClockwiseCommand.h"
+#include "RotateCounterClockwiseCommand.h"
+#include "DropCommand.h"
 #include "Board.h"
 #include "Bag.h"
 #include "Direction.h"
+#include "GameControler.h"
 
 class Game : public GameControler {
+    Invoker invoker;
+    GameControler* gameControler;
     Board board;
     Bag bag;
     int score;
@@ -13,15 +23,15 @@ class Game : public GameControler {
     bool gameOver;
 
 private:
-    void updateScore(int points);
+    void updateScore(int linesCleared, int dropDistance);
     void updateLevel();
-    int getPoints(int lines);
-
+    int getPoints(int lines, int dropDistance) const;
+    void initializeCommands();
 public:
     Game();
     void play();
     void moveActiveTetromino(Direction2D direction) override;
-    void rotateActiveTetromino(Direction direction) override;
+    void rotateActiveTetromino(Rotation rotation) override;
     void dropActiveTetromino() override;
 };
 

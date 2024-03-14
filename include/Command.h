@@ -8,7 +8,8 @@
 #include "GameControler.h"
 
 class Command {
-GameControler gameControler;
+protected:
+GameControler & gameControler;
 public:
     explicit Command(GameControler gameControler);
     virtual void execute();
