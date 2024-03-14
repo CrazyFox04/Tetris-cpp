@@ -35,7 +35,7 @@ void Board::initialize(int difficulty) {
     }
 }
 
-void Board::addTetromino(Tetromino tetromino) {
+void Board::addTetromino(const Tetromino& tetromino) {
     auto cells = tetromino.get_relative_cells();
 
     std::vector<Position> absolutePositions;
@@ -47,7 +47,7 @@ void Board::addTetromino(Tetromino tetromino) {
             // Game over ne devrions nous pas ajouter un atrribut pour cela?
             return;
         }
-        absolutePositions.push_back(Position(absX, absY));
+        absolutePositions.emplace_back(absX, absY);
     }
     for (const auto & pos : absolutePositions) {
         occupied[pos.get_y()][pos.get_x()] = true;
@@ -171,4 +171,8 @@ bool Board::isGameOver() {
         }
     }
     return false;
+}
+
+Tetromino &Board::getActiveTetromino() {
+    return tetrominos.back();
 }

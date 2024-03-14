@@ -2,9 +2,9 @@
 // Created by Julien Delcombel on 07/03/2024.
 //
 #include "Bag.h"
+#include <random>
 
 Bag::Bag() {
-    // Ajouter les tétriminos standards dans possibleTetrominos
     possibleTetrominos.push_front(
             Tetromino(1, Position(0, 1), {Position(-2, 0), Position(-1, 0), Position(0, 0), Position(1, 0)})); // I
     possibleTetrominos.push_front(
