@@ -7,5 +7,6 @@
 class BoardView {
 public:
     BoardView();
+    void display();
 };
 #endif //BOARDVIEW_H

@@ -7,5 +7,6 @@
 class BagView {
 public:
      BagView();
+     void display();
 };
 #endif //BAGVIEW_H
