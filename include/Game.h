@@ -1,6 +1,7 @@
 #ifndef TETRIS_DEV4_PROJET_GAME_H
 #define TETRIS_DEV4_PROJET_GAME_H
 
+#include "Observable.h"
 #include "Invoker.h"
 #include "MoveDownCommand.h"
 #include "MoveLeftCommand.h"
@@ -13,7 +14,7 @@
 #include "Direction.h"
 #include "GameControler.h"
 
-class Game : public GameControler {
+class Game : public GameControler, public Observable {
     Invoker invoker;
     GameControler* gameControler;
     Board board;

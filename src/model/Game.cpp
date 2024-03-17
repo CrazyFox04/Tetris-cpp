@@ -47,12 +47,14 @@ void Game::moveActiveTetromino(Direction2D direction) {
     if (!gameOver) {
         board.moveActiveTetromino(direction);
     }
+    notifyObservers();
 }
 
 void Game::rotateActiveTetromino(Rotation rotation) {
     if (!gameOver) {
         board.rotateActiveTetromino(rotation);
     }
+    notifyObservers();
 }
 
 void Game::dropActiveTetromino() {
@@ -70,14 +72,17 @@ void Game::dropActiveTetromino() {
     int linesCleared = board.removeCompleteLines();
     updateScore(linesCleared, dropDistance);
     board.addTetromino(bag.getNext());
+    notifyObservers();
 }
 
 void Game::updateScore(int linesCleared, int dropDistance) {
     score += getPoints(linesCleared, dropDistance);
+    notifyObservers();
 }
 
 void Game::updateLevel() {
     level++;
+    notifyObservers();
 }
 
 int Game::getPoints(int lines, int dropDistance) const {
