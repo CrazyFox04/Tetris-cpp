@@ -5,6 +5,7 @@ project(tetris)
 
 # Include subdirectory for model
 add_subdirectory(model)
+add_subdirectory(tools)
 
 # Create the main executable
 add_executable(${PROJECT_NAME} main.cpp)

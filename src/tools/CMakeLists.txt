@@ -1,15 +1,11 @@
 # ===========================================
-#          Sources model CMakeLists
+#          Sources tools CMakeLists
 # ===========================================
-project(tetris_model)
+project(tetris_tools)
 
 # C++ sources files of the tetris_model
 set(SOURCES
-        Position.cpp
-        Tetromino.cpp
-        Bag.cpp
-        Board.cpp
-        Game.cpp
+       Direction.cpp
 )
 
 # Create the model library that public can use
