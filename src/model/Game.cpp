@@ -2,23 +2,17 @@
 // Created by Julien Delcombel on 07/03/2024.
 //
 
-#include <iostream>
 #include "Game.h"
 
-Game::Game() : gameControler(std::make_unique<GameControler>()), score(0), level(1), gameOver(false), invoker() {
+Game::Game() : gameControler(new GameControler()), bag(Bag::getInstance()), score(0), level(1), gameOver(false) {
     board = Board();
-    bag = Bag::getInstance();
     initializeCommands();
 }
 
-Game:: ~Game() {
-    delete gameControler;
-    delete invoker;
-}
-
+/* We canno't use play function cause we have to continue implementation
 void Game::play() {
     initializeCommands();
-    char input;
+    std::string input;
     std::cin >> input;
 
     invoker.execute(input);
@@ -30,7 +24,7 @@ void Game::play() {
     if (!board.canTetroMove(Direction::DOWN)) {
         int linesCleared = board.removeCompleteLines();
         updateScore(linesCleared, 0);
-        board.addTetromino(bag.getNext());
+        board.addTetromino(Bag::getInstance().getNext());
     }
 }
 // Pour avancer. Je ne me suis pas du tout pencher sur command pattern
@@ -41,7 +35,7 @@ void initizaCommands() {
     invoker.addNewCommand("z", new RotateClockwiseCommand(gameControler));
     invoker.addNewCommand("a", new RotateCounterClockwiseCommand(gameControler));
     invoker.addNewCommand("e", new DropCommand(gameControler));
-}
+}*/
 
 void Game::moveActiveTetromino(Direction2D direction) {
     if (!gameOver) {
@@ -71,7 +65,7 @@ void Game::dropActiveTetromino() {
     }
     int linesCleared = board.removeCompleteLines();
     updateScore(linesCleared, dropDistance);
-    board.addTetromino(bag.getNext());
+    board.addTetromino(Bag::getInstance().getNext());
     notifyObservers();
 }
 
