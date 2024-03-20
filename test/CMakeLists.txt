@@ -9,6 +9,7 @@ project(tetris_test)
 set(TEST_SOURCES
         testMain.cpp
         Bag.cpp
+        Board.cpp
         Position.cpp
         Tetromino.cpp
 )
