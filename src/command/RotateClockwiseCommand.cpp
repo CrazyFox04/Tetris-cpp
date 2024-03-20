@@ -5,5 +5,6 @@
 #include "RotateClockwiseCommand.h"
 
 void rotateClockwiseCommand::execute() {
-    gameControler.rotateActiveTetromino(Rotation::CLOCKWISE);
+    //gameControler.rotateActiveTetromino(Rotation::CLOCKWISE);
+    // todo : need to implement
 }

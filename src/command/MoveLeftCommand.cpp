@@ -3,6 +3,7 @@
 //
 
 #include "MoveLeftCommand.h"
+#include "Direction.h"
 
 void MoveLeftCommand::execute() {
     gameControler.moveActiveTetromino(Direction::LEFT);

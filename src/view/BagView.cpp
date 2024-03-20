@@ -8,7 +8,8 @@
 #include <iostream>
 
 void BagView::display() {
-    Tetromino nextTetromino = Bag::getInstance().getNext();
+    //Tetromino nextTetromino = Bag::getInstance().getNext();
+    Tetromino nextTetromino = Tetromino(1, {}, {});
     auto cells = nextTetromino.get_relative_cells();
 
     int minX = std::min_element(cells.begin(), cells.end(),

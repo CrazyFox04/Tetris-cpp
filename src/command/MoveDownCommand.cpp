@@ -3,6 +3,7 @@
 //
 
 #include "MoveDownCommand.h"
+#include "Direction.h"
 
 void MoveDownCommand::execute() {
     gameControler.moveActiveTetromino(Direction::DOWN);

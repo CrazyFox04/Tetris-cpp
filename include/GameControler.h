@@ -9,8 +9,8 @@
 
 class GameControler {
 public:
-    virtual void moveActiveTetromino(Direction direction);
-    virtual void rotateActiveTetromino(Direction direction);
+    virtual void moveActiveTetromino(Direction2D direction);
+    virtual void rotateActiveTetromino(Direction2D direction);
     virtual void dropActiveTetromino();
 };
 #endif //GAMECONTROLER_H
