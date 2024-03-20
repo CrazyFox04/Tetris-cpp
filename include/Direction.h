@@ -11,4 +11,10 @@ struct Direction {
     static const Direction2D DOWN;
     static const Direction2D LEFT;
 };
+
+enum class Rotation {
+    CLOCKWISE,
+    COUNTERCLOCKWISE
+};
+
 #endif //DIRECTION_H

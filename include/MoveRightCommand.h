@@ -4,6 +4,9 @@
 
 #ifndef ROTATECLOCKWISECOMMAND_H
 #define ROTATECLOCKWISECOMMAND_H
+
+#include "Command.h"
+
 class MoveRightCommand : public Command {
 public:
     void execute() override;

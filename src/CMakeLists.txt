@@ -5,6 +5,7 @@ project(tetris)
 
 # Include subdirectory for model
 add_subdirectory(model)
+add_subdirectory(tools)
 
 # Create the main executable
 add_executable(${PROJECT_NAME} main.cpp)
@@ -13,4 +14,5 @@ add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(
         ${PROJECT_NAME} PRIVATE
         tetris_model
+        tetris_tools
 )

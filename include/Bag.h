@@ -6,18 +6,17 @@
 #include "Tetromino.h"
 
 class Bag {
-private:
-    static Bag instance;
-    std::forward_list<Tetromino> possibleTetrominos;
+    static Bag* instance;
+    std::vector<Tetromino> possibleTetrominos;
     std::vector<Tetromino> bag;
-
+    void addTetrominosToBag();
     Bag();
     void shuffle();
 
 public:
     Bag(const Bag &) = delete;
     Bag &operator=(const Bag &) = delete;
-
+    int getNumberOfTetrominos() const;
     static Bag & getInstance();
     Tetromino &getNext();
     int size();

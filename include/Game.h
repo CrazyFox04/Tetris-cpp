@@ -1,28 +1,37 @@
 #ifndef TETRIS_DEV4_PROJET_GAME_H
 #define TETRIS_DEV4_PROJET_GAME_H
 
+#include "Observable.h"
+#include "Invoker.h"
 #include "Board.h"
 #include "Bag.h"
 #include "Direction.h"
+#include "GameControler.h"
 
-class Game : public GameControler {
+class Game : public GameControler, public Observable {
+    Invoker invoker;
     Board board;
-    Bag bag;
+    Bag& bag;
     int score;
     int level;
     bool gameOver;
 
 private:
-    void updateScore(int points);
+    void updateScore(int linesCleared, int dropDistance);
     void updateLevel();
-    int getPoints(int lines);
-
+    int getPoints(int lines, int dropDistance) const;
+    void initializeCommands();
 public:
     Game();
+    ~Game();
     void play();
-    void moveActiveTetromino(Direction direction) override;
-    void rotateActiveTetromino(Direction direction) override;
-    void dropActiveTetromino() override;
+    void moveActiveTetromino(Direction2D direction);
+    void rotateActiveTetromino(Rotation rotation);
+    void dropActiveTetromino();
+    void isFree(int row, int col);
+    virtual void notifyObservers();
+    virtual void addObserver(Observer& observer);
+    virtual void removeObserver(int pos);
 };
 
 
