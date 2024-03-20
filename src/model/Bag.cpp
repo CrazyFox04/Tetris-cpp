@@ -7,32 +7,36 @@
 Bag* Bag::instance;
 
 Bag::Bag() {
-    possibleTetrominos.push_front(
-        Tetromino(1, Position(0, 1), {Position(-2, 0), Position(-1, 0), Position(0, 0), Position(1, 0)})); // I
-    possibleTetrominos.push_front(
-        Tetromino(2, Position(0, 0), {Position(0, 0), Position(1, 0), Position(0, 1), Position(1, 1)})); // O
-    possibleTetrominos.push_front(
-        Tetromino(3, Position(0, 0), {Position(-1, 0), Position(0, 0), Position(1, 0), Position(0, 1)})); // T
-    possibleTetrominos.push_front(
-        Tetromino(4, Position(0, 0), {Position(0, 0), Position(1, 0), Position(-1, 1), Position(0, 1)})); // S
-    possibleTetrominos.push_front(
-        Tetromino(5, Position(0, 0), {Position(-1, 0), Position(0, 0), Position(0, 1), Position(1, 1)})); // Z
-    possibleTetrominos.push_front(
-        Tetromino(6, Position(0, 0), {Position(-1, -1), Position(-1, 0), Position(0, 0), Position(1, 0)})); // J
-    possibleTetrominos.push_front(
-        Tetromino(7, Position(0, 0), {Position(1, -1), Position(-1, 0), Position(0, 0), Position(1, 0)})); // L
+    possibleTetrominos.emplace_back(Tetromino{
+        1, Position(0, 1), {Position(-2, 0), Position(-1, 0), Position(0, 0), Position(1, 0)}
+    }); // I
+    possibleTetrominos.emplace_back(Tetromino{
+        2, Position(0, 0), {Position(0, 0), Position(1, 0), Position(0, 1), Position(1, 1)}
+    }); // O
+    possibleTetrominos.emplace_back(Tetromino{
+        3, Position(0, 0), {Position(-1, 0), Position(0, 0), Position(1, 0), Position(0, 1)}
+    }); // T
+    possibleTetrominos.emplace_back(Tetromino{
+        4, Position(0, 0), {Position(0, 0), Position(1, 0), Position(-1, 1), Position(0, 1)}
+    }); // S
+    possibleTetrominos.emplace_back(Tetromino{
+        5, Position(0, 0), {Position(-1, 0), Position(0, 0), Position(0, 1), Position(1, 1)}
+    }); // Z
+    possibleTetrominos.emplace_back(Tetromino{
+        6, Position(0, 0), {Position(-1, -1), Position(-1, 0), Position(0, 0), Position(1, 0)}
+    }); // J
+    possibleTetrominos.emplace_back(Tetromino{
+        7, Position(0, 0), {Position(1, -1), Position(-1, 0), Position(0, 0), Position(1, 0)}
+    }); // L
 
-    //TODO: Ajouter les tétriminos customs dans possibleTetrominos
+    //TODO: Ajouter les tétrominos customs dans possibleTetrominos
 
     // Copier les tétriminos possibles dans le sac
-    for (const auto&tetromino: possibleTetrominos) {
-        bag.push_back(tetromino);
-    }
+    addTetrominosToBag();
     shuffle();
 }
 
 Bag& Bag::getInstance() {
-    // if instance is null create it
     if (instance == nullptr) {
         instance = new Bag();
     }
@@ -47,13 +51,24 @@ void Bag::shuffle() {
 
 Tetromino& Bag::getNext() {
     if (bag.size() <= 0) {
+        addTetrominosToBag();
         shuffle();
     }
-    Tetromino& next = bag.front();
+    Tetromino&next = bag.front();
     bag.erase(bag.begin());
     return next;
 }
 
 int Bag::size() {
     return bag.size();
+}
+
+void Bag::addTetrominosToBag() {
+    for (const auto&tetromino: possibleTetrominos) {
+        bag.emplace_back(tetromino);
+    }
+}
+
+int Bag::getNumberOfTetrominos() const {
+    return possibleTetrominos.size();
 }

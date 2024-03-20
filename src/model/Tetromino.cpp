@@ -48,3 +48,8 @@ Position Tetromino::get_ref_position() const {
 void Tetromino::set_relative_cells(const std::vector<Position>& newCells) {
     cells = newCells;
 }
+
+bool operator==(const Tetromino &Tetromino1, const Tetromino &Tetromino2) {
+    return Tetromino1.get_id() == Tetromino2.get_id() && Tetromino1.get_ref_position() == Tetromino2.get_ref_position() &&
+           Tetromino1.get_relative_cells() == Tetromino2.get_relative_cells();
+}
