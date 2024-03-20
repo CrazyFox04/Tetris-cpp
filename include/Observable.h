@@ -10,9 +10,10 @@
 class Observable {
     std::vector<Observer> observers;
 public:
-    virtual ~Observable();
-    virtual void addObserver(Observer observer);
-    virtual void removeObserver(int pos);
-    virtual void notifyObservers();
+    Observable();
+    virtual ~Observable() = 0;
+    virtual void addObserver(Observer& observer) = 0;
+    virtual void removeObserver(int pos) = 0;
+    virtual void notifyObservers() = 0;
 };
 #endif //OBSERVABLE_H

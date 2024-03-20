@@ -4,6 +4,7 @@
 
 #include "Board.h"
 #include <random>
+#include <algorithm>
 
 Board::Board() : Board(10, 20, 1)
 {}

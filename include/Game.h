@@ -10,7 +10,6 @@
 
 class Game : public GameControler, public Observable {
     Invoker invoker;
-    GameControler* gameControler;
     Board board;
     Bag& bag;
     int score;
@@ -26,10 +25,13 @@ public:
     Game();
     ~Game();
     void play();
-    void moveActiveTetromino(Direction2D direction) override;
-    void rotateActiveTetromino(Rotation rotation) override;
-    void dropActiveTetromino() override;
+    void moveActiveTetromino(Direction2D direction);
+    void rotateActiveTetromino(Rotation rotation);
+    void dropActiveTetromino();
     void isFree(int row, int col);
+    virtual void notifyObservers();
+    virtual void addObserver(Observer& observer);
+    virtual void removeObserver(int pos);
 };
 
 

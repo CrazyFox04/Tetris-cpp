@@ -3,8 +3,9 @@
 //
 
 #include "Game.h"
+#include "Direction.h"
 
-Game::Game() : gameControler(new GameControler()), bag(Bag::getInstance()), score(0), level(1), gameOver(false) {
+Game::Game() : bag(Bag::getInstance()), score(0), level(1), gameOver(false) {
     board = Board();
     initializeCommands();
 }
@@ -87,4 +88,27 @@ int Game::getPoints(int lines, int dropDistance) const {
         case 4: return (1200 + lines + dropDistance) * level;
         default: return dropDistance * level;
     }
+}
+
+void Game::notifyObservers() {
+    // todo : need to implement
+}
+
+void Game::removeObserver(int pos) {
+    // todo : need to implement
+}
+
+void Game::addObserver(Observer &observer) {
+    // todo : need to implement
+}
+
+void Game::play() {
+    // todo : need to implement
+}
+
+void Game::initializeCommands() {
+    // todo : need to implement
+}
+Game::~Game() {
+
 }

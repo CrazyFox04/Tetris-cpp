@@ -6,6 +6,8 @@ project(tetris_tools)
 # C++ sources files of the tetris_model
 set(SOURCES
        Direction.cpp
+        #Observable.cpp
+        #Observer.cpp
 )
 
 # Create the model library that public can use
