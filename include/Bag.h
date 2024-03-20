@@ -6,8 +6,7 @@
 #include "Tetromino.h"
 
 class Bag {
-private:
-    static Bag instance;
+    static Bag* instance;
     std::forward_list<Tetromino> possibleTetrominos;
     std::vector<Tetromino> bag;
 

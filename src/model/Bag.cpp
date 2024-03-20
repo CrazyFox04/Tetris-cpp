@@ -4,7 +4,7 @@
 #include "Bag.h"
 #include <random>
 #include <algorithm>
-Bag Bag::instance;
+Bag* Bag::instance;
 
 Bag::Bag() {
     possibleTetrominos.push_front(
@@ -32,22 +32,26 @@ Bag::Bag() {
 }
 
 Bag& Bag::getInstance() {
-    return instance;
+    // if instance is null create it
+    if (instance == nullptr) {
+        instance = new Bag();
+    }
+    return *instance;
 }
 
 void Bag::shuffle() {
     static std::random_device rd;
     static std::mt19937 g(rd());
-    std::shuffle(bag.begin(), bag.end(), g);
+    std::ranges::shuffle(bag, g);
 }
 
 Tetromino& Bag::getNext() {
-    static size_t index = 0;
-    if (index >= bag.size()) {
+    if (bag.size() <= 0) {
         shuffle();
-        index = 0;
     }
-    return bag[index++];
+    Tetromino& next = bag.front();
+    bag.erase(bag.begin());
+    return next;
 }
 
 int Bag::size() {
