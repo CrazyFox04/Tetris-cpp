@@ -8,6 +8,7 @@ project(tetris_test)
 # Define test source files
 set(TEST_SOURCES
         testMain.cpp
+        Bag.cpp
         Position.cpp
         Tetromino.cpp
 )
