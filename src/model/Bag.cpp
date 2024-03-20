@@ -72,3 +72,12 @@ void Bag::addTetrominosToBag() {
 int Bag::getNumberOfTetrominos() const {
     return possibleTetrominos.size();
 }
+
+std::vector<Tetromino> Bag::getAvailableTetrominos() const {
+    // return a const reference to const possibleTetrominos
+    std::vector<Tetromino> constTetrominos;
+    for (const auto tetromino: possibleTetrominos) {
+        constTetrominos.emplace_back(tetromino);
+    }
+    return constTetrominos;
+}

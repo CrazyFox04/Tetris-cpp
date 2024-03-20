@@ -16,6 +16,7 @@ private:
     void initialize(int difficulty = 0);
     void clearLine(int line);
     void moveLinesDown(int line);
+    void clearOccupiedForActiveTetromino();
 
 public:
     Board();
@@ -29,6 +30,11 @@ public:
     int removeCompleteLines();
     bool isGameOver();
     Tetromino& getActiveTetromino();
+    const std::vector<Tetromino> getTetrominos() const;
+    int getWidth() const;
+    int getHeight() const;
+    const std::vector<std::vector<bool>> getOccupied() const;
+    Position getRefPosition() const;
 };
 
 #endif //TETRIS_DEV4_PROJET_BOARD_H
