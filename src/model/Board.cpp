@@ -114,7 +114,7 @@ bool Board::isOutside(int row, int column) const {
 }
 
 bool Board::isOccupied(int row, int column) const {
-    return occupied[row][column];
+    return occupied[column][row];
 }
 
 int Board::removeCompleteLines() {
