@@ -76,7 +76,7 @@ void Board::moveActiveTetromino(Direction2D direction) {
 void Board::rotateActiveTetromino(Rotation rotation) {
     Tetromino&activeTetromino = tetrominos.back();
     auto originalCells = activeTetromino.get_relative_cells();
-
+    clearOccupiedForActiveTetromino();
     //Tenter la rotation
     if (rotation == Rotation::CLOCKWISE) {
         activeTetromino.rotateClockwise();
@@ -103,8 +103,8 @@ void Board::rotateActiveTetromino(Rotation rotation) {
     }
     // Mettre les nouvelles à true
     for (const auto&cell: activeTetromino.get_relative_cells()) {
-        int absX = cell.get_x() + activeTetromino.get_ref_position().get_x();
-        int absY = cell.get_y() + activeTetromino.get_ref_position().get_y();
+        int absX = cell.get_x() + refPosition.get_x();
+        int absY = cell.get_y() + refPosition.get_y();
         occupied[absY][absX] = true;
     }
 }
