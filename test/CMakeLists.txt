@@ -10,6 +10,7 @@ set(TEST_SOURCES
         testMain.cpp
         Position.cpp
         Tetromino.cpp
+        MoveCommandTest.cpp
 )
 
 # Create the tests main executable
