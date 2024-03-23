@@ -5,5 +5,5 @@
 #include "MoveRightCommand.h"
 
 void MoveRightCommand::execute() {
-    gameControler.moveActiveTetromino(Direction::RIGHT);
+    gameController.moveActiveTetromino(Direction::RIGHT);
 }

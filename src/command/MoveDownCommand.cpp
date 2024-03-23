@@ -5,5 +5,5 @@
 #include "MoveDownCommand.h"
 
 void MoveDownCommand::execute() {
-    gameControler.moveActiveTetromino(Direction::DOWN);
+    gameController.moveActiveTetromino(Direction::DOWN);
 }

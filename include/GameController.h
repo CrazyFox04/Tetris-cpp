@@ -7,10 +7,10 @@
 
 #include "Direction.h"
 
-class GameControler {
+class GameController {
 public:
     virtual void moveActiveTetromino(Direction direction);
-    virtual void rotateActiveTetromino(Direction direction);
+    virtual void rotateActiveTetromino(Rotation rotation);
     virtual void dropActiveTetromino();
 };
 #endif //GAMECONTROLER_H

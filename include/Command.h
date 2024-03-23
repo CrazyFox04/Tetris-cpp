@@ -5,12 +5,13 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
-#include "GameControler.h"
+#include "GameController.h"
 
 class Command {
-GameControler gameControler;
+protected:
+    GameController gameController;
 public:
-    explicit Command(GameControler gameControler);
+    explicit Command(GameController gameController);
     virtual void execute();
 };
 #endif //COMMAND_H

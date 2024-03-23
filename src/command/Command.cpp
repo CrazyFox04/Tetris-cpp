@@ -4,6 +4,6 @@
 
 #include "Command.h"
 
-Command::Command(GameControler gameControler) : gameControler(gameControler) {}
+Command::Command(GameController gameController) : gameController(gameController) {}
 
 void Command::execute() {}

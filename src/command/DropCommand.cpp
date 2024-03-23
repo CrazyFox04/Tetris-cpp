@@ -5,5 +5,5 @@
 #include "DropCommand.h"
 
 void DropCommand::execute() {
-    gameControler.dropActiveTetromino();
+    gameController.dropActiveTetromino();
 }
