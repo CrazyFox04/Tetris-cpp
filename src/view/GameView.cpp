@@ -5,22 +5,27 @@
 #include "GameView.h"
 #include <iostream>
 
-GameView::GameView(BoardView board, BagView bag, int initialScore)
-    : boardView { board }, bagView { bag }, score { initialScore } {}
+GameView::GameView(Game& game) : game(game) {}
 
 void GameView::update() {
-    clearScreen();
-    boardView.display();
-    displayInfos();
-    bagView.display();
+    drawGameInterface();
 }
 
-void GameView::clearScreen() {
-    std::cout << "\033[2J\033[1;1H";
-}
+void GameView::drawGameInterface() {
+    system("clear"); // Clear the terminal. !!! Not portable.
 
-void GameView::displayInfos() {
-    std::cout << "Score: " << score << std::endl;
-    std::cout << "Level: " << level << std::endl;
-    std::cout << "Lines: " << lines << std::endl;
+    //Display the board
+    boardView.drawBoard(game.getBoard());
+
+    // Calculate where to display the other infos
+    int rightColumn = game.getBoard().getWidth() + 4;
+
+    //Display the next tetromino
+    std::cout << std::string(rightColumn, ' ');
+    bagView.drawNextTetromino(game.getBag().getNextTetromino());
+
+    //Display the score, level and lines
+    std::cout << std::string(rightColumn, ' ') << "Score: " << game.getScore() << std::endl;
+    std::cout << std::string(rightColumn, ' ') << "Level: " << game.getLevel() << std::endl;
+    std::cout << std::string(rightColumn, ' ') << "Lines: " << game.getLines() << std::endl;
 }

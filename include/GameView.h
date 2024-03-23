@@ -8,18 +8,17 @@
 #include "Observer.h"
 #include "BoardView.h"
 #include "BagView.h"
+#include "Game.h"
+#include <iostream>
 
 class GameView : public Observer {
+Game& game; //For now we will use the game to get the infos. Later we will use a facade
 BoardView boardView;
 BagView bagView;
-int score;
-int level;
-int lines;
 
 public:
-    GameView(BoardView board, BagView bag, int score);
+    explicit GameView(Game& game);
     void update() override;
-    void clearScreen();
-    void displayInfos();
+    void drawGameInterface();
 };
 #endif //GAMEVIEW_H

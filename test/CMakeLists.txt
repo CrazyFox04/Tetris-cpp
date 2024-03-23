@@ -12,6 +12,7 @@ set(TEST_SOURCES
         Tetromino.cpp
         BagViewTest.cpp
         BoardViewTest.cpp
+        GameViewTest.cpp
 )
 
 # Create the tests main executable
