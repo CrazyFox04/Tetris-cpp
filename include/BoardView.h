@@ -4,9 +4,13 @@
 
 #ifndef BOARDVIEW_H
 #define BOARDVIEW_H
+
+#include "Board.h"
+#include <iostream>
+
 class BoardView {
 public:
-    BoardView();
-    void display();
+    BoardView() {};
+    void drawBoard(const Board& board);
 };
 #endif //BOARDVIEW_H
