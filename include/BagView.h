@@ -4,9 +4,13 @@
 
 #ifndef BAGVIEW_H
 #define BAGVIEW_H
+
+#include "Tetromino.h"
+#include <iostream>
+
 class BagView {
 public:
-     BagView();
-     void display();
+     BagView() {};
+     void drawNextTetromino(const Tetromino& tetromino);
 };
 #endif //BAGVIEW_H
