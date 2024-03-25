@@ -11,6 +11,7 @@ public:
     int get_y() const { return y; }
     void operator+=(const Direction2D& direction);
     void operator-=(const Direction2D& direction);
+    void operator+=(const Position& position);
 };
 Position operator+(const Position &position, const Direction2D& direction);
 Position operator+(const Direction2D& direction, const Position &position);

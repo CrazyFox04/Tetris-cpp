@@ -26,6 +26,10 @@ void Position::operator-=(const Direction2D& direction) {
     this->x -= direction.first;
     this->y -= direction.second;
 }
+void Position::operator+=(const Position& position) {
+    this->x += position.get_x();
+    this->y += position.get_y();
+}
 bool operator==(const Position &position, const Position &position2) {
     return position.get_x() == position2.get_x() && position.get_y() == position2.get_y();
 }

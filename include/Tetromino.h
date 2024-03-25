@@ -18,6 +18,8 @@ public:
     void rotateCounterClockwise();
     void move(int dx, int dy);
     void set_relative_cells(const std::vector<Position>& newCells);
+    int get_length() const;
+    int get_height() const;
 };
 bool operator==(const Tetromino &Tetromino1, const Tetromino &Tetromino2);
 

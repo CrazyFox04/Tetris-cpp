@@ -9,6 +9,7 @@ project(tetris_test)
 set(TEST_SOURCES
         testMain.cpp
         Bag.cpp
+        Board.cpp
         Position.cpp
         Tetromino.cpp
 )
@@ -32,6 +33,7 @@ target_link_libraries(
         GTest::gtest
         GTest::gtest_main
         tetris_model
+        tetris_tools
 )
 
 # Discover tests using Google Test

@@ -20,6 +20,7 @@ public:
     static Bag & getInstance();
     Tetromino &getNext();
     int size();
+    std::vector<Tetromino> getAvailableTetrominos() const;
 };
 
 
