@@ -53,3 +53,30 @@ bool operator==(const Tetromino &Tetromino1, const Tetromino &Tetromino2) {
     return Tetromino1.get_id() == Tetromino2.get_id() && Tetromino1.get_ref_position() == Tetromino2.get_ref_position() &&
            Tetromino1.get_relative_cells() == Tetromino2.get_relative_cells();
 }
+int Tetromino::get_length() const {
+    int min = 0;
+    int max = 0;
+    for (const auto&cell: cells) {
+        if (cell.get_x() < min) {
+            min = cell.get_x();
+        }
+        if (cell.get_x() > max) {
+            max = cell.get_x();
+        }
+    }
+    return max - min + 1;
+}
+
+int Tetromino::get_height() const {
+    int min = 0;
+    int max = 0;
+    for (const auto&cell: cells) {
+        if (cell.get_y() < min) {
+            min = cell.get_y();
+        }
+        if (cell.get_y() > max) {
+            max = cell.get_y();
+        }
+    }
+    return max - min + 1;
+}
