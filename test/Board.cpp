@@ -23,6 +23,28 @@ TEST(Board, constructor_with_parameters) {
     ASSERT_EQ(b.getOccupied().at(0).size(), 5);
 }
 
+TEST(Board, constructor_with_parameters_too_small) {
+    ASSERT_THROW(Board b(1, 1, 1), std::invalid_argument);
+}
+
+TEST(Board, constructor_with_parameters_edge) {
+    int maxHeight = 0;
+    int maxWidth = 0;
+    for (const auto & available_tetromino : Bag::getInstance().getAvailableTetrominos()) {
+        if (available_tetromino.get_height() > maxHeight) {
+            maxHeight = available_tetromino.get_height();
+        }
+        if (available_tetromino.get_length() > maxWidth) {
+            maxWidth = available_tetromino.get_length();
+        }
+    }
+    Board b(maxWidth, maxHeight, 1);
+    ASSERT_EQ(b.getWidth(), maxWidth);
+    ASSERT_THROW(Board b3(maxWidth - 1, maxHeight, 1), std::invalid_argument);
+    ASSERT_THROW(Board b4(maxWidth, maxHeight - 1, 1), std::invalid_argument);
+    ASSERT_THROW(Board b4(maxWidth - 1, maxHeight - 1, 1), std::invalid_argument);
+}
+
 TEST(Board, add_tetromino) {
     Board b(10, 10, 1);
     Tetromino t = Bag::getInstance().getAvailableTetrominos().at(0);
