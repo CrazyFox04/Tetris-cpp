@@ -24,7 +24,7 @@ TEST(Board, constructor_with_parameters) {
 }
 
 TEST(Board, add_tetromino) {
-    Board b(5, 10, 1);
+    Board b(10, 10, 1);
     Tetromino t = Bag::getInstance().getAvailableTetrominos().at(0);
     b.addTetromino(t);
     ASSERT_EQ(b.getTetrominos().size(), 1);
