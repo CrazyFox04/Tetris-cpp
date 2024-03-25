@@ -8,6 +8,7 @@
 class Board {
     int width;
     int height;
+    bool gameOver;
     std::vector<Tetromino> tetrominos;
     std::vector<std::vector<bool>> occupied;
     Position refPosition;
@@ -29,7 +30,7 @@ public:
     bool isOccupied(int row, int column) const;
     bool isLineComplete(int line) const;
     int removeCompleteLines();
-    bool isGameOver();
+    bool isGameOver() const;
     Tetromino& getActiveTetromino();
     const std::vector<Tetromino> getTetrominos() const;
     int getWidth() const;

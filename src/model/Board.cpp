@@ -13,7 +13,7 @@ Board::Board() : Board(10, 20, 1) {
 }
 
 Board::Board(int w, int h, int difficulty)
-    : width(w), height(h), occupied(h, std::vector<bool>(w, false)) {
+    : width(w), height(h), occupied(h, std::vector<bool>(w, false)), gameOver(false) {
     refPosition = Position(width / 2 - 1, 0);
     for (const auto & available_tetromino : Bag::getInstance().getAvailableTetrominos()) {
         if (available_tetromino.get_height() >= h/2.0 || available_tetromino.get_length() >= w/2.0) {
@@ -58,7 +58,7 @@ void Board::addTetromino(Tetromino&tetromino) {
         int absY = refPosition.get_y() + cell.get_y();
 
         if (isOccupied(absY, absX)) {
-            // Game over ne devrions nous pas ajouter un atrribut pour cela?
+            gameOver = true;
             return;
         }
         absolutePositions.emplace_back(absX, absY);
@@ -197,13 +197,8 @@ void Board::moveLinesDown(int clearedline) {
     }
 }
 
-bool Board::isGameOver() {
-    for (int j = 0; j < width; j++) {
-        if (occupied[0][j]) {
-            return true;
-        }
-    }
-    return false;
+bool Board::isGameOver() const {
+    return gameOver;
 }
 
 Tetromino& Board::getActiveTetromino() {
