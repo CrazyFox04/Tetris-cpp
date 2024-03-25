@@ -7,6 +7,7 @@
 #include "Bag.h"
 #include <random>
 #include <algorithm>
+#include <stdexcept>
 
 Board::Board() : Board(10, 20, 1) {
 }
