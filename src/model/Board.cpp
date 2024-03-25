@@ -43,8 +43,13 @@ void Board::initialize(int difficulty) {
 }
 
 void Board::addTetromino(Tetromino&tetromino) {
+    int dy = 0;
     while (isOutside(tetromino)) {
         tetromino.move(Direction::DOWN.first, Direction::DOWN.second);
+        dy++;
+        if (dy >= height) {
+           throw std::invalid_argument("Board is too small to add the tetromino");
+        }
     }
     std::vector<Position> absolutePositions;
     for (const auto&cell: tetromino.get_relative_cells()) {
