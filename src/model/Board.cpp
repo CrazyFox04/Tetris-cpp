@@ -3,6 +3,7 @@
 //
 
 #include "Board.h"
+#include "Direction.h"
 #include <random>
 #include <algorithm>
 
@@ -12,6 +13,7 @@ Board::Board() : Board(10, 20, 1) {
 Board::Board(int w, int h, int difficulty)
     : width(w), height(h), occupied(h, std::vector<bool>(w, false)) {
     refPosition = Position(width / 2 - 1, 0);
+    // todo : add possible tetrominos check based on width and height
     initialize(difficulty);
 }
 
@@ -35,11 +37,12 @@ void Board::initialize(int difficulty) {
     }
 }
 
-void Board::addTetromino(const Tetromino&tetromino) {
-    auto cells = tetromino.get_relative_cells();
-
+void Board::addTetromino(Tetromino&tetromino) {
+    while (isOutside(tetromino)) {
+        tetromino.move(Direction::DOWN.first, Direction::DOWN.second);
+    }
     std::vector<Position> absolutePositions;
-    for (const auto&cell: cells) {
+    for (const auto&cell: tetromino.get_relative_cells()) {
         int absX = refPosition.get_x() + cell.get_x();
         int absY = refPosition.get_y() + cell.get_y();
 
@@ -53,6 +56,15 @@ void Board::addTetromino(const Tetromino&tetromino) {
         occupied[pos.get_y()][pos.get_x()] = true;
     }
     tetrominos.push_back(tetromino);
+}
+
+bool Board::isOutside(Tetromino&tetromino) const {
+    for (auto&relative_cell: tetromino.get_relative_cells()) {
+        if (isOutside(relative_cell.get_y() + refPosition.get_y(), relative_cell.get_x() + refPosition.get_x())) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void Board::moveActiveTetromino(Direction2D direction) {
@@ -114,6 +126,9 @@ bool Board::isOutside(int row, int column) const {
 }
 
 bool Board::isOccupied(int row, int column) const {
+    if (row < 0 || row >= height || column < 0 || column >= width) {
+        return true;
+    }
     return occupied[column][row];
 }
 

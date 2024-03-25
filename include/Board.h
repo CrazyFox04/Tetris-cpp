@@ -17,11 +17,12 @@ private:
     void clearLine(int line);
     void moveLinesDown(int line);
     void clearOccupiedForActiveTetromino();
+    bool isOutside(Tetromino& tetromino) const;
 
 public:
     Board();
     Board(int width, int height, int difficulty); // difficulty will determinate the percentage of occupied cells
-    void addTetromino(const Tetromino& tetromino);
+    void addTetromino(Tetromino& tetromino);
     void moveActiveTetromino(Direction2D direction);
     void rotateActiveTetromino(Rotation rotation);
     bool isOutside(int row, int column) const;
