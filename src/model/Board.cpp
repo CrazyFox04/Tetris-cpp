@@ -4,6 +4,7 @@
 
 #include "Board.h"
 #include "Direction.h"
+#include "Bag.h"
 #include <random>
 #include <algorithm>
 
@@ -13,7 +14,11 @@ Board::Board() : Board(10, 20, 1) {
 Board::Board(int w, int h, int difficulty)
     : width(w), height(h), occupied(h, std::vector<bool>(w, false)) {
     refPosition = Position(width / 2 - 1, 0);
-    // todo : add possible tetrominos check based on width and height
+    for (const auto & available_tetromino : Bag::getInstance().getAvailableTetrominos()) {
+        if (available_tetromino.get_height() > h || available_tetromino.get_length() > w) {
+           throw std::invalid_argument("Board is too small for the available tetrominos");
+        }
+    }
     initialize(difficulty);
 }
 
