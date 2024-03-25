@@ -16,7 +16,7 @@ Board::Board(int w, int h, int difficulty)
     : width(w), height(h), occupied(h, std::vector<bool>(w, false)) {
     refPosition = Position(width / 2 - 1, 0);
     for (const auto & available_tetromino : Bag::getInstance().getAvailableTetrominos()) {
-        if (available_tetromino.get_height() > h || available_tetromino.get_length() > w) {
+        if (available_tetromino.get_height() >= h/2.0 || available_tetromino.get_length() >= w/2.0) {
            throw std::invalid_argument("Board is too small for the available tetrominos");
         }
     }
@@ -84,7 +84,8 @@ void Board::moveActiveTetromino(Direction2D direction) {
     clearOccupiedForActiveTetromino();
     for (const auto&cell: cells) {
         Position newPos = cell + direction;
-        if (isOutside(newPos.get_x(), newPos.get_y()) || isOccupied(newPos.get_x(), newPos.get_y())) {
+        newPos += refPosition;
+        if (isOutside(newPos.get_y(), newPos.get_x()) || isOccupied(newPos.get_y(), newPos.get_x())) {
             return;
         }
     }
@@ -140,7 +141,7 @@ bool Board::isOccupied(int row, int column) const {
     if (row < 0 || row >= height || column < 0 || column >= width) {
         return true;
     }
-    return occupied[column][row];
+    return occupied[row][column];
 }
 
 int Board::removeCompleteLines() {
