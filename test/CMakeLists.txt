@@ -8,11 +8,11 @@ project(tetris_test)
 # Define test source files
 set(TEST_SOURCES
         testMain.cpp
+        Bag.cpp
+        Board.cpp
         Position.cpp
         Tetromino.cpp
-        BagViewTest.cpp
-        BoardViewTest.cpp
-        GameViewTest.cpp
+        MoveCommandTest.cpp
 )
 
 # Create the tests main executable
@@ -35,6 +35,7 @@ target_link_libraries(
         GTest::gtest_main
         tetris_model
         tetris_view
+        tetris_tools
 )
 
 # Discover tests using Google Test
