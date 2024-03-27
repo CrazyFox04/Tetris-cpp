@@ -15,9 +15,9 @@ Board::Board() : Board(10, 20, 1) {
 Board::Board(int w, int h, int difficulty)
     : width(w), height(h), occupied(h, std::vector<bool>(w, false)), gameOver(false) {
     refPosition = Position(width / 2 - 1, 0);
-    for (const auto & available_tetromino : Bag::getInstance().getAvailableTetrominos()) {
-        if (available_tetromino.get_height() >= h/2.0 || available_tetromino.get_length() >= w/2.0) {
-           throw std::invalid_argument("Board is too small for the available tetrominos");
+    for (const auto&available_tetromino: Bag::getInstance().getAvailableTetrominos()) {
+        if (available_tetromino.get_height() >= h / 2.0 || available_tetromino.get_length() >= w / 2.0) {
+            throw std::invalid_argument("Board is too small for the available tetrominos");
         }
     }
     initialize(difficulty);
@@ -49,7 +49,7 @@ void Board::addTetromino(Tetromino&tetromino) {
         tetromino.move(Direction::DOWN.first, Direction::DOWN.second);
         dy++;
         if (dy >= height) {
-           throw std::invalid_argument("Board is too small to add the tetromino");
+            throw std::invalid_argument("Board is too small to add the tetromino");
         }
     }
     std::vector<Position> absolutePositions;
@@ -85,8 +85,15 @@ void Board::moveActiveTetromino(Direction2D direction) {
     for (const auto&cell: cells) {
         Position newPos = cell + direction;
         newPos += refPosition;
-        if (isOutside(newPos.get_y(), newPos.get_x()) || isOccupied(newPos.get_y(), newPos.get_x())) {
-            return;
+        if (isOutside(newPos.get_y(), newPos.get_x())) {
+            throw std::out_of_range(
+                "The new position (" + std::to_string(newPos.get_x()) + ";" + std::to_string(newPos.get_y()) +
+                ") is outside the board");
+        }
+        if (isOccupied(newPos.get_y(), newPos.get_x())) {
+            throw std::invalid_argument(
+                "The new position (" + std::to_string(newPos.get_x()) + ";" + std::to_string(newPos.get_y()) +
+                ") is already occupied");
         }
     }
     activeTetromino.move(direction.first, direction.second);
@@ -110,12 +117,17 @@ void Board::rotateActiveTetromino(Rotation rotation) {
     }
     // Vérifier si la rotation est valide
     for (const auto&cell: activeTetromino.get_relative_cells()) {
-        int absX = cell.get_x();
-        int absY = cell.get_y();
-        if (isOutside(absX, absY) || isOccupied(absX, absY)) {
-            // Annuler la rotation si invalide
+        int absX = cell.get_x() + refPosition.get_x();
+        int absY = cell.get_y() + refPosition.get_y();
+        if (isOutside(absY, absX)) {
             activeTetromino.set_relative_cells(originalCells);
-            return;
+            throw std::out_of_range("The new position (" + std::to_string(absX) + ";" + std::to_string(absY) +
+                                    ") is outside the board");
+        }
+        if (isOccupied(absY, absX)) {
+            activeTetromino.set_relative_cells(originalCells);
+            throw std::invalid_argument("The new position (" + std::to_string(absX) + ";" + std::to_string(absY) +
+                                        ") is already occupied");
         }
     }
     // Mettre à jour occupied
