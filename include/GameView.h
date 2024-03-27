@@ -11,14 +11,13 @@
 #include "Game.h"
 #include <iostream>
 
-class GameView : public Observer {
-Game& game; //For now we will use the game to get the infos. Later we will use a facade
+class GameView {
+const Game& game; //For now we will use the game to get the infos. Later we will use a facade
 BoardView boardView;
 BagView bagView;
 
 public:
-    explicit GameView(Game& game);
-    void update() override;
-    void drawGameInterface();
+    explicit GameView(const Game& game);
+    void draw() const;
 };
 #endif //GAMEVIEW_H
