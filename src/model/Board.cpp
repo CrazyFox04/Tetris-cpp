@@ -12,7 +12,7 @@
 Board::Board() : Board(10, 20, 1) {
 }
 
-Board::Board(int w, int h, int difficulty)
+Board::Board(const int w, const int h, const int difficulty)
     : width(w), height(h), occupied(h, std::vector<bool>(w, false)), gameOver(false) {
     refPosition = Position(width / 2 - 1, 0);
     for (const auto&available_tetromino: Bag::getInstance().getAvailableTetrominos()) {
@@ -104,7 +104,7 @@ void Board::moveActiveTetromino(Direction2D direction) {
     }
 }
 
-void Board::rotateActiveTetromino(Rotation rotation) {
+void Board::rotateActiveTetromino(const Rotation rotation) {
     Tetromino&activeTetromino = tetrominos.back();
     auto originalCells = activeTetromino.get_relative_cells();
     clearOccupiedForActiveTetromino();
@@ -145,11 +145,11 @@ void Board::rotateActiveTetromino(Rotation rotation) {
     }
 }
 
-bool Board::isOutside(int row, int column) const {
+bool Board::isOutside(const int row, const int column) const {
     return row < 0 || row >= height || column < 0 || column >= width;
 }
 
-bool Board::isOccupied(int row, int column) const {
+bool Board::isOccupied(const int row, const int column) const {
     if (row < 0 || row >= height || column < 0 || column >= width) {
         return true;
     }
@@ -168,7 +168,7 @@ int Board::removeCompleteLines() {
     return linesRemoved;
 }
 
-bool Board::isLineComplete(int line) const {
+bool Board::isLineComplete(const int line) const {
     for (int j = 0; j < width; j++) {
         if (!occupied[line][j]) {
             return false;
@@ -193,7 +193,7 @@ void Board::clearLine(int line) {
     }
 }
 
-void Board::moveLinesDown(int clearedline) {
+void Board::moveLinesDown(const int clearedline) {
     for (int y = clearedline; y > 0; --y) {
         for (int x = 0; x < width; ++x) {
             occupied[y][x] = occupied[y - 1][x];
