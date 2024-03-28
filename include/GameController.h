@@ -9,7 +9,7 @@
 
 class GameController {
 public:
-    virtual ~GameControler() = default;
+    virtual ~GameController() = default;
     virtual void moveActiveTetromino(Direction2D direction) = 0;
     virtual void rotateActiveTetromino(Rotation rotation) = 0;
     virtual void dropActiveTetromino() = 0;

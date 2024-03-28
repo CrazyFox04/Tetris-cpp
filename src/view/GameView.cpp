@@ -2,7 +2,7 @@
 
 GameView::GameView(const Game& game) : game(game) {}
 
-void GameView::draw() const {
+void GameView::draw() {
     //Display the board game
     boardView.drawBoard(game.getBoard()); //getBoard() nécessaire
 

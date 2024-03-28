@@ -18,6 +18,6 @@ BagView bagView;
 
 public:
     explicit GameView(const Game& game);
-    void draw() const;
+    void draw();
 };
 #endif //GAMEVIEW_H
