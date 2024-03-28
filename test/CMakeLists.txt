@@ -34,6 +34,7 @@ target_link_libraries(
         GTest::gtest
         GTest::gtest_main
         tetris_model
+        tetris_view
         tetris_tools
 )
 

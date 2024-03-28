@@ -12,6 +12,9 @@ class GameController {
     Game& game_;
     GameView& view_;
 public:
-    explicit GameController(const GameView& view, Game& game);
+    virtual ~GameController() = default;
+    virtual void moveActiveTetromino(Direction2D direction) = 0;
+    virtual void rotateActiveTetromino(Rotation rotation) = 0;
+    virtual void dropActiveTetromino() = 0;
 };
 #endif //GAMECONTROLER_H

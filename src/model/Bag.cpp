@@ -59,6 +59,13 @@ Tetromino& Bag::getNext() {
     return next;
 }
 
+const Tetromino& Bag::peekNext() const {
+    if (bag.empty()) {
+        throw std::runtime_error("Bag is empty");
+    }
+    return bag.front();
+}
+
 int Bag::size() {
     return bag.size();
 }

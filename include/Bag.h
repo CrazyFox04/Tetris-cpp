@@ -19,6 +19,7 @@ public:
     int getNumberOfTetrominos() const;
     static Bag & getInstance();
     Tetromino &getNext();
+    const Tetromino& peekNext() const;
     int size();
     std::vector<Tetromino> getAvailableTetrominos() const;
 };

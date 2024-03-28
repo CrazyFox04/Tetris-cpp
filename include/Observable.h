@@ -6,9 +6,11 @@
 #define OBSERVABLE_H
 #include <vector>
 #include "Observer.h"
+#include <vector>
+#include <memory>
 
 class Observable {
-    std::vector<Observer> observers;
+    std::vector<std::shared_ptr<Observer>> observers;
 public:
     Observable();
     virtual ~Observable() = 0;

@@ -5,7 +5,7 @@
 
 class Command {
 protected:
-    GameController&gameController;
+    GameController& gameController;
 public:
     explicit Command(GameController gameController);
     virtual void execute();

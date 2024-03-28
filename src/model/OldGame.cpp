@@ -5,10 +5,26 @@
 #include "Game.h"
 #include "Direction.h"
 
-Game::Game() : bag(Bag::getInstance()), score(0), level(1), gameOver(false) {
+Game::Game() : bag(Bag::getInstance()), score(0), lines(0), level(1), gameOver(false) {
     board = Board();
     initializeCommands();
 }
+Bag& Game::getBag() const {
+    return bag;
+}
+Board& Game::getBoard() const{
+    return board;
+}
+int Game::getScore() const {
+    return score;
+}
+int Game::getLevel() const {
+    return level;
+}
+int Game::getLines() const {
+    return lines;
+}
+
 
 /* We canno't use play function cause we have to continue implementation
 void Game::play() {
