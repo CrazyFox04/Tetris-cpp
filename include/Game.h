@@ -6,9 +6,8 @@
 #include "Board.h"
 #include "Bag.h"
 #include "Direction.h"
-#include "GameControler.h"
 
-class Game : public GameControler, public Observable {
+class Game : public Observable {
     Invoker invoker;
     Board board;
     Bag& bag;

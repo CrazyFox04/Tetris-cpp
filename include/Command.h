@@ -1,7 +1,3 @@
-//
-// Created by Enzo Renard on 05/03/2024.
-//
-
 #ifndef COMMAND_H
 #define COMMAND_H
 
@@ -9,7 +5,7 @@
 
 class Command {
 protected:
-    GameController&gameControler;
+    GameController&gameController;
 public:
     explicit Command(GameController gameController);
     virtual void execute();

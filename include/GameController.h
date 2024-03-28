@@ -5,19 +5,13 @@
 #ifndef GAMECONTROLER_H
 #define GAMECONTROLER_H
 
-#include "Direction.h"
+#include "Game.h"
+#include "GameView.h"
 
 class GameController {
+    Game& game_;
+    GameView& view_;
 public:
-<<<<<<< HEAD:include/GameController.h
-    virtual void moveActiveTetromino(Direction direction);
-    virtual void rotateActiveTetromino(Rotation rotation);
-    virtual void dropActiveTetromino();
-=======
-    virtual ~GameControler() = default;
-    virtual void moveActiveTetromino(Direction2D direction) = 0;
-    virtual void rotateActiveTetromino(Rotation rotation) = 0;
-    virtual void dropActiveTetromino() = 0;
->>>>>>> 8aa5246:include/GameControler.h
+    explicit GameController(const GameView& view, Game& game);
 };
 #endif //GAMECONTROLER_H
