@@ -85,7 +85,7 @@ TEST(Board, move_active_tetromino_out_of_bounds) {
     Board b(10, 10, 1);
     Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}};
     b.addTetromino(t);
-    b.moveActiveTetromino(Direction2D(0, -1)); // Up
+    ASSERT_THROW(b.moveActiveTetromino(Direction2D(0, -1)), std::out_of_range); // Up
     ASSERT_EQ(b.getActiveTetromino().get_ref_position().get_x(), 0);
     ASSERT_EQ(b.getActiveTetromino().get_ref_position().get_y(), 0);
 }
@@ -102,7 +102,7 @@ TEST(Board, move_active_tetromino_collision) {
     b.moveActiveTetromino({0, 1});
     ASSERT_EQ(b.getActiveTetromino().get_ref_position().get_x(), 0);
     ASSERT_EQ(b.getActiveTetromino().get_ref_position().get_y(), 2);
-    b.moveActiveTetromino({0, 1});
+    ASSERT_THROW(b.moveActiveTetromino({0, 1}), std::invalid_argument);
     ASSERT_EQ(b.getActiveTetromino().get_ref_position().get_x(), 0);
     ASSERT_EQ(b.getActiveTetromino().get_ref_position().get_y(), 2);
 }
@@ -129,16 +129,16 @@ TEST(Board, rotate_active_tetromino_out_of_bounds) {
     Board b(10, 10, 1);
     Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}};
     b.addTetromino(t);
-    b.rotateActiveTetromino(Rotation::CLOCKWISE);
+    ASSERT_THROW(b.rotateActiveTetromino(Rotation::COUNTERCLOCKWISE), std::out_of_range);
     // No rotation should have been done
     ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(0).get_x(), 0);
     ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(0).get_y(), 0);
-    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(1).get_x(), 0);
-    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(1).get_y(), 1);
-    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(2).get_x(), 0);
-    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(2).get_y(), 2);
-    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(3).get_x(), 0);
-    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(3).get_y(), 3);
+    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(1).get_x(), 1);
+    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(1).get_y(), 0);
+    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(2).get_x(), 2);
+    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(2).get_y(), 0);
+    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(3).get_x(), 3);
+    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(3).get_y(), 0);
     ASSERT_EQ(b.getActiveTetromino().get_ref_position().get_x(), 0);
     ASSERT_EQ(b.getActiveTetromino().get_ref_position().get_y(), 0);
 }
@@ -150,15 +150,15 @@ TEST(Board, rotate_active_tetromino_collision) {
     b.rotateActiveTetromino(Rotation::CLOCKWISE);
     b.moveActiveTetromino({0, 1});
     b.addTetromino(t);
-    b.rotateActiveTetromino(Rotation::CLOCKWISE);
+    ASSERT_THROW(b.rotateActiveTetromino(Rotation::CLOCKWISE), std::invalid_argument);
     ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(0).get_x(), 0);
     ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(0).get_y(), 0);
-    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(1).get_x(), 0);
-    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(1).get_y(), 1);
-    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(2).get_x(), 0);
-    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(2).get_y(), 2);
-    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(3).get_x(), 0);
-    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(3).get_y(), 3);
+    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(1).get_x(), 1);
+    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(1).get_y(), 0);
+    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(2).get_x(), 2);
+    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(2).get_y(), 0);
+    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(3).get_x(), 3);
+    ASSERT_EQ(b.getActiveTetromino().get_relative_cells().at(3).get_y(), 0);
 }
 
 TEST(Board, remove_complete_lines) {
@@ -174,10 +174,6 @@ TEST(Board, remove_complete_lines) {
     b.moveActiveTetromino({2, 8});
     b.addTetromino(t);
     b.moveActiveTetromino({4, 8});
-    b.addTetromino(t);
-    b.moveActiveTetromino({6, 8});
-    b.addTetromino(t);
-    b.moveActiveTetromino({8, 8});
     ASSERT_EQ(b.removeCompleteLines(), 2);
     for (const auto&bit_references: b.getOccupied()) {
         for (const auto&bit_reference: bit_references) {

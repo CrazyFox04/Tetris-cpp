@@ -4,6 +4,7 @@
 #include "Bag.h"
 #include <random>
 #include <algorithm>
+#include <stdexcept>
 Bag* Bag::instance;
 
 Bag::Bag() {

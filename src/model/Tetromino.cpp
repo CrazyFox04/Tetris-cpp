@@ -3,8 +3,8 @@
 //
 #include "Tetromino.h"
 
-Tetromino::Tetromino(int id, Position center, std::vector<Position> cells) : id(id), refPosition(center),
-                                                                             cells(std::move(cells)) {
+Tetromino::Tetromino(const int id, const Position center, std::vector<Position> cells) : id(id), refPosition(center),
+                                                                                         cells(std::move(cells)) {
 }
 
 void Tetromino::rotateClockwise() {

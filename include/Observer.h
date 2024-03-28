@@ -6,8 +6,8 @@
 #define OBSERVER_H
 class Observer {
 public:
-    Observer();
-    virtual ~Observer() = 0;
+    virtual ~Observer() = default;
+
     virtual void update() = 0;
 };
 #endif //OBSERVER_H
