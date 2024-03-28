@@ -1,13 +1,9 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
-#include "GameController.h"
-
 class Command {
-protected:
-    GameController& gameController;
 public:
-    explicit Command(GameController gameController);
-    virtual void execute();
+    virtual ~Command() = default;
+    virtual void execute() =0;
 };
 #endif //COMMAND_H

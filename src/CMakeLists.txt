@@ -9,7 +9,8 @@ add_subdirectory(view)
 add_subdirectory(tools)
 
 # Create the main executable
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} main.cpp
+        controller/Invoker.cpp)
 
 # Link each sub project to compile the executable
 target_link_libraries(

@@ -6,15 +6,15 @@
 #define INVOKER_H
 
 #include "Command.h"
-#include <string>
 #include <map>
-
+#include <string>
+#include <memory>
 
 class Invoker {
-    std::map<std::string, Command*> commands;
+    std::map<std::string, std::unique_ptr<Command>> commands;
 public:
-    Invoker();
-    void addNewCommand(std::string input, Command* command);
-    void execute(std::string command);
+    void setCommand(std::string& name, std::unique_ptr<Command> command);
+    void executeCommand(const std::string& name);
 };
+
 #endif //INVOKER_H
