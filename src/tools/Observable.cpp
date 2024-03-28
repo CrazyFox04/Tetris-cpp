@@ -1,7 +1,19 @@
 //
-// Created by Enzo Renard on 19/03/2024.
+// Created by Enzo Renard on 05/03/2024.
 //
 
-#include "Observable.h"
-#include <vector>
+#ifndef OBSERVABLE_H
+#define OBSERVABLE_H
+#include "Observer.h"
 
+class Observable {
+public:
+    virtual ~Observable() = default;
+
+    virtual void addObserver(Observer&observer) = 0;
+
+    virtual void removeObserver(int pos) = 0;
+
+    virtual void notifyObservers() = 0;
+};
+#endif //OBSERVABLE_H

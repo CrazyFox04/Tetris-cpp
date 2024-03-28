@@ -1,6 +1,7 @@
 #ifndef TETRIS_DEV4_PROJET_GAME_H
 #define TETRIS_DEV4_PROJET_GAME_H
 
+#include "GameController.h"
 #include <vector>
 #include "Observable.h"
 #include "Observer.h"
@@ -9,7 +10,7 @@
 #include "Direction.h"
 #include <memory>
 
-class Game : public Observable {
+class Game : public Observable, public GameController {
     std::vector<std::shared_ptr<Observer>> observers;
     Board board;
     Bag& bag;
@@ -33,15 +34,15 @@ public:
     void moveActiveTetromino(Direction2D direction);
     void rotateActiveTetromino(Rotation rotation);
     void dropActiveTetromino();
-    void isFree(int row, int col);
-    virtual void notifyObservers();
-    virtual void addObserver(Observer& observer);
-    virtual void removeObserver(int pos);
-    Board& getBoard() const;
-    Bag& getBag() const;
-    int getScore() const;
-    int getLevel() const;
-    int getLines() const;
+    bool isOccupied(int row, int col) const;
+    void notifyObservers() override;
+    void addObserver(Observer& observer) override;
+    void removeObserver(int pos) override;
+    int getScore() const override;
+    int getLines() const override;
+    int getLevel() const override;
+    Board const & getBoard() const override;
+    Bag const & getBag() const override;
 };
 
 
