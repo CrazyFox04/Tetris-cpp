@@ -5,7 +5,7 @@ project(tetris_tools)
 
 # C++ sources files of the tetris_model
 set(SOURCES
-       Direction.cpp
+        Direction.cpp
         #Observable.cpp
         #Observer.cpp
 )

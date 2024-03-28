@@ -1,20 +1,25 @@
 #ifndef TETRIS_DEV4_PROJET_GAME_H
 #define TETRIS_DEV4_PROJET_GAME_H
 
+#include <vector>
 #include "Observable.h"
-#include "Invoker.h"
+#include "Observer.h"
 #include "Board.h"
 #include "Bag.h"
 #include "Direction.h"
-#include "GameController.h"
+#include <memory>
 
 class Game : public Observable {
-    Invoker invoker;
+    std::vector<std::shared_ptr<Observer>> observers;
     Board board;
     Bag& bag;
-    int score;
-    int lines;
-    int level;
+    int currentScore;
+    int currentLevel;
+    int currentLine;
+    int currentTime;
+    int targetLine;
+    int targetTime;
+    int targetScore;
     bool gameOver;
 
 private:
@@ -23,8 +28,7 @@ private:
     int getPoints(int lines, int dropDistance) const;
     void initializeCommands();
 public:
-    Game();
-    ~Game();
+    Game(int width, int height, int difficulty, int startLevel, int targetLine, int targetTime, int targetScore);
     void play();
     void moveActiveTetromino(Direction2D direction);
     void rotateActiveTetromino(Rotation rotation);
