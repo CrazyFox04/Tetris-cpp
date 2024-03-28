@@ -111,7 +111,7 @@ int Game::getScore() const {
 }
 
 int Game::getLines() const {
-    // todo
+        return currentLine;
 }
 
 int Game::getLevel() const {
