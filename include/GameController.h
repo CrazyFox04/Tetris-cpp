@@ -6,6 +6,9 @@
 #define GAMECONTROLER_H
 
 #include "Game.h"
+#include "Direction.h"
+#include "Bag.h"
+#include "Board.h"
 
 class GameController {
 public:
