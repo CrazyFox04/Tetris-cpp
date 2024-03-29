@@ -8,6 +8,9 @@ Game::Game(const int width, const int height, const int difficulty, const int st
            const int targetScore) : board(width, height, difficulty), bag(Bag::getInstance()), currentScore(0),
                                     currentLevel(startLevel), currentLine(0), currentTime(0), targetLine(targetLine),
                                     targetTime(targetTime), targetScore(targetScore), gameOver(false) {
+   if (width < 10 || height < 10 || difficulty < 1 || startLevel < 1 || targetLine < 1 || targetTime < 1 || targetScore < 1) {
+       throw std::invalid_argument("Invalid argument");
+   }
 }
 
 
