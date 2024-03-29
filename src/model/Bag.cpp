@@ -4,6 +4,7 @@
 #include "Bag.h"
 #include <random>
 #include <algorithm>
+#include <stdexcept>
 Bag* Bag::instance;
 
 Bag::Bag() {
@@ -57,6 +58,13 @@ Tetromino& Bag::getNext() {
     Tetromino&next = bag.front();
     bag.erase(bag.begin());
     return next;
+}
+
+const Tetromino& Bag::peekNext() const {
+    if (bag.empty()) {
+        throw std::runtime_error("Bag is empty");
+    }
+    return bag.front();
 }
 
 int Bag::size() {

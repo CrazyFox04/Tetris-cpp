@@ -1,19 +1,26 @@
 #ifndef TETRIS_DEV4_PROJET_GAME_H
 #define TETRIS_DEV4_PROJET_GAME_H
 
+#include "GameController.h"
+#include <vector>
 #include "Observable.h"
-#include "Invoker.h"
+#include "Observer.h"
 #include "Board.h"
 #include "Bag.h"
 #include "Direction.h"
-#include "GameControler.h"
+#include <memory>
 
-class Game : public GameControler, public Observable {
-    Invoker invoker;
+class Game : public Observable, public GameController {
+    std::vector<std::shared_ptr<Observer>> observers;
     Board board;
     Bag& bag;
-    int score;
-    int level;
+    int currentScore;
+    int currentLevel;
+    int currentLine;
+    int currentTime;
+    int targetLine;
+    int targetTime;
+    int targetScore;
     bool gameOver;
 
 private:
@@ -22,16 +29,20 @@ private:
     int getPoints(int lines, int dropDistance) const;
     void initializeCommands();
 public:
-    Game();
-    ~Game();
+    Game(int width, int height, int difficulty, int startLevel, int targetLine, int targetTime, int targetScore);
     void play();
     void moveActiveTetromino(Direction2D direction);
     void rotateActiveTetromino(Rotation rotation);
     void dropActiveTetromino();
-    void isFree(int row, int col);
-    virtual void notifyObservers();
-    virtual void addObserver(Observer& observer);
-    virtual void removeObserver(int pos);
+    bool isOccupied(int row, int col) const;
+    void notifyObservers() override;
+    void addObserver(Observer& observer) override;
+    void removeObserver(int pos) override;
+    int getScore() const override;
+    int getLines() const override;
+    int getLevel() const override;
+    Board const & getBoard() const override;
+    Bag const & getBag() const override;
 };
 
 

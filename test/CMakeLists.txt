@@ -12,6 +12,7 @@ set(TEST_SOURCES
         Board.cpp
         Position.cpp
         Tetromino.cpp
+        # MoveCommandTest.cpp
 )
 
 # Create the tests main executable
@@ -33,6 +34,7 @@ target_link_libraries(
         GTest::gtest
         GTest::gtest_main
         tetris_model
+        tetris_view
         tetris_tools
 )
 

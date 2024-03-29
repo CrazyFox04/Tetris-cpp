@@ -5,7 +5,7 @@
 #include "Direction.h"
 #include <utility>
 
-Position::Position(int x, int y) : x(x), y(y) {}
+Position::Position(const int x, const int y) : x(x), y(y) {}
 Position operator+(const Position &position, const Direction2D& direction) {
     return {position.get_x() + direction.first, position.get_y() + direction.second};
 }

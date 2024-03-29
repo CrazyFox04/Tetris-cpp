@@ -1,27 +1,19 @@
 //
-// Created by Enzo Renard on 19/03/2024.
+// Created by Enzo Renard on 05/03/2024.
 //
 
-#include "Observable.h"
-#include <vector>
-Observable::Observable() {
-    observers = std::vector<Observer>();
-}
-Observable::~Observable() {
+#ifndef OBSERVABLE_H
+#define OBSERVABLE_H
+#include "Observer.h"
 
-}
+class Observable {
+public:
+    virtual ~Observable() = default;
 
+    virtual void addObserver(Observer&observer) = 0;
 
-void Observable::addObserver(Observer& observer) {
-    observers.push_back(observer);
-}
+    virtual void removeObserver(int pos) = 0;
 
-void Observable::removeObserver(int pos) {
-    observers.erase(observers.begin() + pos);
-}
-
-void Observable::notifyObservers() {
-    for (auto &observer : observers) {
-        observer.update();
-    }
-}
+    virtual void notifyObservers() = 0;
+};
+#endif //OBSERVABLE_H
