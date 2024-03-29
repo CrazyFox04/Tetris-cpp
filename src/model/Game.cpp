@@ -3,10 +3,11 @@
 //
 #include "Game.h"
 
-Game::Game(const int width, const int height, const int difficulty, const int startLevel, const int targetLine, const int targetTime,
+Game::Game(const int width, const int height, const int difficulty, const int startLevel, const int targetLine,
+           const int targetTime,
            const int targetScore) : board(width, height, difficulty), bag(Bag::getInstance()), currentScore(0),
-                                    currentLevel(startLevel), targetLine(targetLine), targetTime(targetTime),
-                                    targetScore(targetScore), gameOver(false) {
+                                    currentLevel(startLevel), currentLine(0), currentTime(0), targetLine(targetLine),
+                                    targetTime(targetTime), targetScore(targetScore), gameOver(false) {
 }
 
 
@@ -43,7 +44,11 @@ void Game::moveActiveTetromino(Direction2D direction) {
                 board.addTetromino(bag.getNext());
             }
         } catch (const std::invalid_argument&) {
-            // nop
+            if (direction == Direction::DOWN) {
+                int linesCleared = board.removeCompleteLines();
+                updateScore(linesCleared, 0);
+                board.addTetromino(bag.getNext());
+            }
         }
     }
     notifyObservers();
@@ -111,7 +116,7 @@ int Game::getScore() const {
 }
 
 int Game::getLines() const {
-        return currentLine;
+    return currentLine;
 }
 
 int Game::getLevel() const {
