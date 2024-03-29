@@ -10,8 +10,12 @@
 #include <map>
 
 class BoardView {
+    std::vector<std::vector<char>> initializeBoard(int width, int height);
+    void fillBoardWithTetrominos(const std::vector<Tetromino> &tetrominos, std::vector<std::vector<char>> &boardGame,
+                                 int boardWidth, int boardHeight);
+    void displayBoard(const std::vector<std::vector<char>> &boardGame);
 public:
     BoardView() {};
-    void drawBoard(const Board& board) const;
+    void drawBoard(const Board& board);
 };
 #endif //BOARDVIEW_H
