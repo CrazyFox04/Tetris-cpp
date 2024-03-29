@@ -79,6 +79,9 @@ bool Board::isOutside(Tetromino&tetromino) const {
 }
 
 void Board::moveActiveTetromino(Direction2D direction) {
+    if (tetrominos.size() == 0) {
+        throw std::runtime_error("No active tetromino to move");
+    }
     auto&activeTetromino = tetrominos.back();
     auto cells = activeTetromino.get_relative_cells();
     clearOccupiedForActiveTetromino();
@@ -105,6 +108,9 @@ void Board::moveActiveTetromino(Direction2D direction) {
 }
 
 void Board::rotateActiveTetromino(const Rotation rotation) {
+    if (tetrominos.size() == 0) {
+        throw std::runtime_error("No active tetromino to move");
+    }
     Tetromino&activeTetromino = tetrominos.back();
     auto originalCells = activeTetromino.get_relative_cells();
     clearOccupiedForActiveTetromino();
@@ -214,6 +220,9 @@ bool Board::isGameOver() const {
 }
 
 Tetromino& Board::getActiveTetromino() {
+    if (tetrominos.size() == 0) {
+        throw std::runtime_error("No active tetromino");
+    }
     return tetrominos.back();
 }
 

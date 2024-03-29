@@ -28,5 +28,9 @@ public:
     virtual Board const& getBoard() const = 0;
 
     virtual Bag const& getBag() const = 0;
+
+    virtual bool isGameOver() const = 0;
+
+    virtual void start() = 0;
 };
 #endif //GAMECONTROLER_H

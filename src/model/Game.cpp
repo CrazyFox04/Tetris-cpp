@@ -25,11 +25,9 @@ void Game::removeObserver(const int pos) {
     observers.erase(observers.begin() + pos);
 }
 
-void Game::play() {
-    while (!gameOver) {
-        board.addTetromino(bag.getNext());
-        notifyObservers();
-    }
+void Game::start() {
+    board.addTetromino(bag.getNext());
+    notifyObservers();
 }
 
 void Game::moveActiveTetromino(Direction2D direction) {
@@ -49,6 +47,8 @@ void Game::moveActiveTetromino(Direction2D direction) {
                 updateScore(linesCleared, 0);
                 board.addTetromino(bag.getNext());
             }
+        } catch (const std::runtime_error&) {
+            // nop
         }
     }
     notifyObservers();
@@ -64,26 +64,43 @@ void Game::rotateActiveTetromino(const Rotation rotation) {
             // nop
         } catch (const std::invalid_argument&) {
             // nop
+        } catch (const std::runtime_error&) {
+            // nop
         }
     }
     notifyObservers();
 }
 
 void Game::dropActiveTetromino() {
-    int dropDistance = 0;
+    if (!gameOver) {
+        try {
+            int dropDistance = 0;
 
-    while (true) {
-        auto originalPosition = board.getActiveTetromino().get_ref_position();
+            while (true) {
+                auto originalPosition = board.getActiveTetromino().get_ref_position();
 
-        board.moveActiveTetromino(Direction::DOWN);
-        if (originalPosition == board.getActiveTetromino().get_ref_position()) {
-            break;
+                board.moveActiveTetromino(Direction::DOWN);
+                if (originalPosition == board.getActiveTetromino().get_ref_position()) {
+                    break;
+                }
+                dropDistance++;
+            }
+            int linesCleared = board.removeCompleteLines();
+            updateScore(linesCleared, dropDistance);
+            board.addTetromino(bag.getNext());
         }
-        dropDistance++;
+        catch (const std::out_of_range&) {
+            int linesCleared = board.removeCompleteLines();
+            updateScore(linesCleared, 0);
+            board.addTetromino(bag.getNext());
+        } catch (const std::invalid_argument&) {
+            int linesCleared = board.removeCompleteLines();
+            updateScore(linesCleared, 0);
+            board.addTetromino(bag.getNext());
+        } catch (const std::runtime_error&) {
+            // nop
+        }
     }
-    int linesCleared = board.removeCompleteLines();
-    updateScore(linesCleared, dropDistance);
-    board.addTetromino(bag.getNext());
     notifyObservers();
 }
 
@@ -129,4 +146,8 @@ Board const& Game::getBoard() const {
 
 Bag const& Game::getBag() const {
     return bag;
+}
+
+bool Game::isGameOver() const {
+    return gameOver;
 }
