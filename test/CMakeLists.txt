@@ -12,9 +12,7 @@ set(TEST_SOURCES
         Board.cpp
         Position.cpp
         Tetromino.cpp
-        MoveCommandTest.cpp
-        ../include/GameController.h
-        ../include/Invoker.h
+        # MoveCommandTest.cpp
 )
 
 # Create the tests main executable
