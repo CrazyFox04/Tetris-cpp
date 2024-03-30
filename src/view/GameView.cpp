@@ -25,5 +25,5 @@ void GameView::displayMenu() {
 void GameView::displayGameOver() {
     std::cout << "Game Over!" << std::endl;
     std::cout << "Your score: " << game.getScore() << std::endl;
-    std::cout << "Press 'restart' to play again or 'quit' to exit." << std::endl;
+    std::cout << "Press 'restart' to start again or 'quit' to exit." << std::endl;
 }

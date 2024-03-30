@@ -50,12 +50,12 @@ void Bag::shuffle() {
     std::ranges::shuffle(bag, g);
 }
 
-Tetromino& Bag::getNext() {
+Tetromino Bag::getNext() {
     if (bag.size() <= 0) {
         addTetrominosToBag();
         shuffle();
     }
-    Tetromino&next = bag.front();
+    Tetromino next = Tetromino(bag.front());
     bag.erase(bag.begin());
     return next;
 }

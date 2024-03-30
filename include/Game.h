@@ -30,7 +30,7 @@ private:
     void initializeCommands();
 public:
     Game(int width, int height, int difficulty, int startLevel, int targetLine, int targetTime, int targetScore);
-    void play();
+    void start();
     void moveActiveTetromino(Direction2D direction);
     void rotateActiveTetromino(Rotation rotation);
     void dropActiveTetromino();

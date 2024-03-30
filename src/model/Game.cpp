@@ -8,6 +8,9 @@ Game::Game(const int width, const int height, const int difficulty, const int st
            const int targetScore) : board(width, height, difficulty), bag(Bag::getInstance()), currentScore(0),
                                     currentLevel(startLevel), currentLine(0), currentTime(0), targetLine(targetLine),
                                     targetTime(targetTime), targetScore(targetScore), gameOver(false) {
+    if (width < 10 || height < 10 || difficulty < 1 || startLevel < 1 || targetLine < 1 || targetTime < 1 || targetScore < 1) {
+        throw std::invalid_argument("Invalid argument");
+    }
 }
 
 
@@ -25,11 +28,9 @@ void Game::removeObserver(const int pos) {
     observers.erase(observers.begin() + pos);
 }
 
-void Game::play() {
-    while (!gameOver) {
-        board.addTetromino(bag.getNext());
-        notifyObservers();
-    }
+void Game::start() {
+    board.addTetromino(bag.getNext());
+    notifyObservers();
 }
 
 void Game::moveActiveTetromino(Direction2D direction) {
@@ -49,6 +50,8 @@ void Game::moveActiveTetromino(Direction2D direction) {
                 updateScore(linesCleared, 0);
                 board.addTetromino(bag.getNext());
             }
+        } catch (const std::runtime_error&) {
+            // nop
         }
     }
     notifyObservers();
@@ -64,26 +67,43 @@ void Game::rotateActiveTetromino(const Rotation rotation) {
             // nop
         } catch (const std::invalid_argument&) {
             // nop
+        } catch (const std::runtime_error&) {
+            // nop
         }
     }
     notifyObservers();
 }
 
 void Game::dropActiveTetromino() {
-    int dropDistance = 0;
+    if (!gameOver) {
+        try {
+            int dropDistance = 0;
 
-    while (true) {
-        auto originalPosition = board.getActiveTetromino().get_ref_position();
+            while (true) {
+                auto originalPosition = board.getActiveTetromino().get_ref_position();
 
-        board.moveActiveTetromino(Direction::DOWN);
-        if (originalPosition == board.getActiveTetromino().get_ref_position()) {
-            break;
+                board.moveActiveTetromino(Direction::DOWN);
+                if (originalPosition == board.getActiveTetromino().get_ref_position()) {
+                    break;
+                }
+                dropDistance++;
+            }
+            int linesCleared = board.removeCompleteLines();
+            updateScore(linesCleared, dropDistance);
+            board.addTetromino(bag.getNext());
         }
-        dropDistance++;
+        catch (const std::out_of_range&) {
+            int linesCleared = board.removeCompleteLines();
+            updateScore(linesCleared, 0);
+            board.addTetromino(bag.getNext());
+        } catch (const std::invalid_argument&) {
+            int linesCleared = board.removeCompleteLines();
+            updateScore(linesCleared, 0);
+            board.addTetromino(bag.getNext());
+        } catch (const std::runtime_error&) {
+            // nop
+        }
     }
-    int linesCleared = board.removeCompleteLines();
-    updateScore(linesCleared, dropDistance);
-    board.addTetromino(bag.getNext());
     notifyObservers();
 }
 
@@ -147,5 +167,5 @@ void Game::restartGame() {
 
 void Game::startGame() {
     gameOver = false;
-    play();
+    start();
 }

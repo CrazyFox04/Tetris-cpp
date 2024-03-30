@@ -43,7 +43,7 @@ void Board::initialize(int difficulty) {
     }
 }
 
-void Board::addTetromino(Tetromino&tetromino) {
+void Board::addTetromino(Tetromino tetromino) {
     int dy = 0;
     while (isOutside(tetromino)) {
         tetromino.move(Direction::DOWN.first, Direction::DOWN.second);
