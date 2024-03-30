@@ -130,3 +130,7 @@ Board const& Game::getBoard() const {
 Bag const& Game::getBag() const {
     return bag;
 }
+
+bool Game::isGameOver() const {
+    return gameOver;
+}

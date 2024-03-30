@@ -2,8 +2,8 @@
 // Created by Enzo Renard on 05/03/2024.
 //
 
-#ifndef GAMECONTROLER_H
-#define GAMECONTROLER_H
+#ifndef GAMECONTROLLER_H
+#define GAMECONTROLLER_H
 
 #include "Direction.h"
 #include "Board.h"
@@ -28,5 +28,7 @@ public:
     virtual Board const& getBoard() const = 0;
 
     virtual Bag const& getBag() const = 0;
+
+    virtual bool isGameOver() const = 0;
 };
-#endif //GAMECONTROLER_H
+#endif //GAMECONTROLLER_H

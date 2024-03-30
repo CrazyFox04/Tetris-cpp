@@ -43,6 +43,7 @@ public:
     int getLevel() const override;
     Board const & getBoard() const override;
     Bag const & getBag() const override;
+    bool isGameOver() const override;
 };
 
 
