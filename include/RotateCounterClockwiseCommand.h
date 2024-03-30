@@ -1,5 +1,5 @@
-#ifndef ROTATECLOCKWISECOMMAND_H
-#define ROTATECLOCKWISECOMMAND_H
+#ifndef ROTATECOUNTERCLOCKWISECOMMAND_H
+#define ROTATECOUNTERCLOCKWISECOMMAND_H
 #include "Command.h"
 #include "GameController.h"
 
@@ -10,4 +10,4 @@ public:
     void execute() override;
 };
 
-#endif //ROTATECLOCKWISECOMMAND_H
+#endif //ROTATECOUNTERCLOCKWISECOMMAND_H

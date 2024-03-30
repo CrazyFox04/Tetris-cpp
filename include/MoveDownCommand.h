@@ -2,8 +2,8 @@
 // Created by Enzo Renard on 05/03/2024.
 //
 
-#ifndef ROTATECLOCKWISECOMMAND_H
-#define ROTATECLOCKWISECOMMAND_H
+#ifndef MOVEDOWNCOMMAND_H
+#define MOVEDOWNCOMMAND_H
 #include "Command.h"
 #include "GameController.h"
 
@@ -13,4 +13,4 @@ public:
     explicit MoveDownCommand(GameController& gameController);
     void execute() override;
 };
-#endif //ROTATECLOCKWISECOMMAND_H
+#endif //MOVEDOWNCOMMAND_H
