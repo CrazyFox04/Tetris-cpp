@@ -19,5 +19,7 @@ BagView bagView;
 public:
     explicit GameView(const Game& game);
     void draw();
+    void displayMenu();
+    void displayGameOver();
 };
 #endif //GAMEVIEW_H
