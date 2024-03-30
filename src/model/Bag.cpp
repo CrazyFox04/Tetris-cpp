@@ -57,6 +57,10 @@ Tetromino Bag::getNext() {
     }
     Tetromino next = Tetromino(bag.front());
     bag.erase(bag.begin());
+    if (bag.size() <= 0) {
+        addTetrominosToBag();
+        shuffle();
+    }
     return next;
 }
 
