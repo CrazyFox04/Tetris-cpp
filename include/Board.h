@@ -19,6 +19,7 @@ private:
     void moveLinesDown(int line);
     void clearOccupiedForActiveTetromino();
     bool isOutside(Tetromino& tetromino) const;
+    void setOccupiedActiveTetromino();
 
 public:
     Board();

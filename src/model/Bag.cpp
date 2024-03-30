@@ -14,7 +14,7 @@ Bag::Bag() {
     possibleTetrominos.emplace_back(Tetromino{
         2, Position(0, 0), {Position(0, 0), Position(1, 0), Position(0, 1), Position(1, 1)}
     }); // O
-    possibleTetrominos.emplace_back(Tetromino{
+    /*possibleTetrominos.emplace_back(Tetromino{
         3, Position(0, 0), {Position(-1, 0), Position(0, 0), Position(1, 0), Position(0, 1)}
     }); // T
     possibleTetrominos.emplace_back(Tetromino{
@@ -29,7 +29,7 @@ Bag::Bag() {
     possibleTetrominos.emplace_back(Tetromino{
         7, Position(0, 0), {Position(1, -1), Position(-1, 0), Position(0, 0), Position(1, 0)}
     }); // L
-
+*/
     //TODO: Ajouter les tétrominos customs dans possibleTetrominos
 
     // Copier les tétriminos possibles dans le sac
