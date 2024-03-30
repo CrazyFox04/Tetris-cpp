@@ -8,7 +8,7 @@
 
 class ApplicationTetris {
     Game game;
-    GameController* gameController;
+    std::unique_ptr<GameController> gameController;
     Invoker invoker;
     GameView gameView;
 

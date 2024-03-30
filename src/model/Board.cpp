@@ -254,3 +254,7 @@ void Board::clearOccupiedForActiveTetromino() {
         occupied[absY][absX] = false;
     }
 }
+
+void Board::clear() {
+    initialize(1);
+}

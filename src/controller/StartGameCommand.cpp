@@ -3,10 +3,10 @@
 //
 #include "StartGameCommand.h"
 
-StartGameCommand::StartGameCommand(GameController& controller, Invoker invoker)
+StartGameCommand::StartGameCommand(GameController& controller, Invoker& invoker)
                     : gameController(controller), invoker(invoker) {}
 
 void StartGameCommand::execute() {
-    gameController.startGame();
     invoker.setState(GameState::PLAYING);
+    gameController.startGame();
 }

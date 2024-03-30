@@ -30,5 +30,9 @@ public:
     virtual Bag const& getBag() const = 0;
 
     virtual bool isGameOver() const = 0;
+
+    virtual void restartGame() = 0;
+
+    virtual void startGame() = 0;
 };
 #endif //GAMECONTROLLER_H

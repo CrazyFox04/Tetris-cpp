@@ -44,6 +44,8 @@ public:
     Board const & getBoard() const override;
     Bag const & getBag() const override;
     bool isGameOver() const override;
+    void restartGame() override;
+    void startGame() override;
 };
 
 

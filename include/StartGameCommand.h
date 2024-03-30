@@ -12,7 +12,7 @@ class StartGameCommand : public Command {
     GameController& gameController;
     Invoker& invoker;
 public:
-    explicit StartGameCommand(GameController& gameController, Invoker& invoker);
+    StartGameCommand(GameController& gameController, Invoker& invoker);
     void execute() override;
 };
 

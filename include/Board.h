@@ -37,6 +37,7 @@ public:
     int getHeight() const;
     const std::vector<std::vector<bool>> getOccupied() const;
     Position getRefPosition() const;
+    void clear();
 };
 
 #endif //TETRIS_DEV4_PROJET_BOARD_H

@@ -10,7 +10,7 @@ void BoardView::drawBoard(const Board &board) {
     displayBoard(boardGame);
 }
 
-std::vector<std::vector<char>> initializeBoard(int width, int height) {
+std::vector<std::vector<char>> BoardView::initializeBoard(int width, int height) {
     return std::vector<std::vector<char>>(height, std::vector<char>(width, ' '));
 }
 
