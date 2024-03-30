@@ -12,7 +12,9 @@
 #include "QuitGameCommand.h"
 #include "RestartGameCommand.h"
 
-ApplicationTetris::ApplicationTetris() : game(20, 10, 1, 1, 100, 600, 100000), gameController(std::unique_ptr<Game>(std::make_unique<Game>(Game(20, 10, 1, 1, 100, 600, 100000)))), gameView(game){
+ApplicationTetris::ApplicationTetris() : game(20, 10, 1, 1, 100, 600, 100000),
+                                            gameController(std::unique_ptr<Game>(std::make_unique<Game>(Game(20, 10, 1, 1, 100, 600, 100000)))),
+                                            gameView(*gameController) {
     initializeCommands();
 }
 
