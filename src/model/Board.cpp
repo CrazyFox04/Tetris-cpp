@@ -13,7 +13,7 @@ Board::Board() : Board(10, 20, 1) {
 }
 
 Board::Board(const int w, const int h, const int difficulty)
-    : width(w), height(h), occupied(h, std::vector<bool>(w, false)), gameOver(false) {
+    : width(w), height(h), gameOver(false), occupied(h, std::vector<bool>(w, false)) {
     refPosition = Position(width / 2 - 1, 0);
     for (const auto&available_tetromino: Bag::getInstance().getAvailableTetrominos()) {
         if (available_tetromino.get_height() >= h / 2.0 || available_tetromino.get_length() >= w / 2.0) {

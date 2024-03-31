@@ -6,20 +6,24 @@
 #define GAMEVIEW_H
 
 #include "Observer.h"
+#include "GameController.h"
 #include "BoardView.h"
 #include "BagView.h"
-#include "Game.h"
 #include <iostream>
 
 class GameView {
-const GameController& controller;
-BoardView boardView;
-BagView bagView;
+    const GameController &controller;
+    BoardView boardView;
+    BagView bagView;
 
 public:
-    explicit GameView(const GameController& controller_);
+    explicit GameView(const GameController &controller_);
+
     void draw();
+
     void displayMenu();
+
     void displayGameOver();
 };
+
 #endif //GAMEVIEW_H
