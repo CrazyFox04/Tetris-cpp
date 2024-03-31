@@ -72,7 +72,6 @@ void Game::rotateActiveTetromino(const Rotation rotation) {
     if (!isGameOver() && !isWinner()) {
         try {
             board.rotateActiveTetromino(rotation);
-            moveActiveTetromino(Direction::DOWN);
         }
         catch (const std::out_of_range &) {
             int linesCleared = board.removeCompleteLines();
