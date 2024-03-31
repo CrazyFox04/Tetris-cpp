@@ -86,8 +86,7 @@ public:
     void moveActiveTetromino(Direction2D direction);
 
     /**
-    * Rotates the active tetromino.
-    * Automatically attempts to move the tetromino downwards after rotation.
+    * Rotates the active tetromino in the specified direction.
     * @param rotation The direction of rotation.
     */
     void rotateActiveTetromino(Rotation rotation);
