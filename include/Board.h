@@ -6,6 +6,8 @@
 #include "Direction.h"
 
 /**
+ * @class Board
+ * @brief Board class
  * Tetromino Board used in a Tetris game.
  */
 class Board {

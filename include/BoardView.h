@@ -11,6 +11,7 @@
 #include <map>
 
 /**
+ * @class BoardView
  * @brief The BoardView class
  * This class is responsible for drawing the board game.
  */

@@ -5,12 +5,14 @@
 #include "Tetromino.h"
 
 /**
- * Tetromino bag used in a Tetris game.
+ * @class Bag
+ * @brief Tetromino bag used in a Tetris game.
+ *
  * Keep a single instance of the bag and provide the next Tetromino to be used.
  * It cannot be empty, so it will be refilled when it is empty.
  */
 class Bag {
-    static Bag* instance; //!< Singleton instance of the bag
+    static Bag * instance; //!< Singleton instance of the bag
     std::vector<Tetromino> possibleTetrominos; //!< All possible Tetrominos that can be in the bag
     std::vector<Tetromino> bag; //!< Tetrominos that are in the bag
 

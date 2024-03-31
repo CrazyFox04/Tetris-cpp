@@ -11,7 +11,9 @@
 #include <algorithm>
 
 /**
- * @brief The BagView class
+ * @class BagView
+ * @brief Displays the next tetromino in the bag.
+ *
  * This class is responsible for drawing the next tetromino in the bag.
  */
 class BagView {
