@@ -21,7 +21,6 @@ class Game : public Observable, public GameController {
     int targetLine;
     int targetTime;
     int targetScore;
-    bool gameOver;
 
 private:
     void updateScore(int linesCleared, int dropDistance);
@@ -30,7 +29,8 @@ private:
     void initializeCommands();
 public:
     Game(int width, int height, int difficulty, int startLevel, int targetLine, int targetTime, int targetScore);
-    void play();
+    void start() override;
+    void restart() override;
     void moveActiveTetromino(Direction2D direction);
     void rotateActiveTetromino(Rotation rotation);
     void dropActiveTetromino();
@@ -43,6 +43,8 @@ public:
     int getLevel() const override;
     Board const & getBoard() const override;
     Bag const & getBag() const override;
+    bool isGameOver() const override;
+    bool isWinner() const override;
 };
 
 

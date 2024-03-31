@@ -39,14 +39,14 @@ TEST(Position, subtraction_assignment) {
 TEST(Position, addition_unmodified) {
     Position p(1, 2);
     Direction2D d(3, 4);
-    Position p2 = p + d;
+    p + d;
     ASSERT_EQ(p.get_x(), 1);
     ASSERT_EQ(p.get_y(), 2);
 }
 TEST(Position, subtraction_unmodified) {
     Position p(1, 2);
     Direction2D d(3, 4);
-    Position p2 = p - d;
+    p - d;
     ASSERT_EQ(p.get_x(), 1);
     ASSERT_EQ(p.get_y(), 2);
 }

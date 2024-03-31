@@ -50,7 +50,8 @@ private:
      * @param tetromino tetromino to check cells
      * @return true if at least one cells is outside, false otherwise
      */
-    bool isOutside(Tetromino&tetromino) const;
+    bool isOutside(Tetromino& tetromino) const;
+    void setOccupiedActiveTetromino();
 
 public:
     /**
@@ -68,11 +69,12 @@ public:
      * @throw std::invalid_argument if the board is not large or higher enough
      */
     Board(int width, int height, int difficulty); // difficulty will determinate the percentage of occupied cells
+
     /**
      * Add a tetromino to the Board
      * @param tetromino
      */
-    void addTetromino(Tetromino&tetromino);
+    void addTetromino(Tetromino tetromino);
 
     void moveActiveTetromino(Direction2D direction);
 
@@ -99,6 +101,7 @@ public:
     const std::vector<std::vector<bool>> getOccupied() const;
 
     Position getRefPosition() const;
+    void clear();
 };
 
 #endif //TETRIS_DEV4_PROJET_BOARD_H

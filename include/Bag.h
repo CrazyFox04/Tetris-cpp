@@ -62,7 +62,7 @@ public:
      * When the bag is empty, it will be refilled and shuffled.
      * @return next Tetromino in the bag
      */
-    Tetromino& getNext();
+    Tetromino getNext();
 
     /**
      * Get the next Tetromino in the bag without removing it.

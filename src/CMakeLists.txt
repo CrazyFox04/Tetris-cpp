@@ -16,7 +16,7 @@ add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(
         ${PROJECT_NAME} PRIVATE
         tetris_model
+        tetris_controller
         tetris_view
         tetris_tools
-        tetris_controller
 )

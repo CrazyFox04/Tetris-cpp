@@ -1,6 +1,6 @@
-#include <iostream>
+#include "ApplicationTetris.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+    ApplicationTetris app;
+    app.run();
 }

@@ -10,6 +10,7 @@ set(TEST_SOURCES
         testMain.cpp
         Bag.cpp
         Board.cpp
+        Game.cpp
         Position.cpp
         Tetromino.cpp
         # MoveCommandTest.cpp

@@ -6,18 +6,24 @@
 #define GAMEVIEW_H
 
 #include "Observer.h"
+#include "GameController.h"
 #include "BoardView.h"
 #include "BagView.h"
-#include "Game.h"
 #include <iostream>
 
 class GameView {
-const Game& game; //For now we will use the game to get the infos. Later we will use a facade
-BoardView boardView;
-BagView bagView;
+    const GameController &controller;
+    BoardView boardView;
+    BagView bagView;
 
 public:
-    explicit GameView(const Game& game);
+    explicit GameView(const GameController &controller_);
+
     void draw();
+
+    void displayMenu();
+
+    void displayGameOver();
 };
+
 #endif //GAMEVIEW_H
