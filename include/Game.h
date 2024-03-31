@@ -30,7 +30,8 @@ private:
     void initializeCommands();
 public:
     Game(int width, int height, int difficulty, int startLevel, int targetLine, int targetTime, int targetScore);
-    void start();
+    void start() override;
+    void restart() override;
     void moveActiveTetromino(Direction2D direction);
     void rotateActiveTetromino(Rotation rotation);
     void dropActiveTetromino();
@@ -44,8 +45,6 @@ public:
     Board const & getBoard() const override;
     Bag const & getBag() const override;
     bool isGameOver() const override;
-    void restartGame() override;
-    void startGame() override;
 };
 
 

@@ -8,5 +8,5 @@ StartGameCommand::StartGameCommand(GameController& controller, Invoker& invoker)
 
 void StartGameCommand::execute() {
     invoker.setState(GameState::PLAYING);
-    gameController.startGame();
+    gameController.start();
 }

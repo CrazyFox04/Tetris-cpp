@@ -34,6 +34,17 @@ void Game::start() {
     notifyObservers();
 }
 
+void Game::restart() {
+    currentScore = 0;
+    currentLevel = 0;
+    currentLine = 0;
+    currentTime = 0;
+    gameOver = false;
+    board.clear();
+    start();
+    notifyObservers();
+}
+
 void Game::moveActiveTetromino(Direction2D direction) {
     if (!gameOver) {
         try {
@@ -157,19 +168,4 @@ Bag const &Game::getBag() const {
 
 bool Game::isGameOver() const {
     return gameOver;
-}
-
-void Game::restartGame() {
-    currentScore = 0;
-    currentLevel = 0;
-    currentLine = 0;
-    currentTime = 0;
-    gameOver = false;
-    board.clear();
-    notifyObservers();
-}
-
-void Game::startGame() {
-    gameOver = false;
-    start();
 }

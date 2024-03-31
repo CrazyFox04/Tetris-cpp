@@ -13,6 +13,10 @@ class GameController {
 public:
     virtual ~GameController() = default;
 
+    virtual void start() = 0;
+
+    virtual void restart() = 0;
+
     virtual void moveActiveTetromino(Direction2D direction) = 0;
 
     virtual void rotateActiveTetromino(Rotation rotation) = 0;
@@ -30,9 +34,5 @@ public:
     virtual Bag const& getBag() const = 0;
 
     virtual bool isGameOver() const = 0;
-
-    virtual void restartGame() = 0;
-
-    virtual void startGame() = 0;
 };
 #endif //GAMECONTROLLER_H
