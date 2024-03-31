@@ -10,7 +10,7 @@ Bag *Bag::instance;
 
 Bag::Bag() {
     possibleTetrominos.emplace_back(Tetromino{
-            1, Position(0, 1), {Position(-2, 0), Position(-1, 0), Position(0, 0), Position(1, 0)}
+            1, Position(0, 0), {Position(-2, 0), Position(0, 0), Position(-1, 0), Position(1, 0)}
     }); // I
     possibleTetrominos.emplace_back(Tetromino{
             2, Position(0, 0), {Position(0, 0), Position(1, 0), Position(0, 1), Position(1, 1)}
