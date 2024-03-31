@@ -18,7 +18,7 @@ class Board {
 
 private:
     /**
-     * \brief Initialize the board with a given difficulty.
+     * \brief Initializes the board with a given difficulty.
      *
      * The board will be filled with occupied cells based on the difficulty.
      * The number of lines filled will be the difficulty percentage of the height.
@@ -27,7 +27,7 @@ private:
     void initialize(int difficulty = 1);
 
     /**
-     * \brief Clear a line of the board.
+     * \brief Clears a line of the board.
      *
      * Keep update the occupied and Tetrominos cells
      * @param line line number (y-axis)
@@ -35,18 +35,18 @@ private:
     void clearLine(int line);
 
     /**
-     * Move Direction::DOWN every lines of the board
+     * Moves Direction::DOWN every lines of the board
      * @param line number of lines to push down
      */
     void moveLinesDown(int line);
 
     /**
-     * Clear the occupied vector of the active tetromino'cells positions
+     * Clears the occupied vector of the active tetromino'cells positions
      */
     void clearOccupiedForActiveTetromino();
 
     /**
-     * Check if tetromino's cells are in the board
+     * Checks if tetromino's cells are in the board
      * @param tetromino tetromino to check cells
      * @return true if at least one cells is outside, false otherwise
      */
@@ -55,7 +55,7 @@ private:
 
 public:
     /**
-     * Cronstruct a 10 by 20 board with a difficulty of 20
+     * Constructs a 10 by 20 board with a difficulty of 20
      * \see Board(int, int, int);
      */
     Board();
@@ -71,36 +71,98 @@ public:
     Board(int width, int height, int difficulty); // difficulty will determinate the percentage of occupied cells
 
     /**
-     * Add a tetromino to the Board
-     * @param tetromino
+     * Adds a tetromino to the Board
+     * @param tetromino tetromino to add
      */
     void addTetromino(Tetromino tetromino);
 
+    /**
+     * Moves the active tetromino in the given direction
+     * @param direction direction to move the active tetromino. DOWN, LEFT or RIGHT
+     */
     void moveActiveTetromino(Direction2D direction);
 
+    /**
+     * Rotates the active tetromino in the given direction
+     * @param rotation rotation to apply to the active tetromino. CLOCKWISE or COUNTERCLOCKWISE
+     */
     void rotateActiveTetromino(Rotation rotation);
 
+    /**
+     * Checks if a given position is outside the board
+     * @param row to check
+     * @param column to check
+     * @return true if the position is outside the board, false otherwise
+     */
     bool isOutside(int row, int column) const;
 
+    /**
+     * Checks the value of the occupied vector at a given position
+     * @param row to check
+     * @param column to check
+     * @return the value of the occupied vector at the given position
+     */
     bool isOccupied(int row, int column) const;
 
+    /**
+     * Checks if a line of the board is full of tetromino's blocks
+     * @param line the line to check
+     * @return false if at least one column of the line is not occupied, true otherwise
+     */
     bool isLineComplete(int line) const;
 
+    /**
+     * Deletes all completed lines of the board and moves down the upper lines
+     * @return the number of lines deleted
+     */
     int removeCompleteLines();
 
+    /**
+     * Checks if the game is over
+     * @return true if the game is over, false otherwise
+     */
     bool isGameOver() const;
 
+    /**
+     * Getter for the active tetromino
+     * @return a reference to the active tetromino
+     */
     Tetromino& getActiveTetromino();
 
+    /**
+     * Getter for the tetrominos placed on the board
+     * @return a const copy of the tetrominos vector
+     */
     const std::vector<Tetromino> getTetrominos() const;
 
+    /**
+     * Getter for the width of the board
+     * @return the width of the board
+     */
     int getWidth() const;
 
+    /**
+     * Getter for the height of the board
+     * @return the height of the board
+     */
     int getHeight() const;
 
+    /**
+     * Getter for the occupied vector
+     * @return a const copy of the occupied vector
+     */
     const std::vector<std::vector<bool>> getOccupied() const;
 
+    /**
+     * Getter for the reference position of the board
+     * @return the reference position of the board
+     */
     Position getRefPosition() const;
+
+    /**
+     * Prepare the board for a new game.
+     * set game over to false, clear the board and initialize it.
+     */
     void clear();
 };
 
