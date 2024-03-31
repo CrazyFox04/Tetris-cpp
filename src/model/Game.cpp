@@ -75,11 +75,13 @@ void Game::rotateActiveTetromino(const Rotation rotation) {
             moveActiveTetromino(Direction::DOWN);
         }
         catch (const std::out_of_range &) {
-            // nop
+            int linesCleared = board.removeCompleteLines();
+            updateScore(linesCleared, 0);
+            board.addTetromino(bag.getNext());
         } catch (const std::invalid_argument &) {
-            // nop
-        } catch (const std::runtime_error &) {
-            // nop
+            int linesCleared = board.removeCompleteLines();
+            updateScore(linesCleared, 0);
+            board.addTetromino(bag.getNext());
         }
     }
     notifyObservers();
