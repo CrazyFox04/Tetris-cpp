@@ -21,7 +21,6 @@ class Game : public Observable, public GameController {
     int targetLine;
     int targetTime;
     int targetScore;
-    bool gameOver;
 
 private:
     void updateScore(int linesCleared, int dropDistance);
@@ -45,6 +44,7 @@ public:
     Board const & getBoard() const override;
     Bag const & getBag() const override;
     bool isGameOver() const override;
+    bool isWinner() const override;
 };
 
 

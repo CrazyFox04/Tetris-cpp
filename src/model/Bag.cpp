@@ -14,7 +14,7 @@ Bag::Bag() {
     possibleTetrominos.emplace_back(Tetromino{
         2, Position(0, 0), {Position(0, 0), Position(1, 0), Position(0, 1), Position(1, 1)}
     }); // O
-    /*possibleTetrominos.emplace_back(Tetromino{
+    possibleTetrominos.emplace_back(Tetromino{
         3, Position(0, 0), {Position(-1, 0), Position(0, 0), Position(1, 0), Position(0, 1)}
     }); // T
     possibleTetrominos.emplace_back(Tetromino{
@@ -29,7 +29,6 @@ Bag::Bag() {
     possibleTetrominos.emplace_back(Tetromino{
         7, Position(0, 0), {Position(1, -1), Position(-1, 0), Position(0, 0), Position(1, 0)}
     }); // L
-*/
     //TODO: Ajouter les tétrominos customs dans possibleTetrominos
 
     // Copier les tétriminos possibles dans le sac
@@ -48,6 +47,12 @@ void Bag::shuffle() {
     static std::random_device rd;
     static std::mt19937 g(rd());
     std::ranges::shuffle(bag, g);
+    for (auto &tetro: bag) {
+        int rotateTimes = rd() % 4;
+        for (int i = 0; i < rotateTimes; i++) {
+            tetro.rotateClockwise();
+        }
+    }
 }
 
 Tetromino Bag::getNext() {

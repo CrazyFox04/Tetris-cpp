@@ -7,7 +7,7 @@ Game::Game(const int width, const int height, const int difficulty, const int st
            const int targetTime,
            const int targetScore) : board(width, height, difficulty), bag(Bag::getInstance()), currentScore(0),
                                     currentLevel(startLevel), currentLine(0), currentTime(0), targetLine(targetLine),
-                                    targetTime(targetTime), targetScore(targetScore), gameOver(false) {
+                                    targetTime(targetTime), targetScore(targetScore) {
     if (width < 10 || height < 10 || difficulty < 1 || startLevel < 1 || targetLine < 1 || targetTime < 1 ||
         targetScore < 1) {
         throw std::invalid_argument("Invalid argument");
@@ -39,14 +39,13 @@ void Game::restart() {
     currentLevel = 0;
     currentLine = 0;
     currentTime = 0;
-    gameOver = false;
     board.clear();
     start();
     notifyObservers();
 }
 
 void Game::moveActiveTetromino(Direction2D direction) {
-    if (!gameOver) {
+    if (!isGameOver() && !isWinner()) {
         try {
             board.moveActiveTetromino(direction);
         }
@@ -70,7 +69,7 @@ void Game::moveActiveTetromino(Direction2D direction) {
 }
 
 void Game::rotateActiveTetromino(const Rotation rotation) {
-    if (!gameOver) {
+    if (!isGameOver() && !isWinner()) {
         try {
             board.rotateActiveTetromino(rotation);
             moveActiveTetromino(Direction::DOWN);
@@ -87,7 +86,7 @@ void Game::rotateActiveTetromino(const Rotation rotation) {
 }
 
 void Game::dropActiveTetromino() {
-    if (!gameOver) {
+    if (!isGameOver() && !isWinner()) {
         int dropDistance = 0;
         try {
             while (true) {
@@ -106,9 +105,6 @@ void Game::dropActiveTetromino() {
         } catch (const std::runtime_error &) {
             // nop
         }
-        int linesCleared = board.removeCompleteLines();
-        updateScore(linesCleared, dropDistance);
-        board.addTetromino(bag.getNext());
     }
     notifyObservers();
 }
@@ -119,11 +115,6 @@ void Game::updateScore(const int linesCleared, const int dropDistance) {
     }
     currentLine += linesCleared;
     currentScore += getPoints(linesCleared, dropDistance);
-    notifyObservers();
-}
-
-void Game::updateLevel() {
-    currentLevel++;
     notifyObservers();
 }
 
@@ -167,5 +158,18 @@ Bag const &Game::getBag() const {
 }
 
 bool Game::isGameOver() const {
-    return gameOver;
+    return board.isGameOver();
+}
+
+bool Game::isWinner() const {
+    if (targetLine <= currentLine) {
+        return true;
+    }
+    if (targetScore <= currentScore) {
+        return true;
+    }
+    if (targetTime <= currentTime) {
+       return true;
+    }
+    return false;
 }

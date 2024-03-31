@@ -34,5 +34,7 @@ public:
     virtual Bag const& getBag() const = 0;
 
     virtual bool isGameOver() const = 0;
+
+    virtual bool isWinner() const = 0;
 };
 #endif //GAMECONTROLLER_H

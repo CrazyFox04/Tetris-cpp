@@ -265,5 +265,10 @@ void Board::clearOccupiedForActiveTetromino() {
 }
 
 void Board::clear() {
+    gameOver = false;
+    tetrominos.clear();
+    for (auto&row: occupied) {
+        std::fill(row.begin(), row.end(), false);
+    }
     initialize(1);
 }
