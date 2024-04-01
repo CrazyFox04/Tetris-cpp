@@ -36,7 +36,6 @@ void Game::restart() {
     currentLevel = 1;
     currentLine = 0;
     currentTime = 0;
-    Game(20, 10, 1, 1, 100, 600, 100000);
     start();
     notifyObservers();
 }
