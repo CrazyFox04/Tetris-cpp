@@ -1,6 +1,3 @@
-//
-// Created by Enzo Renard on 06/03/2024.
-//
 #include "Tetromino.h"
 
 Tetromino::Tetromino(const int id, const Position center, std::vector<Position> cells) : id(id), refPosition(center),

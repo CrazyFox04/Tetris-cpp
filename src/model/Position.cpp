@@ -1,6 +1,3 @@
-//
-// Created by Enzo Renard on 05/03/2024.
-//
 #include "Position.h"
 #include "Direction.h"
 #include <utility>

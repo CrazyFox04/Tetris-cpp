@@ -15,7 +15,7 @@ set(SOURCES
         ApplicationTetris.cpp
         StartGameCommand.cpp
         RestartGameCommand.cpp
-        QuiteGameCommand.cpp
+        QuitGameCommand.cpp
 )
 
 # Create the model library that public can use

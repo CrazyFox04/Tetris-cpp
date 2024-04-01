@@ -1,9 +1,4 @@
-//
-// Created by Julien Delcombel on 07/03/2024.
-//
-
 #include "Board.h"
-#include "Direction.h"
 #include "Bag.h"
 #include <random>
 #include <algorithm>
@@ -121,15 +116,16 @@ void Board::rotateActiveTetromino(const Rotation rotation) {
     else {
         activeTetromino.rotateCounterClockwise();
     }
+    // TODO: Methode privée?
     // Vérifier si la rotation est valide
-    for (const auto&cell: activeTetromino.get_relative_cells()) {
+    for (const auto& cell: activeTetromino.get_relative_cells()) {
         int absX = cell.get_x() + refPosition.get_x();
         int absY = cell.get_y() + refPosition.get_y();
         if (isOccupied(absY, absX)) {
             activeTetromino.set_relative_cells(originalCells);
-            for (const auto&cell: originalCells) {
-                int absX = cell.get_x() + activeTetromino.get_ref_position().get_x();
-                int absY = cell.get_y() + activeTetromino.get_ref_position().get_y();
+            for (const auto& c : originalCells) {
+                int absX = c.get_x() + activeTetromino.get_ref_position().get_x();
+                int absY = c.get_y() + activeTetromino.get_ref_position().get_y();
                 occupied[absY][absX] = true;
             }
             throw std::invalid_argument("The new position (" + std::to_string(absX) + ";" + std::to_string(absY) +
@@ -137,9 +133,9 @@ void Board::rotateActiveTetromino(const Rotation rotation) {
         }
         if (isOutside(absY, absX)) {
             activeTetromino.set_relative_cells(originalCells);
-            for (const auto&cell: originalCells) {
-                int absX = cell.get_x() + activeTetromino.get_ref_position().get_x();
-                int absY = cell.get_y() + activeTetromino.get_ref_position().get_y();
+            for (const auto& c: originalCells) {
+                int absX = c.get_x() + activeTetromino.get_ref_position().get_x();
+                int absY = c.get_y() + activeTetromino.get_ref_position().get_y();
                 occupied[absY][absX] = true;
             }
             throw std::out_of_range("The new position (" + std::to_string(absX) + ";" + std::to_string(absY) +
@@ -191,7 +187,7 @@ void Board::clearLine(int line) {
         occupied[line][j] = false;
     }
 
-    for (auto&tetro: tetrominos) {
+    for (auto& tetro: tetrominos) {
         std::vector<Position> cells = tetro.get_relative_cells();
         cells.erase(std::remove_if(cells.begin(), cells.end(), [line](const Position&pos) {
                         return pos.get_y() == line;

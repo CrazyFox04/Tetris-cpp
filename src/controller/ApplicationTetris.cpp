@@ -21,12 +21,16 @@ ApplicationTetris::ApplicationTetris() : game(20, 10, 1, 1, 100, 600, 100000),
 void ApplicationTetris::run() {
     invoker.setState(GameState::MAIN_MENU);
     gameView.displayMenu();
+    while (true) {
 
     while (!gameController->isGameOver()) {
         handleInput();
         gameView.draw();
     }
+    invoker.setState(GameState::GAME_OVER);
     gameView.displayGameOver();
+    handleInput();
+    }
 }
 
 void ApplicationTetris::initializeCommands() {
@@ -47,6 +51,7 @@ void ApplicationTetris::handleInput() {
     try {
         invoker.execute(input);
     } catch (const std::runtime_error& e) {
+        std::cout << e.what() << std::endl;
         handleInput();
     }
 }

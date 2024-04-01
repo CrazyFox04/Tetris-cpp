@@ -1,6 +1,3 @@
-//
-// Created by Julien Delcombel on 07/03/2024.
-//
 #include "Bag.h"
 #include <random>
 #include <algorithm>
@@ -30,9 +27,7 @@ Bag::Bag() {
     possibleTetrominos.emplace_back(Tetromino{
             7, Position(0, 0), {Position(1, -1), Position(-1, 0), Position(0, 0), Position(1, 0)}
     }); // L
-    //TODO: Ajouter les tétrominos customs dans possibleTetrominos
 
-    // Copier les tétriminos possibles dans le sac
     addTetrominosToBag();
     shuffle();
 }
@@ -49,7 +44,7 @@ void Bag::shuffle() {
     static std::mt19937 g(rd());
     std::ranges::shuffle(bag, g);
     for (auto &tetro: bag) {
-        int rotateTimes = rd() % 4;
+        auto rotateTimes = rd() % 4;
         for (int i = 0; i < rotateTimes; i++) {
             tetro.rotateClockwise();
         }
@@ -57,13 +52,13 @@ void Bag::shuffle() {
 }
 
 Tetromino Bag::getNext() {
-    if (bag.size() <= 0) {
+    if (bag.empty()) {
         addTetrominosToBag();
         shuffle();
     }
     Tetromino next = Tetromino(bag.front());
     bag.erase(bag.begin());
-    if (bag.size() <= 0) {
+    if (bag.empty()) {
         addTetrominosToBag();
         shuffle();
     }
@@ -78,7 +73,7 @@ const Tetromino &Bag::peekNext() const {
 }
 
 int Bag::size() {
-    return bag.size();
+    return static_cast<int>(bag.size());
 }
 
 void Bag::addTetrominosToBag() {
@@ -88,7 +83,7 @@ void Bag::addTetrominosToBag() {
 }
 
 int Bag::getNumberOfTetrominos() const {
-    return possibleTetrominos.size();
+    return static_cast<int>(possibleTetrominos.size());
 }
 
 std::vector<Tetromino> Bag::getAvailableTetrominos() const {

@@ -1,6 +1,3 @@
-//
-// Created by Enzo Renard on 27/03/2024.
-//
 #include "Game.h"
 
 Game::Game(const int width, const int height, const int difficulty, const int startLevel, const int targetLine,
@@ -36,10 +33,10 @@ void Game::start() {
 
 void Game::restart() {
     currentScore = 0;
-    currentLevel = 0;
+    currentLevel = 1;
     currentLine = 0;
     currentTime = 0;
-    board.clear();
+    Game(20, 10, 1, 1, 100, 600, 100000);
     start();
     notifyObservers();
 }
@@ -97,11 +94,11 @@ void Game::dropActiveTetromino() {
         }
         catch (const std::out_of_range &) {
             int linesCleared = board.removeCompleteLines();
-            updateScore(linesCleared, 0);
+            updateScore(linesCleared, dropDistance);
             board.addTetromino(bag.getNext());
         } catch (const std::invalid_argument &) {
             int linesCleared = board.removeCompleteLines();
-            updateScore(linesCleared, 0);
+            updateScore(linesCleared, dropDistance);
             board.addTetromino(bag.getNext());
         } catch (const std::runtime_error &) {
             // nop
