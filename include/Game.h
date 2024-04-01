@@ -83,19 +83,19 @@ public:
     * Handles logic for game continuation or termination based on the move result.
     * @param direction The direction to move the active tetromino.
     */
-    void moveActiveTetromino(Direction2D direction);
+    void moveActiveTetromino(Direction2D direction) override;
 
     /**
     * Rotates the active tetromino in the specified direction.
     * @param rotation The direction of rotation.
     */
-    void rotateActiveTetromino(Rotation rotation);
+    void rotateActiveTetromino(Rotation rotation) override;
 
     /**
     * Drops the active tetromino to the lowest possible position.
     * Calls dropActiveTetromino() until the tetromino can no longer move downwards.
     */
-    void dropActiveTetromino();
+    void dropActiveTetromino() override;
 
     //TODO: necessaire?
     bool isOccupied(int row, int col) const;
