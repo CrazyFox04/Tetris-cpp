@@ -170,13 +170,13 @@ bool Game::isGameOver() const {
 }
 
 bool Game::isWinner() const {
-    if (targetLine < currentLine) {
+    if (targetLine != 0 && targetLine < currentLine) {
         return true;
     }
-    if (targetScore < currentScore) {
+    if (targetScore != 0 && targetScore < currentScore) {
         return true;
     }
-    if (targetTime < currentTime) {
+    if (targetTime != 0 && targetTime < currentTime) {
         return true;
     }
     return false;
