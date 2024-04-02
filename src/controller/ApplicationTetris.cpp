@@ -27,7 +27,11 @@ void ApplicationTetris::run() {
             handleInput();
         }
         invoker.setState(GameState::GAME_OVER);
-        gameView.displayGameOver();
+        if (gameController->isGameOver()) {
+            gameView.displayGameOver();
+        } else {
+            gameView.displayVictory();
+        }
     } while (playerWantToRestart());
     handleInput();
 }
