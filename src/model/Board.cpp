@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <stdexcept>
 
-Board::Board() : Board(10, 20, 1) {
+Board::Board() : Board(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_DIFFICULTY) {
 }
 
 Board::Board(const int w, const int h, const int difficulty)

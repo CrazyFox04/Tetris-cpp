@@ -52,12 +52,26 @@ private:
      * @param tetromino tetromino to check cells
      * @return true if at least one cells is outside, false otherwise
      */
-    bool isOutside(Tetromino& tetromino) const;
+    bool isOutside(Tetromino &tetromino) const;
+
+    /**
+ * For each cell of the active tetromino, set the corresponding cell in the occupied matrix to true.
+ */
     void setOccupiedActiveTetromino();
 
 public:
+    static const int DEFAULT_WIDTH = 10; //!< Default width of the board
+    static const int DEFAULT_HEIGHT = 20; //!< Default height of the board
+    static const int DEFAULT_DIFFICULTY = 1; //!< Default difficulty of the board
+    static const int MIN_DIFFICULTY = 1; //!< Minimum difficulty of the board
+    static const int MAX_DIFFICULTY = 20; //!< Maximum difficulty of the board
+    static const int MIN_BOARD_WIDTH = 10; //!< Minimum width of the board
+    static const int MIN_BOARD_HEIGHT = 10; //!< Minimum height of the board
+    static const int MAX_BOARD_WIDTH = 30; //!< Maximum width of the board
+    static const int MAX_BOARD_HEIGHT = 30; //!< Maximum height of the board
+
     /**
-     * Constructs a 10 by 20 board with a difficulty of 20
+     * Constructs a Board with default width, height and difficulty.
      * \see Board(int, int, int);
      */
     Board();
@@ -129,7 +143,7 @@ public:
      * Getter for the active tetromino
      * @return a reference to the active tetromino
      */
-    Tetromino& getActiveTetromino();
+    Tetromino &getActiveTetromino();
 
     /**
      * Getter for the tetrominos placed on the board

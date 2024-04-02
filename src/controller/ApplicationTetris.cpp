@@ -12,29 +12,37 @@
 #include "QuitGameCommand.h"
 #include "RestartGameCommand.h"
 
-ApplicationTetris::ApplicationTetris() : game(20, 10, 1, 1, 100, 600, 100000),
-                                            gameController(std::unique_ptr<Game>(std::make_unique<Game>(Game(20, 10, 1, 1, 100, 600, 100000)))),
-                                            gameView(*gameController) {
+ApplicationTetris::ApplicationTetris() :
+        gameController(std::unique_ptr<Game>(std::make_unique<Game>(Game()))),
+        gameView(*gameController) {
     initializeCommands();
 }
 
 void ApplicationTetris::run() {
     invoker.setState(GameState::MAIN_MENU);
     gameView.displayMenu();
-    while (true) {
-
-    while (!gameController->isGameOver()) {
-        handleInput();
-        gameView.draw();
-    }
-    invoker.setState(GameState::GAME_OVER);
-    gameView.displayGameOver();
+    do {
+        while (!gameController->isGameOver()) {
+            handleInput();
+            gameView.draw();
+        }
+        invoker.setState(GameState::GAME_OVER);
+        gameView.displayGameOver();
+    } while (playerWantToRestart());
     handleInput();
-    }
+}
+
+bool ApplicationTetris::playerWantToRestart() {
+    std::string input = "";
+    do {
+        input = askUser("Do you want to play another Game ? (y/n)");
+    } while (input != "y" && input != "n");
+    return input == "y";
 }
 
 void ApplicationTetris::initializeCommands() {
-    invoker.registerCommand("start", std::make_unique<StartGameCommand>(*gameController, invoker), GameState::MAIN_MENU);
+    invoker.registerCommand("start", std::make_unique<StartGameCommand>(*gameController, invoker),
+                            GameState::MAIN_MENU);
     invoker.registerCommand("a", std::make_unique<RotateCounterClockwiseCommand>(*gameController), GameState::PLAYING);
     invoker.registerCommand("z", std::make_unique<DropCommand>(*gameController), GameState::PLAYING);
     invoker.registerCommand("e", std::make_unique<RotateClockwiseCommand>(*gameController), GameState::PLAYING);
@@ -50,8 +58,15 @@ void ApplicationTetris::handleInput() {
     std::cin >> input;
     try {
         invoker.execute(input);
-    } catch (const std::runtime_error& e) {
+    } catch (const std::runtime_error &e) {
         std::cout << e.what() << std::endl;
         handleInput();
     }
+}
+
+std::string ApplicationTetris::askUser(std::string question) {
+    std::cout << question << std::endl;
+    std::string input;
+    std::cin >> input;
+    return input;
 }

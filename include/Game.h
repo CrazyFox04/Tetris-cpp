@@ -31,6 +31,14 @@ class Game : public Observable, public GameController {
     int targetLine; ///< Target line to clear.
     int targetTime; ///< Target time limit for the game.
     int targetScore; ///< Target score to achieve.
+    int difficulty; ///< Board's Game difficulty level.
+    bool hasStarted; ///< Flag indicating if the game has started.
+    int boardWidth; ///< Width of the game board.
+    int boardHeight; ///< Height of the game board.
+    static const int START_LEVEL = 1; ///< Default starting level of the game.
+    static const int DEFAULT_TARGET_LINE = 0; ///< Default target line to clear.
+    static const int DEFAULT_TARGET_TIME = 0; ///< Default target time limit.
+    static const int DEFAULT_TARGET_SCORE = 0; ///< Default target score to achieve.
 
 private:
 
@@ -40,7 +48,6 @@ private:
     * @param dropDistance The distance the tetromino dropped.
     */
     void updateScore(int linesCleared, int dropDistance);
-    void updateLevel();
 
     /**
     * Calculates the points based on the number of lines cleared and the drop distance.
@@ -50,26 +57,22 @@ private:
     */
     int getPoints(int lines, int dropDistance) const;
 
-    //TODO: necessaire?
-    void initializeCommands();
+    /**
+ * Resets the game score and stats
+ */
+    void resetScore();
+
 public:
     /**
-    * Constructs a new game with the specified parameters.
-    * Throws an exception if parameters are invalid.
-    * @param width Width of the game board.
-    * @param height Height of the game board.
-    * @param difficulty Difficulty level of the game.
-    * @param startLevel Initial level of the game.
-    * @param targetLine Line target for winning the game.
-    * @param targetTime Time target for winning the game.
-    * @param targetScore Score target for winning the game.
-    */
-    Game(int width, int height, int difficulty, int startLevel, int targetLine, int targetTime, int targetScore);
+     * Constructs a Game with default parameters.
+     */
+    Game();
 
     /**
- * Starts the game, initiating the first tetromino from the bag.
-     * Overrides GameController::start().
- */
+  * Starts the game.
+  * @throws std::invalid_argument if the game parameters are invalid.
+  * @throws std::runtime_error if the game has already started.
+  */
     void start() override;
 
     /**
@@ -97,12 +100,10 @@ public:
     */
     void dropActiveTetromino() override;
 
-    //TODO: necessaire?
-    bool isOccupied(int row, int col) const;
-
-    
     void notifyObservers() override;
-    void addObserver(Observer& observer) override;
+
+    void addObserver(Observer &observer) override;
+
     void removeObserver(int pos) override;
 
     /**
@@ -127,13 +128,13 @@ public:
      * Getter for the game board
      * @return Constant reference to the board.
      */
-    Board const & getBoard() const override;
+    Board const &getBoard() const override;
 
     /**
      * Getter for the bag of tetrominos.
      * @return Constant reference to the bag.
      */
-    Bag const & getBag() const override;
+    Bag const &getBag() const override;
 
     /**
      * Checks if the game is over.
@@ -146,6 +147,54 @@ public:
      * @return True if the player has won, false otherwise.
      */
     bool isWinner() const override;
+
+    /**
+     * Sets the width of the game board.
+     * @param width The width of the game board.
+     */
+    void setBoardWidth(int width) override;
+
+    /**
+     * Sets the height of the game board.
+     * @param height The height of the game board.
+     */
+    void setBoardHeight(int height) override;
+
+    /**
+     * Sets the starting level of the game.
+     * @param level The starting level of the game.
+     */
+    void setStartLevel(int level) override;
+
+    /**
+     * Sets the target line to clear for the game.
+     * @param line The target line to clear.
+     */
+    void setTargetLine(int line) override;
+
+    /**
+     * Sets the target time limit for the game.
+     * @param time The target time limit.
+     */
+    void setTargetTime(int time) override;
+
+    /**
+     * Sets the target score to achieve for the game.
+     * @param score The target score to achieve.
+     */
+    void setTargetScore(int score) override;
+
+    /**
+     * Sets the game difficulty level.
+     * @param difficulty The game difficulty level.
+     */
+    void setDifficulty(int difficulty) override;
+
+    /**
+     * Checks if the game targets are valid
+     * @return True if the targets are valid, false otherwise.
+     */
+    void checkTargets() const override;
 };
 
 

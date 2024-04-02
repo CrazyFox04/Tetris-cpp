@@ -14,7 +14,6 @@
  * handling user input, and orchestrating the game view and game controller.
  */
 class ApplicationTetris {
-    Game game; //!< The game model
     std::unique_ptr<GameController> gameController; //!< Controller interface for the game
     Invoker invoker; //!< Command Invoker for the game
     GameView gameView; //!< View component for rendering the game
@@ -31,6 +30,19 @@ class ApplicationTetris {
      * This method reads user input and executes associated command
      */
     void handleInput();
+
+    /**
+  * Ask the player if he wants to restart the game
+  * @return true if the player wants to restart the game, false otherwise
+  */
+    bool playerWantToRestart();
+
+/**
+ * Ask the player a question and wait for his answer
+ * @param question the question to ask
+ * @return the player's answer
+ */
+    std::string askUser(std::string question);
 public:
     /**
      * Constructor for ApplicationTetris.

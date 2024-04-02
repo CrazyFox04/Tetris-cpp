@@ -1,17 +1,5 @@
 #include "Game.h"
 
-Game::Game(const int width, const int height, const int difficulty, const int startLevel, const int targetLine,
-           const int targetTime,
-           const int targetScore) : board(width, height, difficulty), bag(Bag::getInstance()), currentScore(0),
-                                    currentLevel(startLevel), currentLine(0), currentTime(0), targetLine(targetLine),
-                                    targetTime(targetTime), targetScore(targetScore) {
-    if (width < 10 || height < 10 || difficulty < 1 || startLevel < 1 || targetLine < 1 || targetTime < 1 ||
-        targetScore < 1) {
-        throw std::invalid_argument("Invalid argument");
-    }
-}
-
-
 void Game::addObserver(Observer &observer) {
     observers.emplace_back(&observer);
 }
@@ -27,17 +15,44 @@ void Game::removeObserver(const int pos) {
 }
 
 void Game::start() {
+    if (hasStarted) {
+        throw std::runtime_error("Game has already started.");
+    }
+    checkTargets();
+    hasStarted = true;
+    board = Board(boardWidth, boardHeight, difficulty);
     board.addTetromino(bag.getNext());
     notifyObservers();
 }
 
+void Game::checkTargets() const {
+    if (boardWidth < Board::MIN_BOARD_WIDTH || boardHeight < Board::MIN_BOARD_HEIGHT ||
+        boardWidth > Board::MAX_BOARD_WIDTH || boardHeight > Board::MAX_BOARD_HEIGHT) {
+        throw std::invalid_argument("Invalid Board Size, please try again.");
+    }
+    if (difficulty < Board::MIN_DIFFICULTY || difficulty > Board::MAX_DIFFICULTY) {
+        throw std::invalid_argument("Invalid difficulty, please try again.");
+    }
+    if (currentLevel < 1) {
+        throw std::invalid_argument("Invalid level, please try again.");
+    }
+    if (targetScore < 0 || targetTime < 0 || targetLine < 0) {
+        throw std::invalid_argument("Invalid game parameter, please try again.");
+    }
+}
+
 void Game::restart() {
-    currentScore = 0;
-    currentLevel = 1;
-    currentLine = 0;
-    currentTime = 0;
+    resetScore();
+    hasStarted = false;
     start();
     notifyObservers();
+}
+
+void Game::resetScore() {
+    currentScore = 0;
+    currentLevel = START_LEVEL;
+    currentLine = 0;
+    currentTime = 0;
 }
 
 void Game::moveActiveTetromino(Direction2D direction) {
@@ -130,10 +145,6 @@ int Game::getPoints(const int lines, const int dropDistance) const {
     }
 }
 
-bool Game::isOccupied(const int row, const int col) const {
-    return board.isOccupied(row, col);
-}
-
 int Game::getScore() const {
     return currentScore;
 }
@@ -159,14 +170,69 @@ bool Game::isGameOver() const {
 }
 
 bool Game::isWinner() const {
-    if (targetLine <= currentLine) {
+    if (targetLine < currentLine) {
         return true;
     }
-    if (targetScore <= currentScore) {
+    if (targetScore < currentScore) {
         return true;
     }
-    if (targetTime <= currentTime) {
-       return true;
+    if (targetTime < currentTime) {
+        return true;
     }
     return false;
+}
+
+void Game::setBoardWidth(int width) {
+    if (hasStarted) {
+        throw std::runtime_error("You can't set Game target if it's already started");
+    }
+    boardWidth = width;
+}
+
+void Game::setBoardHeight(int height) {
+    if (hasStarted) {
+        throw std::runtime_error("You can't set Game target if it's already started");
+    }
+    boardHeight = height;
+}
+
+void Game::setStartLevel(int level) {
+    if (hasStarted) {
+        throw std::runtime_error("You can't set Game target if it's already started");
+    }
+    currentLevel = level;
+}
+
+void Game::setTargetLine(int line) {
+    if (hasStarted) {
+        throw std::runtime_error("You can't set Game target if it's already started");
+    }
+    targetLine = line;
+}
+
+void Game::setTargetTime(int time) {
+    if (hasStarted) {
+        throw std::runtime_error("You can't set Game target if it's already started");
+    }
+    targetTime = time;
+}
+
+void Game::setTargetScore(int score) {
+    if (hasStarted) {
+        throw std::runtime_error("You can't set Game target if it's already started");
+    }
+    targetScore = score;
+}
+
+void Game::setDifficulty(int difficulty) {
+    if (hasStarted) {
+        throw std::runtime_error("You can't set Game target if it's already started");
+    }
+    this->difficulty = difficulty;
+}
+
+Game::Game()
+        : board(), bag(Bag::getInstance()), currentLevel(START_LEVEL), targetLine(DEFAULT_TARGET_LINE), targetTime(DEFAULT_TARGET_TIME),
+          targetScore(DEFAULT_TARGET_SCORE), difficulty(Board::DEFAULT_DIFFICULTY), boardWidth(Board::DEFAULT_WIDTH),
+          boardHeight(Board::DEFAULT_HEIGHT) {
 }
