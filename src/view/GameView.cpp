@@ -68,7 +68,7 @@ int GameView::askHeight() {
 int GameView::askDifficulty() {
     int level = 0;
     do {
-        std::cout << "Enter the level of the game (Fills the board with more or less blocks, 1 for default): ";
+        std::cout << "Enter the difficulty of the game (Fills the board with more or less blocks, 1 for default): ";
         std::cin >> level;
         if (level < 1 || level > 20) {
             std::cout << "The level must be between 1 and 20." << std::endl;
@@ -127,6 +127,12 @@ int GameView::askTargetScore() {
 
 void GameView::displayGameOver() {
     std::cout << "Game Over!" << std::endl;
+    std::cout << "Your score: " << controller.getScore() << std::endl;
+    std::cout << "Press 'restart' to start again or 'quit' to exit." << std::endl;
+}
+
+void GameView::displayVictory() {
+    std::cout << "Congratulations! You won!" << std::endl;
     std::cout << "Your score: " << controller.getScore() << std::endl;
     std::cout << "Press 'restart' to start again or 'quit' to exit." << std::endl;
 }

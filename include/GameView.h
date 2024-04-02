@@ -49,9 +49,14 @@ public:
     /**
     * Displays the game over screen.
     * Shows the player's final score and options to restart or quit the game.
-    * This method should be called when the game is in the GAME_OVER state.
     */
     void displayGameOver();
+
+    /**
+     * Displays the victory screen.
+     * Shows the player's final score and options to restart or quit the game.
+     */
+    void displayVictory();
 
     /**
      * Displays the different settings of the game to the player
