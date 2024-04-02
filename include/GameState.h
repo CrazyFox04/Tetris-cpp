@@ -11,7 +11,7 @@
 enum class GameState {
     MAIN_MENU, ///< The game is at the main menu. Certain commands might be restricted in this state.
     PLAYING,   ///< The game is in progress. Most game-related commands are available in this state.
-    GAME_OVER  ///< The game has ended. Commands are limited to restarting or quitting the game.
+    END_GAME  ///< The game has ended. Commands are limited to restarting or quitting the game.
 };
 
 #endif //TETRIS_GAMESTATE_H

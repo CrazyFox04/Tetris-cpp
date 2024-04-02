@@ -24,16 +24,17 @@ void ApplicationTetris::run() {
     gameView.displayMenu();
     do {
         handleInput();
-        while (!gameController->isGameOver()) {
+        while (!gameController->isGameOver() && !gameController->isWinner()) {
             handleInput();
         }
-        invoker.setState(GameState::GAME_OVER);
+        invoker.setState(GameState::END_GAME);
         if (gameController->isGameOver()) {
             gameView.displayGameOver();
-        } else {
+        }
+        if (gameController->isWinner()) {
             gameView.displayVictory();
         }
-    } while (invoker.getState() == GameState::GAME_OVER);
+    } while (invoker.getState() == GameState::END_GAME);
 }
 
 void ApplicationTetris::initializeCommands() {
@@ -47,8 +48,8 @@ void ApplicationTetris::initializeCommands() {
     invoker.registerCommand("q", std::make_unique<MoveLeftCommand>(*gameController, gameView), GameState::PLAYING);
     invoker.registerCommand("s", std::make_unique<MoveDownCommand>(*gameController, gameView), GameState::PLAYING);
     invoker.registerCommand("d", std::make_unique<MoveRightCommand>(*gameController, gameView), GameState::PLAYING);
-    invoker.registerCommand("quit", std::make_unique<QuitGameCommand>(*gameController), GameState::GAME_OVER);
-    invoker.registerCommand("restart", std::make_unique<RestartGameCommand>(*gameController, invoker, gameView), GameState::GAME_OVER);
+    invoker.registerCommand("quit", std::make_unique<QuitGameCommand>(*gameController), GameState::END_GAME);
+    invoker.registerCommand("restart", std::make_unique<RestartGameCommand>(*gameController, invoker, gameView), GameState::END_GAME);
 }
 
 void ApplicationTetris::handleInput() {
