@@ -209,7 +209,7 @@ void Board::clearLine(int line) {
 }
 
 void Board::moveLinesDown(const int clearedline) {
-    for (int y = clearedline; y >= 0; --y) {
+    for (int y = clearedline; y > 0; --y) {
         for (int x = 0; x < width; ++x) {
             occupied[y][x] = occupied[y - 1][x];
         }

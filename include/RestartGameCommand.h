@@ -4,6 +4,7 @@
 #include "Command.h"
 #include "GameController.h"
 #include "GameView.h"
+#include "Invoker.h"
 
 /**
  * @class RestartGameCommand
@@ -14,6 +15,7 @@
  */
 class RestartGameCommand : public Command {
     GameController& gameController; //!< Reference to the game controller.
+    Invoker& invoker; //!< Reference to the invoker.
     GameView& view; //!< Reference to the game view.
 public:
 
@@ -22,7 +24,7 @@ public:
      * Initializes the command with a reference to the GameController.
      * @param gameController Reference to the GameController that controls the game's logic.
      */
-    explicit RestartGameCommand(GameController& gameController, GameView& view_);
+    explicit RestartGameCommand(GameController& gameController, Invoker& invoker, GameView& view_);
 
     /**
      * Executes the command to restart the game.
