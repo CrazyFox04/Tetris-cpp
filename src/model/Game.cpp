@@ -85,9 +85,13 @@ void Game::rotateActiveTetromino(const Rotation rotation) {
             board.rotateActiveTetromino(rotation);
         }
         catch (const std::out_of_range &) {
-            int linesCleared = board.removeCompleteLines();
-            updateScore(linesCleared, 0);
-            board.addTetromino(bag.getNext());
+            if (board.activeTetroIsBellow(boardHeight-1)) {
+                int linesCleared = board.removeCompleteLines();
+                updateScore(linesCleared, 0);
+                board.addTetromino(bag.getNext());
+            } else {
+                // nop
+            }
         } catch (const std::invalid_argument &) {
             int linesCleared = board.removeCompleteLines();
             updateScore(linesCleared, 0);
@@ -101,6 +105,7 @@ void Game::dropActiveTetromino() {
     if (!isGameOver() && !isWinner()) {
         int dropDistance = 0;
         try {
+            // todo: horrible code, fix this
             while (true) {
                 board.moveActiveTetromino(Direction::DOWN);
                 dropDistance++;
@@ -114,8 +119,6 @@ void Game::dropActiveTetromino() {
             int linesCleared = board.removeCompleteLines();
             updateScore(linesCleared, dropDistance);
             board.addTetromino(bag.getNext());
-        } catch (const std::runtime_error &) {
-            // nop
         }
     }
     notifyObservers();

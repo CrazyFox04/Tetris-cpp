@@ -113,6 +113,13 @@ public:
     bool isOutside(int row, int column) const;
 
     /**
+ * Checks if the active tetromino is below a given row
+ * @param row the row to check
+ * @return true if the active tetromino is below the given row, false otherwise
+ */
+    bool activeTetroIsBellow(int row) const;
+
+    /**
      * Checks the value of the occupied vector at a given position
      * @param row to check
      * @param column to check
