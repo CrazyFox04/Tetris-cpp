@@ -1,5 +1,4 @@
 #include "MoveDownCommand.h"
-#include "Direction.h"
 
 MoveDownCommand::MoveDownCommand(GameController& controller) : gameController(controller) {}
 

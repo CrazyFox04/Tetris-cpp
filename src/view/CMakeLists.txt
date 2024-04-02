@@ -1,9 +1,9 @@
 # ===========================================
-#          Sources model CMakeLists
+#          Sources View CMakeLists
 # ===========================================
 project(tetris_view)
 
-# C++ sources files of the tetris_model
+# C++ sources files of the tetris_view
 set(SOURCES
         BagView.cpp
         BoardView.cpp

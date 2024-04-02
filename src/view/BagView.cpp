@@ -1,11 +1,6 @@
-//
-// Created by Julien Delcombel on 17/03/2024.
-//
-
 #include "BagView.h"
 
-void BagView::drawNextTetromino(const Bag& bag) const {
-    // TODO: remplacer bag.xxx par facade.xxx
+ void BagView::drawNextTetromino(const Bag& bag) const {
     const Tetromino& nextTetromino = bag.peekNext();
 
     //Mapping tetrominos id to symbols

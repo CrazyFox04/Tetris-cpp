@@ -1,5 +1,4 @@
 #include "MoveRightCommand.h"
-#include "Direction.h"
 
 MoveRightCommand::MoveRightCommand(GameController& controller) : gameController(controller) {}
 

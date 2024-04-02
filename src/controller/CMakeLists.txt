@@ -12,6 +12,10 @@ set(SOURCES
         MoveRightCommand.cpp
         RotateClockwiseCommand.cpp
         RotateCounterClockwise.cpp
+        ApplicationTetris.cpp
+        StartGameCommand.cpp
+        RestartGameCommand.cpp
+        QuitGameCommand.cpp
 )
 
 # Create the model library that public can use
