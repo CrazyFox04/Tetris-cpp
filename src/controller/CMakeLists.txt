@@ -1,13 +1,21 @@
 # ===========================================
-#          Sources View CMakeLists
+#         Controller model CMakeLists
 # ===========================================
-project(tetris_view)
+project(tetris_controller)
 
-# C++ sources files of the tetris_view
+# C++ sources files of the tetris_model
 set(SOURCES
-        BagView.cpp
-        BoardView.cpp
-        GameView.cpp
+        DropCommand.cpp
+        Invoker.cpp
+        MoveDownCommand.cpp
+        MoveLeftCommand.cpp
+        MoveRightCommand.cpp
+        RotateClockwiseCommand.cpp
+        RotateCounterClockwise.cpp
+        ApplicationTetris.cpp
+        StartGameCommand.cpp
+        RestartGameCommand.cpp
+        QuitGameCommand.cpp
 )
 
 # Create the model library that public can use

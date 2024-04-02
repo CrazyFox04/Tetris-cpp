@@ -1,5 +1,4 @@
 #include "RotateCounterClockwiseCommand.h"
-#include "Direction.h"
 
 RotateCounterClockwiseCommand::RotateCounterClockwiseCommand(GameController& controller) : gameController(controller) {}
 
