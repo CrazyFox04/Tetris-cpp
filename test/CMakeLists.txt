@@ -13,6 +13,7 @@ set(TEST_SOURCES
         Game.cpp
         Position.cpp
         Tetromino.cpp
+        ../include/SettingsGameCommand.h
         # MoveCommandTest.cpp
 )
 

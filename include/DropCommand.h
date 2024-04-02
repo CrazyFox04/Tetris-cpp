@@ -6,6 +6,7 @@
 #define DROPCOMMAND_H
 #include "Command.h"
 #include "GameController.h"
+#include "GameView.h"
 
 /**
  * @class DropCommand
@@ -19,13 +20,15 @@
 class DropCommand : public Command {
     // Reference to GameController to delegate the execution logic of the command.
     GameController &gameController;
+    // Reference to the GameView to delegate the display of the command.
+    GameView &view;
 
 public:
     /**
      * Constructor for DropCommand.
      * @param controller Reference to GameController which this command will interact with.
      */
-    explicit DropCommand(GameController &controller);
+    explicit DropCommand(GameController &controller, GameView &view);
 
     /**
      * Execute the drop action.

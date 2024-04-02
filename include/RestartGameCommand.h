@@ -3,6 +3,7 @@
 
 #include "Command.h"
 #include "GameController.h"
+#include "GameView.h"
 
 /**
  * @class RestartGameCommand
@@ -13,6 +14,7 @@
  */
 class RestartGameCommand : public Command {
     GameController& gameController; //!< Reference to the game controller.
+    GameView& view; //!< Reference to the game view.
 public:
 
     /**
@@ -20,7 +22,7 @@ public:
      * Initializes the command with a reference to the GameController.
      * @param gameController Reference to the GameController that controls the game's logic.
      */
-    explicit RestartGameCommand(GameController& gameController);
+    explicit RestartGameCommand(GameController& gameController, GameView& view_);
 
     /**
      * Executes the command to restart the game.

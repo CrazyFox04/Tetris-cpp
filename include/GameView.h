@@ -20,7 +20,7 @@
  * board and other relevant information to the user.
  */
 class GameView {
-    const GameController &controller; //!< The controller of the game.
+    GameController &controller; //!< The controller of the game.
     BoardView boardView; //!< The view of the board.
     BagView bagView; //!< The view of the tetromino to come.
 
@@ -30,7 +30,7 @@ public:
      * Initializes the game view with a reference to the game controller.
     * @param controller_ Reference to a constant GameController used to obtain game state information.
     */
-    explicit GameView(const GameController &controller_);
+    explicit GameView(GameController &controller_);
 
     /**
     * Draws the current state of the game.
@@ -41,7 +41,7 @@ public:
 
     /**
     * Displays the main menu of the game.
-    * Provides options for the player to start the game.
+    * Offers the choice to start the game or configure the game settings.
     * This method should be called when the game is in the MAIN_MENU state.
     */
     void displayMenu();
@@ -52,6 +52,59 @@ public:
     * This method should be called when the game is in the GAME_OVER state.
     */
     void displayGameOver();
+
+    /**
+     * Displays the different settings of the game to the player
+     * and collects the player's input to configure the game.
+     */
+    void displaySettings();
+
+private:
+
+    /**
+     * Asks the player for the width of the board.
+     * @return the width of the board
+     */
+    int askWidth();
+
+    /**
+     * Asks the player for the height of the board.
+     * @return the height of the board
+     */
+    int askHeight();
+
+    /**
+     * Asks the player for the difficulty of the game.
+     * @return the difficulty of the game
+     */
+    int askDifficulty();
+
+    /**
+     * Asks the player for the level of the game.
+     * @return the level of the game
+     */
+    int askLevel();
+
+    /**
+     * Asks the player for the target number of lines to clear.
+     * @return the target number of lines to clear
+     */
+    int askTargetLines();
+
+    /**
+     * Asks the player for the target time to reach.
+     * @return the target time to reach
+     */
+    int askTargetTime();
+
+    /**
+     * Asks the player for the target score to reach.
+     * @return the target score to reach
+     */
+    int askTargetScore();
+
 };
+
+
 
 #endif //GAMEVIEW_H

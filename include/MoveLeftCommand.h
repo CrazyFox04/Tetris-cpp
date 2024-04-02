@@ -6,6 +6,7 @@
 #define MOVELEFTCOMMAND_H
 #include "Command.h"
 #include "GameController.h"
+#include "GameView.h"
 
 /**
  * @class MoveLeftCommand
@@ -17,6 +18,7 @@
  */
 class MoveLeftCommand : public Command {
     GameController& gameController; //!< Reference to the game controller.
+    GameView& view; //!< Reference to the game view.
 public:
 
     /**
@@ -24,7 +26,7 @@ public:
      * Initializes the command with a reference to the GameController.
      * @param gameController Reference to the GameController that controls the game's logic.
      */
-    explicit MoveLeftCommand(GameController& gameController);
+    explicit MoveLeftCommand(GameController& gameController, GameView& view);
 
     /**
      * Executes the command to move the active tetromino to the left.
