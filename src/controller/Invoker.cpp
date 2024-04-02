@@ -20,3 +20,7 @@ void Invoker::execute(const std::string &commandName) {
         }
     }
 }
+
+GameState Invoker::getState() const {
+    return currentState;
+}

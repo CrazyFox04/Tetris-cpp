@@ -9,6 +9,7 @@
 #include "RotateClockwiseCommand.h"
 #include "DropCommand.h"
 #include "StartGameCommand.h"
+#include "SettingsGameCommand.h"
 #include "QuitGameCommand.h"
 #include "RestartGameCommand.h"
 
@@ -22,35 +23,33 @@ void ApplicationTetris::run() {
     invoker.setState(GameState::MAIN_MENU);
     gameView.displayMenu();
     do {
-        while (!gameController->isGameOver()) {
+        handleInput();
+        while (!gameController->isGameOver() && !gameController->isWinner()) {
             handleInput();
-            gameView.draw();
         }
-        invoker.setState(GameState::GAME_OVER);
-        gameView.displayGameOver();
-    } while (playerWantToRestart());
-    handleInput();
-}
-
-bool ApplicationTetris::playerWantToRestart() {
-    std::string input = "";
-    do {
-        input = askUser("Do you want to play another Game ? (y/n)");
-    } while (input != "y" && input != "n");
-    return input == "y";
+        invoker.setState(GameState::END_GAME);
+        if (gameController->isGameOver()) {
+            gameView.displayGameOver();
+        }
+        if (gameController->isWinner()) {
+            gameView.displayVictory();
+        }
+    } while (invoker.getState() == GameState::END_GAME);
 }
 
 void ApplicationTetris::initializeCommands() {
-    invoker.registerCommand("start", std::make_unique<StartGameCommand>(*gameController, invoker),
+    invoker.registerCommand("start", std::make_unique<StartGameCommand>(*gameController, invoker, gameView),
                             GameState::MAIN_MENU);
-    invoker.registerCommand("a", std::make_unique<RotateCounterClockwiseCommand>(*gameController), GameState::PLAYING);
-    invoker.registerCommand("z", std::make_unique<DropCommand>(*gameController), GameState::PLAYING);
-    invoker.registerCommand("e", std::make_unique<RotateClockwiseCommand>(*gameController), GameState::PLAYING);
-    invoker.registerCommand("q", std::make_unique<MoveLeftCommand>(*gameController), GameState::PLAYING);
-    invoker.registerCommand("s", std::make_unique<MoveDownCommand>(*gameController), GameState::PLAYING);
-    invoker.registerCommand("d", std::make_unique<MoveRightCommand>(*gameController), GameState::PLAYING);
-    invoker.registerCommand("quit", std::make_unique<QuitGameCommand>(*gameController), GameState::GAME_OVER);
-    invoker.registerCommand("restart", std::make_unique<RestartGameCommand>(*gameController), GameState::GAME_OVER);
+    invoker.registerCommand("settings", std::make_unique<SettingsGameCommand>(*gameController, gameView),
+                            GameState::MAIN_MENU);
+    invoker.registerCommand("a", std::make_unique<RotateCounterClockwiseCommand>(*gameController, gameView), GameState::PLAYING);
+    invoker.registerCommand("z", std::make_unique<DropCommand>(*gameController, gameView), GameState::PLAYING);
+    invoker.registerCommand("e", std::make_unique<RotateClockwiseCommand>(*gameController, gameView), GameState::PLAYING);
+    invoker.registerCommand("q", std::make_unique<MoveLeftCommand>(*gameController, gameView), GameState::PLAYING);
+    invoker.registerCommand("s", std::make_unique<MoveDownCommand>(*gameController, gameView), GameState::PLAYING);
+    invoker.registerCommand("d", std::make_unique<MoveRightCommand>(*gameController, gameView), GameState::PLAYING);
+    invoker.registerCommand("quit", std::make_unique<QuitGameCommand>(*gameController), GameState::END_GAME);
+    invoker.registerCommand("restart", std::make_unique<RestartGameCommand>(*gameController, invoker, gameView), GameState::END_GAME);
 }
 
 void ApplicationTetris::handleInput() {
@@ -62,11 +61,4 @@ void ApplicationTetris::handleInput() {
         std::cout << e.what() << std::endl;
         handleInput();
     }
-}
-
-std::string ApplicationTetris::askUser(std::string question) {
-    std::cout << question << std::endl;
-    std::string input;
-    std::cin >> input;
-    return input;
 }

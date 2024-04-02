@@ -37,7 +37,7 @@ public:
      * @param command The unique_ptr to the command object.
      * @param state The game state in which the command is valid.
      */
-    void registerCommand(const std::string& input, std::unique_ptr<Command> command, GameState state);
+    void registerCommand(const std::string &input, std::unique_ptr<Command> command, GameState state);
 
     /**
      * Sets the current state of the game.
@@ -49,7 +49,13 @@ public:
      * Executes a command based on its name if the command is valid in the current game state.
      * @param commandName The name of the command to execute.
      */
-    void execute(const std::string& name);
+    void execute(const std::string &name);
+
+    /**
+     * Get the current state of the game.
+     * @return The current state of the game.
+     */
+    GameState getState() const;
 };
 
 #endif //INVOKER_H

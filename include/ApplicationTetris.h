@@ -31,18 +31,6 @@ class ApplicationTetris {
      */
     void handleInput();
 
-    /**
-  * Ask the player if he wants to restart the game
-  * @return true if the player wants to restart the game, false otherwise
-  */
-    bool playerWantToRestart();
-
-/**
- * Ask the player a question and wait for his answer
- * @param question the question to ask
- * @return the player's answer
- */
-    std::string askUser(std::string question);
 public:
     /**
      * Constructor for ApplicationTetris.

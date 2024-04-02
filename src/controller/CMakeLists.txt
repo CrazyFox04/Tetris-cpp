@@ -16,6 +16,7 @@ set(SOURCES
         StartGameCommand.cpp
         RestartGameCommand.cpp
         QuitGameCommand.cpp
+        SettingsGameCommand.cpp
 )
 
 # Create the model library that public can use
