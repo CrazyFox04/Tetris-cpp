@@ -20,7 +20,7 @@
  * that a command is only executed if the game is in an appropriate state for that command.
  */
 class Invoker {
-    std::map<std::string, std::pair<std::unique_ptr<Command>, GameState>> commandMap; //!< A mapping of command names to their respective command objects and game states.
+    std::multimap<std::string, std::pair<std::unique_ptr<Command>, std::vector<GameState>>> commandMap; //!< A mapping of command names to their respective command objects and game states.
     GameState currentState; //!< The current state of the game.
 
 public:
@@ -37,7 +37,7 @@ public:
      * @param command The unique_ptr to the command object.
      * @param state The game state in which the command is valid.
      */
-    void registerCommand(const std::string &input, std::unique_ptr<Command> command, GameState state);
+    void registerCommand(const std::string &input, std::unique_ptr<Command> command, std::vector<GameState> state);
 
     /**
      * Sets the current state of the game.

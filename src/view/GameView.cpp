@@ -3,21 +3,24 @@
 GameView::GameView(GameController& controller_) : controller(controller_) {}
 
 void GameView::draw() {
-    //Display the board game
     boardView.drawBoard(controller.getBoard());
+    printStats();
+    printNext();
+}
 
-    //Display the score, level and lines
-    std::cout << "Score: " << controller.getScore() << std::endl;
-    std::cout << "Level: " << controller.getLevel() << std::endl;
+void GameView::printStats() const{
+    std::cout << "Score: " << controller.getScore() << " - ";
+    std::cout << "Level: " << controller.getLevel() << " - ";
     std::cout << "Lines: " << controller.getLines() << std::endl;
+}
 
-    //Display the next tetromino
+void GameView::printNext() const{
     std::cout << "Next Tetromino: " << std::endl;
     bagView.drawNextTetromino(controller.getBag());
     std::cout << std::endl;
 }
 
-void GameView::displayMenu() {
+void GameView::displayMenu() const{
     std::cout << "Welcome to Tetris!" << std::endl;
     std::cout << "Press 'start' to begin or 'settings' to configure the game ." << std::endl;
 }
@@ -42,96 +45,56 @@ void GameView::displaySettings() {
 }
 
 int GameView::askWidth() {
-    int width = 0;
-    do {
-        std::cout << "Enter the width of the board (between 5 and 20, 0 for default): ";
-        std::cin >> width;
-        if (width < 5 || width > 20) {
-            std::cout << "The width must be between 5 and 20." << std::endl;
-        }
-    } while (width < 5 || width > 20);
-    return width;
+    return askForInt("Enter the width of the board (between 10 and 30): ", 5, 20);
 }
 
 int GameView::askHeight() {
-    int height = 0;
-    do {
-        std::cout << "Enter the height of the board (between 10 and 30, 0 for default): ";
-        std::cin >> height;
-        if (height < 10 || height > 30) {
-            std::cout << "The height must be between 10 and 30." << std::endl;
-        }
-    } while (height < 10 || height > 30);
-    return height;
+    return askForInt("Enter the height of the board (between 10 and 30): ", 10, 30);
 }
 
 int GameView::askDifficulty() {
-    int level = 0;
-    do {
-        std::cout << "Enter the difficulty of the game (Fills the board with more or less blocks, 1 for default): ";
-        std::cin >> level;
-        if (level < 1 || level > 20) {
-            std::cout << "The level must be between 1 and 20." << std::endl;
-        }
-    } while (level < 1 || level > 20);
-    return level;
+    return askForInt("Enter the difficulty (fill randomly with more or less blocks. 1 for default): ", 1, 20);
 }
 
 int GameView::askLevel() {
-    int level = 0;
-    do {
-        std::cout << "Enter the starting level (sets the speed accordingly. 1 to 20, 1 for default): ";
-        std::cin >> level;
-        if (level < 1 || level > 20) {
-            std::cout << "The level must be between 1 and 20." << std::endl;
-        }
-    } while (level < 1 || level > 20);
-    return level;
+    return askForInt("Enter the starting level (sets speed. 1 for default): ", 1, 20);
 }
 
 int GameView::askTargetLines() {
-    int target =0;
-    do {
-        std::cout << "Enter the target number of lines to clear (0 to disable): ";
-        std::cin >> target;
-        if (target < 0) {
-            std::cout << "The target must be greater than 0." << std::endl;
-        }
-    } while (target < 0);
-    return target;
+    return askForInt("Enter the target number of lines to clear (0 to disable): ", 0, std::numeric_limits<int>::max());
 }
 
 int GameView::askTargetTime() {
-    int target =0;
-    do {
-        std::cout << "Enter the target time to survive in seconds (0 to disable): ";
-        std::cin >> target;
-        if (target < 0) {
-            std::cout << "The target must be greater than 0." << std::endl;
-        }
-    } while (target < 0);
-    return target;
+    return askForInt("Enter the target time to reach (0 to disable): ", 0, std::numeric_limits<int>::max());
 }
 
 int GameView::askTargetScore() {
-    int target =0;
-    do {
-        std::cout << "Enter the target score to reach (0 to disable): ";
-        std::cin >> target;
-        if (target < 0) {
-            std::cout << "The target must be greater than 0." << std::endl;
-        }
-    } while (target < 0);
-    return target;
+    return askForInt("Enter the target score to reach (0 to disable): ", 0, std::numeric_limits<int>::max());
 }
 
-void GameView::displayGameOver() {
+int GameView::askForInt(const std::string& prompt, int min, int max) {
+    int value;
+    while (true) {
+        std::cout << prompt;
+        std::cin >> value;
+        if (std::cin.fail() || value < min || value > max) {
+            std::cout << "Invalid input. Please enter a number between " << min << " and " << max << "." << std::endl;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        } else {
+            break;
+        }
+    }
+    return value;
+}
+
+void GameView::displayGameOver() const {
     std::cout << "Game Over!" << std::endl;
     std::cout << "Your score: " << controller.getScore() << std::endl;
     std::cout << "Press 'restart' to start again or 'quit' to exit." << std::endl;
 }
 
-void GameView::displayVictory() {
+void GameView::displayVictory() const {
     std::cout << "Congratulations! You won!" << std::endl;
     std::cout << "Your score: " << controller.getScore() << std::endl;
     std::cout << "Press 'restart' to start again or 'quit' to exit." << std::endl;

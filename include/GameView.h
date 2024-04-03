@@ -1,7 +1,3 @@
-//
-// Created by Enzo Renard on 05/03/2024.
-//
-
 #ifndef GAMEVIEW_H
 #define GAMEVIEW_H
 
@@ -44,19 +40,7 @@ public:
     * Offers the choice to start the game or configure the game settings.
     * This method should be called when the game is in the MAIN_MENU state.
     */
-    void displayMenu();
-
-    /**
-    * Displays the game over screen.
-    * Shows the player's final score and options to restart or quit the game.
-    */
-    void displayGameOver();
-
-    /**
-     * Displays the victory screen.
-     * Shows the player's final score and options to restart or quit the game.
-     */
-    void displayVictory();
+    void displayMenu() const;
 
     /**
      * Displays the different settings of the game to the player
@@ -64,7 +48,28 @@ public:
      */
     void displaySettings();
 
+    /**
+    * Displays the game over screen.
+    * Shows the player's final score and options to restart or quit the game.
+    */
+    void displayGameOver() const;
+
+    /**
+     * Displays the victory screen.
+     * Shows the player's final score and options to restart or quit the game.
+     */
+    void displayVictory() const;
+
 private:
+    /**
+     * Prints the current score, level, and number of lines cleared.
+     */
+    void printStats() const;
+
+    /**
+     * Prints the next tetromino to come.
+     */
+    void printNext() const;
 
     /**
      * Asks the player for the width of the board.
@@ -108,8 +113,17 @@ private:
      */
     int askTargetScore();
 
+    /**
+    * Asks the user for an integer input within a specified range.
+    * This method displays the given prompt, validates the input to ensure it's an integer
+    * within the specified range, and handles any input errors.
+    *
+    * @param prompt The message to display to the user.
+    * @param min The minimum allowable value.
+    * @param max The maximum allowable value.
+    * @return The validated integer input from the user.
+    */
+    int askForInt(const std::string &prompt, int min, int max);
+
 };
-
-
-
 #endif //GAMEVIEW_H
