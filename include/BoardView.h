@@ -22,7 +22,7 @@ class BoardView {
      * @param height The height of the board game.
      * @return The board game initialized.
      */
-    std::vector<std::vector<char>> initializeBoard(int width, int height);
+    std::vector<std::vector<char>> initializeBoard(int width, int height, const std::vector<std::vector<bool>> &occupied);
 
     /**
      * Fills the board game with char representing the tetrominos.
