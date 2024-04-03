@@ -2,6 +2,7 @@
 #define TETRIS_DEV4_PROJET_BOARD_H
 
 #include <vector>
+#include <random>
 #include "Tetromino.h"
 #include "Direction.h"
 
@@ -52,12 +53,38 @@ private:
      * @param tetromino tetromino to check cells
      * @return true if at least one cells is outside, false otherwise
      */
-    bool isOutside(Tetromino &tetromino) const;
+    bool isOutside(const Tetromino &tetromino) const;
 
     /**
  * For each cell of the active tetromino, set the corresponding cell in the occupied matrix to true.
  */
-    void setOccupiedActiveTetromino();
+    void setOccupiedForActiveTetromino();
+
+    /**
+ * Checks if the board is too small for any of the available tetrominos.
+ * The board is considered too small if any tetromino's height or length is greater than half of the board's height or width respectively.
+ * @return true if the board is too small for any of the available tetrominos, false otherwise.
+ * @see Bag::getAvailableTetrominos()
+ */
+    bool isBoardTooSmallForAvailableTetromino() const;
+
+/**
+ * Positions the given tetromino at the top of the board.
+ * The tetromino is moved downwards until it is no longer outside the board.
+ * If the tetromino cannot be placed within the board's height, an exception is thrown.
+ * @param tetromino The tetromino to be positioned at the top of the board.
+ * @throw std::invalid_argument if the board is too small to add the tetromino.
+ */
+    void positionTetroOnTop(Tetromino &tetromino);
+
+    /**
+ * Marks the cells occupied by a given tetromino on the board.
+ * The cells of the tetromino are marked as occupied on the board.
+ * @param tetromino The tetromino for which to set the occupied status.
+ * @throw std::out_of_range if tetromino is outside the board; no cells are marked as occupied.
+ * @throw std::invalid_argument if the tetromino is already occupied; no cells are marked as occupied.
+ */
+    void setOccupiedForTetromino(Tetromino &tetromino);
 
 public:
     static const int DEFAULT_WIDTH = 10; //!< Default width of the board
@@ -126,6 +153,8 @@ public:
      * @return the value of the occupied vector at the given position
      */
     bool isOccupied(int row, int column) const;
+
+    bool isOccupied(Tetromino& tetromino) const;
 
     /**
      * Checks if a line of the board is full of tetromino's blocks

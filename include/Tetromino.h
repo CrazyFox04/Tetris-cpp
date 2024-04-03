@@ -45,27 +45,17 @@ public:
     std::vector<Position> get_relative_cells() const;
 
     /**
-     * Rotates the Tetromino clockwise around its reference position.
-     */
-    void rotateClockwise();
-
-    /**
-     * Rotates the Tetromino counter-clockwise around its reference position.
-     */
-    void rotateCounterClockwise();
-
-    /**
      * Moves the Tetromino by a specified offset.
      * @param dx The horizontal offset.
      * @param dy The vertical offset.
      */
-    void move(int dx, int dy);
+    Tetromino &move(int dx, int dy);
 
     /**
      * Sets the relative cell positions of the Tetromino.
      * @param newCells The new relative cell positions.
      */
-    void set_relative_cells(const std::vector<Position>& newCells);
+    void set_relative_cells(const std::vector<Position> &newCells);
 
     /**
      * Getter for the length of the Tetromino.
@@ -86,6 +76,15 @@ public:
      * @return true if the Tetromino is rotatable, false otherwise.
      */
     bool isRotable() const;
+
+    /**
+ * Rotates the Tetromino in the specified direction.
+ * The rotation is performed around the reference position of the Tetromino.
+ * @param rotation The direction of the rotation. It can be either CLOCKWISE or COUNTERCLOCKWISE.
+ * @throws runtime_error if the Tetromino is not rotatable.
+     * @see Rotation
+ */
+    Tetromino &rotate(Rotation rotation);
 };
 
 /**

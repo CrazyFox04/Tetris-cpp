@@ -17,7 +17,7 @@ TEST(Tetromino, rotateClockwise) {
     Position center(1, 2);
     std::vector<Position> cells = {Position(0, 0), Position(0, 1), Position(1, 0), Position(1, 1)};
     Tetromino t(1, center, cells, true);
-    t.rotateClockwise();
+    t.rotate(Rotation::CLOCKWISE);
     std::vector<Position> rotatedCells = {Position(0, 0), Position(-1, 0), Position(0, 1), Position(-1, 1)};
     std::vector<Position> expected = {Position(1, 2), Position(0, 2), Position(1, 3), Position(0, 3)};
     ASSERT_EQ(t.get_relative_cells(), expected);
@@ -27,7 +27,7 @@ TEST(Tetromino, rotateCounterClockwise) {
     Position center(1, 2);
     std::vector<Position> cells = {Position(0, 0), Position(0, 1), Position(1, 0), Position(1, 1)};
     Tetromino t(1, center, cells, true);
-    t.rotateCounterClockwise();
+    t.rotate(Rotation::COUNTERCLOCKWISE);
     std::vector<Position> rotatedCells = {Position(0, 0), Position(1, 0), Position(0, -1), Position(1, -1)};
     std::vector<Position> expected = {Position(1, 2), Position(2, 2), Position(1, 1), Position(2, 1)};
     ASSERT_EQ(t.get_relative_cells(), expected);

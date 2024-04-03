@@ -4,28 +4,27 @@ Tetromino::Tetromino(const int id, const Position center, std::vector<Position> 
 id(id), refPosition(center), cells(std::move(cells)), rotable(rotable_) {
 }
 
-void Tetromino::rotateClockwise() {
+Tetromino& Tetromino::rotate(Rotation rotation) {
+    if (!rotable) {
+        throw std::runtime_error("Tetromino is not rotatable");
+    }
     for (auto &cell: cells) {
         if (!(cell == Position(0, 0))) {
             int x = cell.get_x();
             int y = cell.get_y();
-            cell = Position(-y, x);
+            if (rotation == Rotation::CLOCKWISE) {
+                cell = Position(-y, x);
+            } else {
+                cell = Position(y, -x);
+            }
         }
     }
+    return *this;
 }
 
-void Tetromino::rotateCounterClockwise() {
-    for (auto &cell: cells) {
-        if (!(cell == Position(0, 0))) {
-            int x = cell.get_x();
-            int y = cell.get_y();
-            cell = Position(y, -x);
-        }
-    }
-}
-
-void Tetromino::move(int dx, int dy) {
+Tetromino& Tetromino::move(int dx, int dy) {
     refPosition += Direction2D(dx, dy);
+    return *this;
 }
 
 int Tetromino::get_id() const {

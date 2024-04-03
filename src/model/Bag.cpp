@@ -46,7 +46,11 @@ void Bag::shuffle() {
     for (auto &tetro: bag) {
         auto rotateTimes = rd() % 4;
         for (unsigned i = 0; i < rotateTimes; i++) {
-            tetro.rotateClockwise();
+            try {
+                tetro.rotate(Rotation::CLOCKWISE);
+            } catch (std::runtime_error &e) {
+                // nop
+            }
         }
     }
 }

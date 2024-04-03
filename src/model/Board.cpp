@@ -8,14 +8,21 @@ Board::Board() : Board(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_DIFFICULTY) {
 }
 
 Board::Board(const int w, const int h, const int difficulty)
-    : width(w), height(h), gameOver(false), occupied(h, std::vector<bool>(w, false)) {
+        : width(w), height(h), gameOver(false), occupied(h, std::vector<bool>(w, false)) {
     refPosition = Position(width / 2 - 1, 0);
-    for (const auto&available_tetromino: Bag::getInstance().getAvailableTetrominos()) {
-        if (available_tetromino.get_height() >= h / 2.0 || available_tetromino.get_length() >= w / 2.0) {
-            throw std::invalid_argument("Board is too small for the available tetrominos");
-        }
+    if (isBoardTooSmallForAvailableTetromino()) {
+        throw std::invalid_argument("Board is too small for the available tetrominos");
     }
     initialize(difficulty);
+}
+
+bool Board::isBoardTooSmallForAvailableTetromino() const {
+    for (const auto &available_tetromino: Bag::getInstance().getAvailableTetrominos()) {
+        if (available_tetromino.get_height() >= height / 2.0 || available_tetromino.get_length() >= width / 2.0) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void Board::initialize(int difficulty) {
@@ -28,9 +35,6 @@ void Board::initialize(int difficulty) {
     std::mt19937 gen(rd());
     std::bernoulli_distribution d(fillPercentage / 100);
 
-    for (auto&row: occupied) {
-        std::fill(row.begin(), row.end(), false);
-    }
     for (int i = height - linesToFill; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             occupied[i][j] = d(gen);
@@ -39,6 +43,16 @@ void Board::initialize(int difficulty) {
 }
 
 void Board::addTetromino(Tetromino tetromino) {
+    positionTetroOnTop(tetromino);
+    if (isOutside(tetromino) || isOccupied(tetromino)) {
+        gameOver = true;
+    } else {
+        setOccupiedForTetromino(tetromino);
+        tetrominos.push_back(tetromino);
+    }
+}
+
+void Board::positionTetroOnTop(Tetromino &tetromino) {
     int dy = 0;
     while (isOutside(tetromino)) {
         tetromino.move(Direction::DOWN.first, Direction::DOWN.second);
@@ -47,25 +61,32 @@ void Board::addTetromino(Tetromino tetromino) {
             throw std::invalid_argument("Board is too small to add the tetromino");
         }
     }
-    std::vector<Position> absolutePositions;
-    for (const auto&cell: tetromino.get_relative_cells()) {
-        int absX = refPosition.get_x() + cell.get_x();
-        int absY = refPosition.get_y() + cell.get_y();
-
-        if (isOccupied(absY, absX)) {
-            gameOver = true;
-            return;
-        }
-        absolutePositions.emplace_back(absX, absY);
-    }
-    for (const auto&pos: absolutePositions) {
-        occupied[pos.get_y()][pos.get_x()] = true;
-    }
-    tetrominos.push_back(tetromino);
 }
 
-bool Board::isOutside(Tetromino&tetromino) const {
-    for (auto&relative_cell: tetromino.get_relative_cells()) {
+bool Board::isOccupied(Tetromino &tetromino) const {
+    for (const auto &cell: tetromino.get_relative_cells()) {
+        if (isOccupied(refPosition.get_y() + cell.get_y(),
+                       refPosition.get_x() + cell.get_x())) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Board::setOccupiedForTetromino(Tetromino &tetromino) {
+    if (isOccupied(tetromino)) {
+        throw std::invalid_argument("The position of the tetromino is already occupied");
+    }
+    if (isOutside(tetromino)) {
+        throw std::out_of_range("The position of the tetromino is outside the board");
+    }
+    for (const auto &pos: tetromino.get_relative_cells()) {
+        occupied[refPosition.get_y() + pos.get_y()][refPosition.get_x() + pos.get_x()] = true;
+    }
+}
+
+bool Board::isOutside(const Tetromino &tetromino) const {
+    for (auto &relative_cell: tetromino.get_relative_cells()) {
         if (isOutside(relative_cell.get_y() + refPosition.get_y(), relative_cell.get_x() + refPosition.get_x())) {
             return true;
         }
@@ -73,8 +94,8 @@ bool Board::isOutside(Tetromino&tetromino) const {
     return false;
 }
 
-void Board::setOccupiedActiveTetromino() {
-    for (const auto&cell: tetrominos.back().get_relative_cells()) {
+void Board::setOccupiedForActiveTetromino() {
+    for (const auto &cell: tetrominos.back().get_relative_cells()) {
         int absX = refPosition.get_x() + cell.get_x();
         int absY = refPosition.get_y() + cell.get_y();
         occupied[absY][absX] = true;
@@ -82,72 +103,31 @@ void Board::setOccupiedActiveTetromino() {
 }
 
 void Board::moveActiveTetromino(Direction2D direction) {
-    auto&activeTetromino = tetrominos.back();
-    auto cells = activeTetromino.get_relative_cells();
+    Tetromino &activeTetromino = tetrominos.back();
     clearOccupiedForActiveTetromino();
-    for (const auto&cell: cells) {
-        Position newPos = cell + direction;
-        newPos += refPosition;
-        if (isOutside(newPos.get_y(), newPos.get_x())) {
-            setOccupiedActiveTetromino();
-            throw std::out_of_range(
-                    "The new position (" + std::to_string(newPos.get_x()) + ";" + std::to_string(newPos.get_y()) +
-                    ") is outside the board");
-        }
-        if (isOccupied(newPos.get_y(), newPos.get_x())) {
-            setOccupiedActiveTetromino();
-            throw std::invalid_argument(
-                    "The new position (" + std::to_string(newPos.get_x()) + ";" + std::to_string(newPos.get_y()) +
-                    ") is already occupied");
-        }
+    if (isOutside(Tetromino(activeTetromino).move(direction.first, direction.second))) {
+        setOccupiedForActiveTetromino();
+        throw std::out_of_range("The new position is outside the board");
+    }
+    if (isOccupied(Tetromino(activeTetromino).move(direction.first, direction.second))) {
+        setOccupiedForActiveTetromino();
+        throw std::invalid_argument("The new position is already occupied");
     }
     activeTetromino.move(direction.first, direction.second);
-    setOccupiedActiveTetromino();
+    setOccupiedForActiveTetromino();
 }
 
-void Board::rotateActiveTetromino(const Rotation rotation) {
-    Tetromino&activeTetromino = tetrominos.back();
-    auto originalCells = activeTetromino.get_relative_cells();
+void Board::rotateActiveTetromino(Rotation rotation) {
+    Tetromino &activeTetromino = tetrominos.back();
     clearOccupiedForActiveTetromino();
-    //Tenter la rotation
-    if (rotation == Rotation::CLOCKWISE) {
-        activeTetromino.rotateClockwise();
+    if (isOutside(Tetromino(activeTetromino).rotate(rotation))) {
+       throw std::out_of_range("The new position is outside the board");
     }
-    else {
-        activeTetromino.rotateCounterClockwise();
+    if (isOccupied(Tetromino(activeTetromino).rotate(rotation))) {
+        throw std::invalid_argument("The new position is already occupied");
     }
-    // TODO: Methode privée?
-    // Vérifier si la rotation est valide
-    for (const auto& cell: activeTetromino.get_relative_cells()) {
-        int absX = cell.get_x() + refPosition.get_x();
-        int absY = cell.get_y() + refPosition.get_y();
-        if (isOutside(absY, absX)) {
-            activeTetromino.set_relative_cells(originalCells);
-            for (const auto& c: originalCells) {
-                int absX = c.get_x() + refPosition.get_x();
-                int absY = c.get_y() + refPosition.get_y();
-                occupied[absY][absX] = true;
-            }
-            throw std::out_of_range("The new position (" + std::to_string(absX) + ";" + std::to_string(absY) +
-                                    ") is outside the board");
-        }
-        if (isOccupied(absY, absX)) {
-            activeTetromino.set_relative_cells(originalCells);
-            for (const auto& c : originalCells) {
-                int absX = c.get_x() + refPosition.get_x();
-                int absY = c.get_y() + refPosition.get_y();
-                occupied[absY][absX] = true;
-            }
-            throw std::invalid_argument("The new position (" + std::to_string(absX) + ";" + std::to_string(absY) +
-                                        ") is already occupied");
-        }
-    }
-    // Mettre les nouvelles à true
-    for (const auto&cell: activeTetromino.get_relative_cells()) {
-        int absX = cell.get_x() + refPosition.get_x();
-        int absY = cell.get_y() + refPosition.get_y();
-        occupied[absY][absX] = true;
-    }
+    activeTetromino.rotate(rotation);
+    setOccupiedForActiveTetromino();
 }
 
 bool Board::isOutside(const int row, const int column) const {
@@ -155,7 +135,7 @@ bool Board::isOutside(const int row, const int column) const {
 }
 
 bool Board::activeTetroIsBellow(int row) const {
-    const Tetromino& activeTetromino = tetrominos.back();
+    const Tetromino &activeTetromino = tetrominos.back();
     for (const auto &cell: activeTetromino.get_relative_cells()) {
         if (cell.get_y() + refPosition.get_y() > row) {
             return true;
@@ -197,9 +177,9 @@ void Board::clearLine(int line) {
         occupied[line][j] = false;
     }
 
-    for (auto& tetro: tetrominos) {
+    for (auto &tetro: tetrominos) {
         std::vector<Position> cells = tetro.get_relative_cells();
-        cells.erase(std::remove_if(cells.begin(), cells.end(), [line](const Position&pos) {
+        cells.erase(std::remove_if(cells.begin(), cells.end(), [line](const Position &pos) {
                         return pos.get_y() == line;
                     }),
                     cells.end()
@@ -214,11 +194,11 @@ void Board::moveLinesDown(const int clearedline) {
             occupied[y][x] = occupied[y - 1][x];
         }
     }
-    for (auto&tetromino: tetrominos) {
+    for (auto &tetromino: tetrominos) {
         auto modifiedCells = std::vector<Position>();
-        for (auto&cell: tetromino.get_relative_cells()) {
-            if (cell.get_y()+refPosition.get_y() < clearedline) {
-                modifiedCells.emplace_back(cell.get_x(), cell.get_y()+1);
+        for (auto &cell: tetromino.get_relative_cells()) {
+            if (cell.get_y() + refPosition.get_y() < clearedline) {
+                modifiedCells.emplace_back(cell.get_x(), cell.get_y() + 1);
             } else {
                 modifiedCells.emplace_back(cell.get_x(), cell.get_y());
             }
@@ -231,13 +211,13 @@ bool Board::isGameOver() const {
     return gameOver;
 }
 
-Tetromino& Board::getActiveTetromino() {
+Tetromino &Board::getActiveTetromino() {
     return tetrominos.back();
 }
 
 const std::vector<Tetromino> Board::getTetrominos() const {
     std::vector<Tetromino> constTetrominos;
-    for (const auto&tetromino: tetrominos) {
+    for (const auto &tetromino: tetrominos) {
         constTetrominos.push_back(tetromino);
     }
     return constTetrominos;
@@ -253,7 +233,7 @@ int Board::getHeight() const {
 
 const std::vector<std::vector<bool>> Board::getOccupied() const {
     std::vector<std::vector<bool>> constOccupied;
-    for (const auto&row: occupied) {
+    for (const auto &row: occupied) {
         constOccupied.push_back(row);
     }
     return constOccupied;
@@ -264,9 +244,9 @@ Position Board::getRefPosition() const {
 }
 
 void Board::clearOccupiedForActiveTetromino() {
-    auto&activeTetromino = tetrominos.back();
+    auto &activeTetromino = tetrominos.back();
     auto cells = activeTetromino.get_relative_cells();
-    for (const auto&cell: cells) {
+    for (const auto &cell: cells) {
         int absX = refPosition.get_x() + cell.get_x();
         int absY = refPosition.get_y() + cell.get_y();
         occupied[absY][absX] = false;
@@ -276,13 +256,13 @@ void Board::clearOccupiedForActiveTetromino() {
 void Board::clear() {
     gameOver = false;
     tetrominos.clear();
-    for (auto&row: occupied) {
+    for (auto &row: occupied) {
         std::fill(row.begin(), row.end(), false);
     }
     initialize(1);
 }
 
 bool Board::activeTetrominoIsRotatable() const {
-    const Tetromino& activeTetromino = tetrominos.back();
+    const Tetromino &activeTetromino = tetrominos.back();
     return activeTetromino.isRotable();
 }
