@@ -60,41 +60,28 @@ void Game::moveActiveTetromino(Direction2D direction) {
         try {
             board.moveActiveTetromino(direction);
         }
-        catch (const std::out_of_range &) {
+        catch (const std::exception &) {
             if (direction == Direction::DOWN) {
-                int linesCleared = board.removeCompleteLines();
-                updateScore(linesCleared, 0);
+                updateScore(board.removeCompleteLines(), 0);
                 board.addTetromino(bag.getNext());
             }
-        } catch (const std::invalid_argument &) {
-            if (direction == Direction::DOWN) {
-                int linesCleared = board.removeCompleteLines();
-                updateScore(linesCleared, 0);
-                board.addTetromino(bag.getNext());
-            }
-        } catch (const std::runtime_error &) {
-            // nop
         }
     }
     notifyObservers();
 }
 
-void Game::rotateActiveTetromino(const Rotation rotation) {
+void Game::rotateActiveTetromino(Rotation rotation) {
     if (hasStarted && !isGameOver() && !isWinner() && board.activeTetrominoIsRotatable()) {
         try {
             board.rotateActiveTetromino(rotation);
         }
         catch (const std::out_of_range &) {
-            if (board.activeTetroIsBellow(boardHeight - 1)) {
-                int linesCleared = board.removeCompleteLines();
-                updateScore(linesCleared, 0);
+            if (board.activeTetroIsBellow(boardHeight - 2)) {
+                updateScore(board.removeCompleteLines(), 0);
                 board.addTetromino(bag.getNext());
-            } else {
-                // nop
             }
         } catch (const std::invalid_argument &) {
-            int linesCleared = board.removeCompleteLines();
-            updateScore(linesCleared, 0);
+            updateScore(board.removeCompleteLines(), 0);
             board.addTetromino(bag.getNext());
         }
     }
@@ -105,19 +92,13 @@ void Game::dropActiveTetromino() {
     if (hasStarted && !isGameOver() && !isWinner()) {
         int dropDistance = 0;
         try {
-            // todo: horrible code, fix this
-            while (true) {
+            while (!board.activeTetroIsBellow(boardHeight - 1)) {
                 board.moveActiveTetromino(Direction::DOWN);
                 dropDistance++;
             }
         }
-        catch (const std::out_of_range &) {
-            int linesCleared = board.removeCompleteLines();
-            updateScore(linesCleared, dropDistance);
-            board.addTetromino(bag.getNext());
-        } catch (const std::invalid_argument &) {
-            int linesCleared = board.removeCompleteLines();
-            updateScore(linesCleared, dropDistance);
+        catch (const std::exception &) {
+            updateScore(board.removeCompleteLines(), dropDistance);
             board.addTetromino(bag.getNext());
         }
     }
