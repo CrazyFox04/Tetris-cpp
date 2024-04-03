@@ -14,7 +14,6 @@
  * the game. It relies on the GameController and the GameView to actually perform the setting.
  */
 class SettingsGameCommand : public Command {
-    GameController &gameController; //!< Reference to the game controller.
     GameView &gameView; //!< Reference to the game view.
 public:
 
@@ -24,7 +23,7 @@ public:
      * @param gameController Reference to the GameController that controls the game's logic.
      * @param gameView Reference to GameView that controls the game's view.
      */
-    SettingsGameCommand(GameController &gameController, GameView &gameView);
+    SettingsGameCommand(GameView &gameView);
 
     /**
      * Executes the command to start the game.

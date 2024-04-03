@@ -1,8 +1,7 @@
 #include "QuitGameCommand.h"
 #include <cstdlib>
 
-QuitGameCommand::QuitGameCommand(GameController& controller) : gameController(controller) {}
-
+QuitGameCommand::QuitGameCommand() {}
 void QuitGameCommand::execute() {
     exit(0);
 }

@@ -40,7 +40,7 @@ void ApplicationTetris::run() {
 void ApplicationTetris::initializeCommands() {
     invoker.registerCommand("start", std::make_unique<StartGameCommand>(*gameController, invoker, gameView),
                             GameState::MAIN_MENU);
-    invoker.registerCommand("settings", std::make_unique<SettingsGameCommand>(*gameController, gameView),
+    invoker.registerCommand("settings", std::make_unique<SettingsGameCommand>(gameView),
                             GameState::MAIN_MENU);
     invoker.registerCommand("a", std::make_unique<RotateCounterClockwiseCommand>(*gameController, gameView), GameState::PLAYING);
     invoker.registerCommand("z", std::make_unique<DropCommand>(*gameController, gameView), GameState::PLAYING);
@@ -48,7 +48,7 @@ void ApplicationTetris::initializeCommands() {
     invoker.registerCommand("q", std::make_unique<MoveLeftCommand>(*gameController, gameView), GameState::PLAYING);
     invoker.registerCommand("s", std::make_unique<MoveDownCommand>(*gameController, gameView), GameState::PLAYING);
     invoker.registerCommand("d", std::make_unique<MoveRightCommand>(*gameController, gameView), GameState::PLAYING);
-    invoker.registerCommand("quit", std::make_unique<QuitGameCommand>(*gameController), GameState::END_GAME);
+    invoker.registerCommand("quit", std::make_unique<QuitGameCommand>(), GameState::END_GAME);
     invoker.registerCommand("restart", std::make_unique<RestartGameCommand>(*gameController, invoker, gameView), GameState::END_GAME);
 }
 

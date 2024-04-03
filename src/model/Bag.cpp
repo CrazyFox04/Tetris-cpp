@@ -45,7 +45,7 @@ void Bag::shuffle() {
     std::ranges::shuffle(bag, g);
     for (auto &tetro: bag) {
         auto rotateTimes = rd() % 4;
-        for (int i = 0; i < rotateTimes; i++) {
+        for (unsigned i = 0; i < rotateTimes; i++) {
             tetro.rotateClockwise();
         }
     }

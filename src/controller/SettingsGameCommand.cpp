@@ -1,7 +1,7 @@
 #include "SettingsGameCommand.h"
 
-SettingsGameCommand::SettingsGameCommand(GameController& controller, GameView& view)
-: gameController(controller), gameView(view) {}
+SettingsGameCommand::SettingsGameCommand(GameView& view)
+: gameView(view) {}
 
 void SettingsGameCommand::execute() {
     gameView.displaySettings();
