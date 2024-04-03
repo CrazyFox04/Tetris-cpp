@@ -44,7 +44,7 @@ void GameView::displaySettings() {
 int GameView::askWidth() {
     int width = 0;
     do {
-        std::cout << "Enter the width of the board (between 5 and 20, 0 for default): ";
+        std::cout << "Enter the width of the board (between 5 and 20): ";
         std::cin >> width;
         if (width < 5 || width > 20) {
             std::cout << "The width must be between 5 and 20." << std::endl;
@@ -56,7 +56,7 @@ int GameView::askWidth() {
 int GameView::askHeight() {
     int height = 0;
     do {
-        std::cout << "Enter the height of the board (between 10 and 30, 0 for default): ";
+        std::cout << "Enter the height of the board (between 10 and 30): ";
         std::cin >> height;
         if (height < 10 || height > 30) {
             std::cout << "The height must be between 10 and 30." << std::endl;
