@@ -5,7 +5,10 @@
 #include "Game.h"
 
 TEST(Game, ctor) {
-    Game game = Game(10, 20, 1, 1, 10, 10, 10);
+    Game game = Game();
+    game.setBoardWidth(10);
+    game.setBoardHeight(20);
+    game.setStartLevel(1);
     ASSERT_EQ(game.getBoard().getWidth(), 10);
     ASSERT_EQ(game.getBoard().getHeight(), 20);
     ASSERT_EQ(game.getLevel(), 1);
@@ -14,31 +17,46 @@ TEST(Game, ctor) {
 }
 
 TEST(Game, play_isGameOver) {
-    Game game = Game(10, 20, 1, 1, 10, 10, 10);
+    Game game = Game();
+    game.setBoardWidth(10);
+    game.setBoardHeight(20);
+    game.setStartLevel(1);
     game.start();
     ASSERT_FALSE(game.isGameOver());
 }
 
 TEST(Game, moveActiveTetrominoWithoutStarting) {
-    Game game = Game(10, 20, 1, 1, 10, 10, 10);
+    Game game = Game();
+    game.setBoardWidth(10);
+    game.setBoardHeight(20);
+    game.setStartLevel(1);
     ASSERT_NO_THROW(game.moveActiveTetromino(Direction::DOWN));
     ASSERT_EQ(game.getBag().getNumberOfTetrominos(), Bag::getInstance().getAvailableTetrominos().size());
 }
 
 TEST(Game, rotateActiveTetrominoWithoutstarting) {
-    Game game = Game(10, 20, 1, 1, 10, 10, 10);
+    Game game = Game();
+    game.setBoardWidth(10);
+    game.setBoardHeight(20);
+    game.setStartLevel(1);
     ASSERT_NO_THROW(game.rotateActiveTetromino(Rotation::CLOCKWISE));
     ASSERT_EQ(game.getBag().getNumberOfTetrominos(), Bag::getInstance().getAvailableTetrominos().size());
 }
 
 TEST(Game, dropActiveTetrominoWithoutStarting) {
-    Game game = Game(10, 20, 1, 1, 10, 10, 10);
+    Game game = Game();
+    game.setBoardWidth(10);
+    game.setBoardHeight(20);
+    game.setStartLevel(1);
     ASSERT_NO_THROW(game.dropActiveTetromino());
     ASSERT_EQ(game.getBag().getNumberOfTetrominos(), Bag::getInstance().getAvailableTetrominos().size());
 }
 
 TEST(Game, moveAndDropAddNewTetro) {
-    Game game = Game(10, 20, 1, 1, 10, 10, 10);
+    Game game = Game();
+    game.setBoardWidth(10);
+    game.setBoardHeight(20);
+    game.setStartLevel(1);
     game.start();
     game.dropActiveTetromino();
     game.dropActiveTetromino();
@@ -47,21 +65,30 @@ TEST(Game, moveAndDropAddNewTetro) {
 }
 
 TEST(Game, moveActiveTetromino) {
-    Game game = Game(10, 20, 1, 1, 10, 10, 10);
+    Game game = Game();
+    game.setBoardWidth(10);
+    game.setBoardHeight(20);
+    game.setStartLevel(1);
     game.start();
     game.moveActiveTetromino(Direction::DOWN);
     ASSERT_EQ(game.getBoard().getTetrominos().size(), 1);
 }
 
 TEST(Game, rotateActiveTetromino) {
-    Game game = Game(10, 20, 1, 1, 10, 10, 10);
+    Game game = Game();
+    game.setBoardWidth(10);
+    game.setBoardHeight(20);
+    game.setStartLevel(1);
     game.start();
     game.rotateActiveTetromino(Rotation::CLOCKWISE);
     ASSERT_EQ(game.getBoard().getTetrominos().size(), 1);
 }
 
 TEST(Game, dropActiveTetromino) {
-    Game game = Game(10, 20, 1, 1, 10, 10, 10);
+    Game game = Game();
+    game.setBoardWidth(10);
+    game.setBoardHeight(20);
+    game.setStartLevel(1);
     game.start();
     game.dropActiveTetromino();
     ASSERT_EQ(game.getBoard().getTetrominos().size(), 2);

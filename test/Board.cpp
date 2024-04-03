@@ -56,7 +56,7 @@ TEST(Board, add_tetromino) {
 
 TEST(Board, move_active_tetromino) {
     Board b(10, 10, 1);
-    Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}};
+    Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}, true};
     b.addTetromino(t);
     b.moveActiveTetromino(Direction2D(0, 1)); // Down
     ASSERT_EQ(b.getActiveTetromino().get_ref_position().get_x(), 0);
@@ -65,7 +65,7 @@ TEST(Board, move_active_tetromino) {
 
 TEST(Board, move_active_tetromino_4dirs_happy_path) {
     Board b(10, 10, 1);
-    Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}};
+    Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}, true};
     b.addTetromino(t);
     b.moveActiveTetromino(Direction2D(0, 1)); // Down
     ASSERT_EQ(b.getActiveTetromino().get_ref_position().get_x(), 0);
@@ -83,7 +83,7 @@ TEST(Board, move_active_tetromino_4dirs_happy_path) {
 
 TEST(Board, move_active_tetromino_out_of_bounds) {
     Board b(10, 10, 1);
-    Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}};
+    Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}, true};
     b.addTetromino(t);
     ASSERT_THROW(b.moveActiveTetromino(Direction2D(0, -1)), std::out_of_range); // Up
     ASSERT_EQ(b.getActiveTetromino().get_ref_position().get_x(), 0);
@@ -92,7 +92,7 @@ TEST(Board, move_active_tetromino_out_of_bounds) {
 
 TEST(Board, move_active_tetromino_collision) {
     Board b(10, 10, 1);
-    Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}};
+    Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}, true};
     b.addTetromino(t);
     b.moveActiveTetromino({0, 3});
     b.addTetromino(t);
@@ -109,7 +109,7 @@ TEST(Board, move_active_tetromino_collision) {
 
 TEST(Board, rotate_active_tetromino) {
     Board b(10, 10, 1);
-    Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}};
+    Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}, true};
     b.addTetromino(t);
     b.moveActiveTetromino({0, 4});
     b.rotateActiveTetromino(Rotation::COUNTERCLOCKWISE);
@@ -127,7 +127,7 @@ TEST(Board, rotate_active_tetromino) {
 
 TEST(Board, rotate_active_tetromino_out_of_bounds) {
     Board b(10, 10, 1);
-    Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}};
+    Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}, true};
     b.addTetromino(t);
     ASSERT_THROW(b.rotateActiveTetromino(Rotation::COUNTERCLOCKWISE), std::out_of_range);
     // No rotation should have been done
@@ -145,7 +145,7 @@ TEST(Board, rotate_active_tetromino_out_of_bounds) {
 
 TEST(Board, rotate_active_tetromino_collision) {
     Board b(10, 10, 1);
-    Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}};
+    Tetromino t{1, Position(0, 0), {Position(0, 0), Position(1, 0), Position(2, 0), Position(3, 0)}, true};
     b.addTetromino(t);
     b.rotateActiveTetromino(Rotation::CLOCKWISE);
     b.moveActiveTetromino({0, 1});
@@ -163,7 +163,7 @@ TEST(Board, rotate_active_tetromino_collision) {
 
 TEST(Board, remove_complete_lines) {
     Board b(10, 10, 1);
-    Tetromino t{2, Position(0, 0), {Position(0, 0), Position(1, 0), Position(0, 1), Position(1, 1)}};
+    Tetromino t{2, Position(0, 0), {Position(0, 0), Position(1, 0), Position(0, 1), Position(1, 1)}, true};
     b.addTetromino(t);
     b.moveActiveTetromino({-4, 8});
     b.addTetromino(t);

@@ -9,11 +9,12 @@ project(tetris_test)
 set(TEST_SOURCES
         testMain.cpp
         Bag.cpp
+        BagViewTest.cpp
         Board.cpp
+        BoardViewTest.cpp
         Game.cpp
         Position.cpp
         Tetromino.cpp
-        # MoveCommandTest.cpp
 )
 
 # Create the tests main executable

@@ -56,7 +56,7 @@ void Game::resetScore() {
 }
 
 void Game::moveActiveTetromino(Direction2D direction) {
-    if (!isGameOver() && !isWinner()) {
+    if (hasStarted && !isGameOver() && !isWinner()) {
         try {
             board.moveActiveTetromino(direction);
         }
@@ -80,12 +80,12 @@ void Game::moveActiveTetromino(Direction2D direction) {
 }
 
 void Game::rotateActiveTetromino(const Rotation rotation) {
-    if (!isGameOver() && !isWinner() && board.activeTetrominoIsRotatable()) {
+    if (hasStarted && !isGameOver() && !isWinner() && board.activeTetrominoIsRotatable()) {
         try {
             board.rotateActiveTetromino(rotation);
         }
         catch (const std::out_of_range &) {
-            if (board.activeTetroIsBellow(boardHeight-1)) {
+            if (board.activeTetroIsBellow(boardHeight - 1)) {
                 int linesCleared = board.removeCompleteLines();
                 updateScore(linesCleared, 0);
                 board.addTetromino(bag.getNext());
@@ -102,7 +102,7 @@ void Game::rotateActiveTetromino(const Rotation rotation) {
 }
 
 void Game::dropActiveTetromino() {
-    if (!isGameOver() && !isWinner()) {
+    if (hasStarted && !isGameOver() && !isWinner()) {
         int dropDistance = 0;
         try {
             // todo: horrible code, fix this
@@ -235,7 +235,7 @@ void Game::setDifficulty(int difficulty) {
 }
 
 Game::Game()
-        : board(), bag(Bag::getInstance()), currentLevel(START_LEVEL), targetLine(DEFAULT_TARGET_LINE), targetTime(DEFAULT_TARGET_TIME),
-          targetScore(DEFAULT_TARGET_SCORE), difficulty(Board::DEFAULT_DIFFICULTY), boardWidth(Board::DEFAULT_WIDTH),
-          boardHeight(Board::DEFAULT_HEIGHT) {
+        : board(), bag(Bag::getInstance()), currentScore(0), currentLevel(START_LEVEL), currentLine(0), currentTime(0),
+          targetLine(DEFAULT_TARGET_LINE), targetTime(DEFAULT_TARGET_TIME), targetScore(DEFAULT_TARGET_SCORE),
+          difficulty(Board::DEFAULT_DIFFICULTY), boardWidth(Board::DEFAULT_WIDTH), boardHeight(Board::DEFAULT_HEIGHT) {
 }

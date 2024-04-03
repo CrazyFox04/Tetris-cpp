@@ -3,7 +3,6 @@
 //
 #include <gtest/gtest.h>
 #include "Bag.h"
-#include "Tetromino.h"
 
 TEST(Bag, getInstance) {
     Bag&bag = Bag::getInstance();
@@ -18,6 +17,9 @@ TEST(Bag, getNext) {
     ASSERT_EQ(bag.size(), Bag::getInstance().getNumberOfTetrominos()-1);
     bag.getNext();
     ASSERT_EQ(bag.size(), Bag::getInstance().getNumberOfTetrominos()-2);
+    for (int i = 0; i < bag.getNumberOfTetrominos() - 2; i++) {
+        bag.getNext();
+    }
 }
 
 TEST(Bag, shuffle) {
@@ -25,7 +27,7 @@ TEST(Bag, shuffle) {
     for (int i = 0; i < bag.getNumberOfTetrominos(); i++) {
         bag.getNext();
     }
-    ASSERT_EQ(bag.size(), 0);
+    ASSERT_EQ(bag.size(), 7);
     bag.getNext();
     ASSERT_EQ(bag.size(), Bag::getInstance().getNumberOfTetrominos()-1);
 }

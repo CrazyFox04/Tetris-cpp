@@ -88,17 +88,17 @@ void Board::moveActiveTetromino(Direction2D direction) {
     for (const auto&cell: cells) {
         Position newPos = cell + direction;
         newPos += refPosition;
+        if (isOutside(newPos.get_y(), newPos.get_x())) {
+            setOccupiedActiveTetromino();
+            throw std::out_of_range(
+                    "The new position (" + std::to_string(newPos.get_x()) + ";" + std::to_string(newPos.get_y()) +
+                    ") is outside the board");
+        }
         if (isOccupied(newPos.get_y(), newPos.get_x())) {
             setOccupiedActiveTetromino();
             throw std::invalid_argument(
                     "The new position (" + std::to_string(newPos.get_x()) + ";" + std::to_string(newPos.get_y()) +
                     ") is already occupied");
-        }
-        if (isOutside(newPos.get_y(), newPos.get_x())) {
-            setOccupiedActiveTetromino();
-            throw std::out_of_range(
-                "The new position (" + std::to_string(newPos.get_x()) + ";" + std::to_string(newPos.get_y()) +
-                ") is outside the board");
         }
     }
     activeTetromino.move(direction.first, direction.second);
