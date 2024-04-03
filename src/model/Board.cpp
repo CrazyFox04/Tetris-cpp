@@ -281,3 +281,8 @@ void Board::clear() {
     }
     initialize(1);
 }
+
+bool Board::activeTetrominoIsRotatable() const {
+    const Tetromino& activeTetromino = tetrominos.back();
+    return activeTetromino.isRotable();
+}

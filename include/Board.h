@@ -187,6 +187,12 @@ public:
      * set game over to false, clear the board and initialize it.
      */
     void clear();
+
+    /**
+     * Checks if the active tetromino is rotatable
+     * @return true if the active tetromino is rotatable, false otherwise
+     */
+    bool activeTetrominoIsRotatable() const;
 };
 
 #endif //TETRIS_DEV4_PROJET_BOARD_H

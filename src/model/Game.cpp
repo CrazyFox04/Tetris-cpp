@@ -80,7 +80,7 @@ void Game::moveActiveTetromino(Direction2D direction) {
 }
 
 void Game::rotateActiveTetromino(const Rotation rotation) {
-    if (!isGameOver() && !isWinner()) {
+    if (!isGameOver() && !isWinner() && board.activeTetrominoIsRotatable()) {
         try {
             board.rotateActiveTetromino(rotation);
         }

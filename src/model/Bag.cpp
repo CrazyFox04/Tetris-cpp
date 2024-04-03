@@ -7,25 +7,25 @@ Bag *Bag::instance;
 
 Bag::Bag() {
     possibleTetrominos.emplace_back(Tetromino{
-            1, Position(0, 0), {Position(-2, 0), Position(0, 0), Position(-1, 0), Position(1, 0)}
+            1, Position(0, 0), {Position(-2, 0), Position(0, 0), Position(-1, 0), Position(1, 0)}, true
     }); // I
     possibleTetrominos.emplace_back(Tetromino{
-            2, Position(0, 0), {Position(0, 0), Position(1, 0), Position(0, 1), Position(1, 1)}
+            2, Position(0, 0), {Position(0, 0), Position(1, 0), Position(0, 1), Position(1, 1)}, false
     }); // O
     possibleTetrominos.emplace_back(Tetromino{
-            3, Position(0, 0), {Position(-1, 0), Position(0, 0), Position(1, 0), Position(0, 1)}
+            3, Position(0, 0), {Position(-1, 0), Position(0, 0), Position(1, 0), Position(0, 1)}, true
     }); // T
     possibleTetrominos.emplace_back(Tetromino{
-            4, Position(0, 0), {Position(0, 0), Position(1, 0), Position(-1, 1), Position(0, 1)}
+            4, Position(0, 0), {Position(0, 0), Position(1, 0), Position(-1, 1), Position(0, 1)}, true
     }); // S
     possibleTetrominos.emplace_back(Tetromino{
-            5, Position(0, 0), {Position(-1, 0), Position(0, 0), Position(0, 1), Position(1, 1)}
+            5, Position(0, 0), {Position(-1, 0), Position(0, 0), Position(0, 1), Position(1, 1)}, true
     }); // Z
     possibleTetrominos.emplace_back(Tetromino{
-            6, Position(0, 0), {Position(-1, -1), Position(-1, 0), Position(0, 0), Position(1, 0)}
+            6, Position(0, 0), {Position(-1, -1), Position(-1, 0), Position(0, 0), Position(1, 0)}, true
     }); // J
     possibleTetrominos.emplace_back(Tetromino{
-            7, Position(0, 0), {Position(1, -1), Position(-1, 0), Position(0, 0), Position(1, 0)}
+            7, Position(0, 0), {Position(1, -1), Position(-1, 0), Position(0, 0), Position(1, 0)}, true
     }); // L
 
     addTetrominosToBag();

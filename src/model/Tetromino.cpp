@@ -1,7 +1,7 @@
 #include "Tetromino.h"
 
-Tetromino::Tetromino(const int id, const Position center, std::vector<Position> cells) : id(id), refPosition(center),
-                                                                                         cells(std::move(cells)) {
+Tetromino::Tetromino(const int id, const Position center, std::vector<Position> cells, bool rotable_) :
+id(id), refPosition(center), cells(std::move(cells)), rotable(rotable_) {
 }
 
 void Tetromino::rotateClockwise() {
@@ -85,4 +85,8 @@ int Tetromino::get_height() const {
         }
     }
     return max - min + 1;
+}
+
+bool Tetromino::isRotable() const {
+    return rotable;
 }

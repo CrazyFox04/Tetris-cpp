@@ -15,6 +15,7 @@ class Tetromino {
     int id; //!< The unique identifier of the Tetromino.
     Position refPosition; //!< Reference position of the Tetromino.
     std::vector<Position> cells; //!< Vector of cells that make up the Tetromino.
+    bool rotable; //!< Flag to indicate if the Tetromino is rotatable.
 
 public:
     /**
@@ -23,7 +24,7 @@ public:
      * @param center Reference position for the Tetromino.
      * @param cells Initial cell positions relative to the reference position.
      */
-    Tetromino(int id, Position center, std::vector<Position> cells);
+    Tetromino(int id, Position center, std::vector<Position> cells, bool rotable);
 
     /**
      * Getter for the unique identifier of the Tetromino.
@@ -79,6 +80,12 @@ public:
      * @return the height of the Tetromino.
      */
     int get_height() const;
+
+    /**
+     * Get the rotatibility of the Tetromino.
+     * @return true if the Tetromino is rotatable, false otherwise.
+     */
+    bool isRotable() const;
 };
 
 /**
