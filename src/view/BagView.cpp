@@ -10,6 +10,9 @@
 
     char tSymbol = symbols.at(nextTetromino.get_id());
     int gridSize = std::max(nextTetromino.get_length(), nextTetromino.get_height());
+    if (gridSize % 2 == 0) {
+        gridSize++;
+    }
     std::vector<std::vector<char>> grid(gridSize, std::vector<char>(gridSize, ' '));
     int centerX = gridSize / 2;
     int centerY = gridSize / 2;
