@@ -128,13 +128,13 @@ public:
      * Getter for the game board
      * @return Constant reference to the board.
      */
-    Board const &getBoard() const override;
+    const Board &getBoard() const override;
 
     /**
      * Getter for the bag of tetrominos.
      * @return Constant reference to the bag.
      */
-    Bag const &getBag() const override;
+    const Bag &getBag() const override;
 
     /**
      * Checks if the game is over.
