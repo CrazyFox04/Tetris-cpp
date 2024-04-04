@@ -176,16 +176,13 @@ void Board::clearLine(int line) {
     for (int j = 0; j < width; j++) {
         occupied[line][j] = false;
     }
-
-    for (auto &tetro: tetrominos) {
-        std::vector<Position> cells = tetro.get_relative_cells();
-        cells.erase(std::remove_if(cells.begin(), cells.end(), [line](const Position &pos) {
-                        return pos.get_y() == line;
-                    }),
-                    cells.end()
-        );
+    std::for_each(tetrominos.begin(), tetrominos.end(), [line](Tetromino &tetro) {
+        auto cells = tetro.get_relative_cells();
+        erase_if(cells,[line](const Position &pos) {
+            return pos.get_y() == line;
+        });
         tetro.set_relative_cells(cells);
-    }
+    });
 }
 
 void Board::moveLinesDown(const int clearedline) {
@@ -194,17 +191,18 @@ void Board::moveLinesDown(const int clearedline) {
             occupied[y][x] = occupied[y - 1][x];
         }
     }
-    for (auto &tetromino: tetrominos) {
+    std::for_each(tetrominos.begin(), tetrominos.end(), [clearedline, this](Tetromino &tetro) {
         auto modifiedCells = std::vector<Position>();
-        for (auto &cell: tetromino.get_relative_cells()) {
-            if (cell.get_y() + refPosition.get_y() < clearedline) {
+        auto cells = tetro.get_relative_cells();
+        std::for_each(cells.begin(), cells.end(), [clearedline, &modifiedCells, this](const Position &cell) {
+            if (cell.get_y() + this->refPosition.get_y() < clearedline) {
                 modifiedCells.emplace_back(cell.get_x(), cell.get_y() + 1);
             } else {
                 modifiedCells.emplace_back(cell.get_x(), cell.get_y());
             }
-        }
-        tetromino.set_relative_cells(modifiedCells);
-    }
+        });
+        tetro.set_relative_cells(modifiedCells);
+    });
 }
 
 bool Board::isGameOver() const {
@@ -215,11 +213,9 @@ Tetromino &Board::getActiveTetromino() {
     return tetrominos.back();
 }
 
-const std::vector<Tetromino> Board::getTetrominos() const {
+std::vector<Tetromino> Board::getTetrominos() const {
     std::vector<Tetromino> constTetrominos;
-    for (const auto &tetromino: tetrominos) {
-        constTetrominos.push_back(tetromino);
-    }
+    std::copy(tetrominos.begin(), tetrominos.end(), std::back_inserter(constTetrominos));
     return constTetrominos;
 }
 
@@ -231,11 +227,9 @@ int Board::getHeight() const {
     return height;
 }
 
-const std::vector<std::vector<bool>> Board::getOccupied() const {
+std::vector<std::vector<bool>> Board::getOccupied() const {
     std::vector<std::vector<bool>> constOccupied;
-    for (const auto &row: occupied) {
-        constOccupied.push_back(row);
-    }
+    std::copy(occupied.begin(), occupied.end(), std::back_inserter(constOccupied));
     return constOccupied;
 }
 
@@ -246,11 +240,9 @@ Position Board::getRefPosition() const {
 void Board::clearOccupiedForActiveTetromino() {
     auto &activeTetromino = tetrominos.back();
     auto cells = activeTetromino.get_relative_cells();
-    for (const auto &cell: cells) {
-        int absX = refPosition.get_x() + cell.get_x();
-        int absY = refPosition.get_y() + cell.get_y();
-        occupied[absY][absX] = false;
-    }
+    std::for_each(cells.begin(), cells.end(), [this](Position &cell) {
+        occupied[refPosition.get_y() + cell.get_y()][refPosition.get_x() + cell.get_x()] = false;
+    });
 }
 
 void Board::clear() {

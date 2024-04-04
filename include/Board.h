@@ -86,6 +86,12 @@ private:
  */
     void setOccupiedForTetromino(Tetromino &tetromino);
 
+    /**
+ * Prepare the board for a new game.
+ * set game over to false, clear the board and initialize it.
+ */
+    void clear();
+
 public:
     static const int DEFAULT_WIDTH = 10; //!< Default width of the board
     static const int DEFAULT_HEIGHT = 20; //!< Default height of the board
@@ -154,7 +160,7 @@ public:
      */
     bool isOccupied(int row, int column) const;
 
-    bool isOccupied(Tetromino& tetromino) const;
+    bool isOccupied(Tetromino &tetromino) const;
 
     /**
      * Checks if a line of the board is full of tetromino's blocks
@@ -185,7 +191,7 @@ public:
      * Getter for the tetrominos placed on the board
      * @return a const copy of the tetrominos vector
      */
-    const std::vector<Tetromino> getTetrominos() const;
+    std::vector<Tetromino> getTetrominos() const;
 
     /**
      * Getter for the width of the board
@@ -203,19 +209,13 @@ public:
      * Getter for the occupied vector
      * @return a const copy of the occupied vector
      */
-    const std::vector<std::vector<bool>> getOccupied() const;
+    std::vector<std::vector<bool>> getOccupied() const;
 
     /**
      * Getter for the reference position of the board
      * @return the reference position of the board
      */
     Position getRefPosition() const;
-
-    /**
-     * Prepare the board for a new game.
-     * set game over to false, clear the board and initialize it.
-     */
-    void clear();
 
     /**
      * Checks if the active tetromino is rotatable

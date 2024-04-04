@@ -5,9 +5,9 @@ void Game::addObserver(Observer &observer) {
 }
 
 void Game::notifyObservers() {
-    for (auto &observer: observers) {
+    std::for_each(observers.begin(), observers.end(), [](std::shared_ptr<Observer>& observer) {
         observer->update();
-    }
+    });
 }
 
 void Game::removeObserver(const int pos) {
@@ -33,7 +33,7 @@ void Game::checkTargets() const {
     if (difficulty < Board::MIN_DIFFICULTY || difficulty > Board::MAX_DIFFICULTY) {
         throw std::invalid_argument("Invalid difficulty, please try again.");
     }
-    if (currentLevel < 1) {
+    if (currentLevel < 0) {
         throw std::invalid_argument("Invalid level, please try again.");
     }
     if (targetScore < 0 || targetTime < 0 || targetLine < 0) {
@@ -150,6 +150,9 @@ Bag const &Game::getBag() const {
 }
 
 bool Game::isGameOver() const {
+    if (targetTime != 0 && targetTime <= currentTime) {
+        return true;
+    }
     return board.isGameOver();
 }
 
@@ -158,9 +161,6 @@ bool Game::isWinner() const {
         return true;
     }
     if (targetScore != 0 && targetScore <= currentScore) {
-        return true;
-    }
-    if (targetTime != 0 && targetTime <= currentTime) {
         return true;
     }
     return false;
@@ -208,11 +208,11 @@ void Game::setTargetScore(int score) {
     targetScore = score;
 }
 
-void Game::setDifficulty(int difficulty) {
+void Game::setDifficulty(int difficulty_) {
     if (hasStarted) {
         throw std::runtime_error("You can't set Game target if it's already started");
     }
-    this->difficulty = difficulty;
+    difficulty = difficulty_;
 }
 
 Game::Game()

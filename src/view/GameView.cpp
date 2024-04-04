@@ -46,15 +46,15 @@ void GameView::displaySettings() {
 }
 
 int GameView::askWidth() {
-    return askForInt("Enter the width of the board (between 10 and 30): ", 5, 20);
+    return askForInt("Enter the width of the board (between 10 and 30): ", Board::MIN_BOARD_WIDTH, Board::MAX_BOARD_WIDTH);
 }
 
 int GameView::askHeight() {
-    return askForInt("Enter the height of the board (between 10 and 30): ", 10, 30);
+    return askForInt("Enter the height of the board (between 10 and 30): ", Board::MIN_BOARD_HEIGHT, Board::MAX_BOARD_HEIGHT);
 }
 
 int GameView::askDifficulty() {
-    return askForInt("Enter the difficulty (fill randomly with more or less blocks. 1 for default): ", 1, 20);
+    return askForInt("Enter the difficulty (fill randomly with more or less blocks. 1 for default): ", Board::MIN_DIFFICULTY, Board::MAX_DIFFICULTY);
 }
 
 int GameView::askLevel() {
