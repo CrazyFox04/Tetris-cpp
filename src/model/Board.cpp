@@ -209,7 +209,7 @@ bool Board::isGameOver() const {
     return gameOver;
 }
 
-Tetromino &Board::getActiveTetromino() {
+const Tetromino &Board::getActiveTetromino() {
     return tetrominos.back();
 }
 

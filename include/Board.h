@@ -185,7 +185,7 @@ public:
      * Getter for the active tetromino
      * @return a reference to the active tetromino
      */
-    Tetromino &getActiveTetromino();
+    const Tetromino &getActiveTetromino();
 
     /**
      * Getter for the tetrominos placed on the board
