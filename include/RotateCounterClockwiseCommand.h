@@ -20,9 +20,8 @@ public:
 
     /**
      * Constructor for RotateCounterClockwiseCommand.
-     * Initializes the command with a reference to the GameController and GameView.
+     * Initializes the command with a reference to the GameController.
      * @param gameController Reference to the GameController that controls the game's logic.
-     * @param view Reference to the GameView that displays the game.
      */
     explicit RotateCounterClockwiseCommand(GameController &gameController, GameView &view_);
 

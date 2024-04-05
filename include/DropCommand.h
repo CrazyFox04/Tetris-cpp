@@ -21,9 +21,7 @@ class DropCommand : public Command {
 public:
     /**
      * Constructor for DropCommand.
-     * Initializes the command with a reference to the GameController and GameView.
      * @param controller Reference to GameController which this command will interact with.
-     * @param view Reference to GameView which this command will interact with.
      */
     explicit DropCommand(GameController &controller, GameView &view);
 

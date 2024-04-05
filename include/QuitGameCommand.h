@@ -12,6 +12,7 @@
  */
 class QuitGameCommand : public Command {
 public:
+
     /**
      * Constructor for QuitGameCommand.
      * Initializes the command with a reference to the GameController.
