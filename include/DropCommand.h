@@ -1,9 +1,6 @@
-//
-// Created by Enzo Renard on 05/03/2024.
-//
-
 #ifndef DROPCOMMAND_H
 #define DROPCOMMAND_H
+
 #include "Command.h"
 #include "GameController.h"
 #include "GameView.h"
@@ -18,10 +15,8 @@
  * GameController that it communicates with to execute the action.
  */
 class DropCommand : public Command {
-    // Reference to GameController to delegate the execution logic of the command.
-    GameController &gameController;
-    // Reference to the GameView to delegate the display of the command.
-    GameView &view;
+    GameController &gameController; //!< Reference to GameController to delegate the execution logic of the command.
+    GameView &view;  //!< Reference to the GameView to delegate the display of the command.
 
 public:
     /**

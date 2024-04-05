@@ -1,5 +1,6 @@
 #ifndef ROTATECLOCKWISECOMMAND_H
 #define ROTATECLOCKWISECOMMAND_H
+
 #include "Command.h"
 #include "GameController.h"
 #include "GameView.h"
@@ -13,8 +14,8 @@
  * perform the rotation.
  */
 class RotateClockwiseCommand : public Command {
-    GameController& gameController; //!< Reference to the game controller.
-    GameView& view; //!< Reference to the game view.
+    GameController &gameController; //!< Reference to the game controller.
+    GameView &view; //!< Reference to the game view.
 public:
 
     /**
@@ -22,7 +23,7 @@ public:
      * Initializes the command with a reference to the GameController.
      * @param gameController Reference to the GameController that controls the game's logic.
      */
-    explicit RotateClockwiseCommand(GameController& gameController, GameView& view);
+    explicit RotateClockwiseCommand(GameController &gameController, GameView &view);
 
     /**
      * Executes the command to rotate the active tetromino clockwise.

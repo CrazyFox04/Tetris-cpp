@@ -2,7 +2,6 @@
 #define TETRIS_QUITGAMECOMMAND_H
 
 #include "Command.h"
-#include "GameController.h"
 
 /**
  * @class QuitGameCommand
@@ -12,7 +11,6 @@
  * the game. It relies on the GameController to actually perform the quitting.
  */
 class QuitGameCommand : public Command {
-    //GameController& gameController; //!< Reference to the game controller.
 public:
 
     /**
@@ -20,7 +18,6 @@ public:
      * Initializes the command with a reference to the GameController.
      * @param gameController Reference to the GameController that controls the game's logic.
      */
-// explicit QuitGameCommand(GameController& gameController);
     explicit QuitGameCommand();
     /**
      * Executes the command to quit the game.

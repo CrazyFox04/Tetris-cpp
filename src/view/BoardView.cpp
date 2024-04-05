@@ -1,3 +1,6 @@
+#include <iostream>
+#include <map>
+
 #include "BoardView.h"
 
 void BoardView::drawBoard(const Board &board) const {

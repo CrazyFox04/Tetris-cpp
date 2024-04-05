@@ -2,6 +2,7 @@
 #define TETRIS_DEV4_PROJET_BAG_H
 
 #include <vector>
+#include "Bag.h"
 #include "Tetromino.h"
 
 /**
@@ -77,7 +78,7 @@ public:
      * Get the number of Tetrominos in the bag.
      * @return number of Tetrominos in the bag
      */
-    int size();
+    int size() const;
 
     /**
      * Get all possible Tetrominos that can be in the bag.

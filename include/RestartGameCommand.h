@@ -24,7 +24,7 @@ public:
      * Initializes the command with a reference to the GameController.
      * @param gameController Reference to the GameController that controls the game's logic.
      */
-    explicit RestartGameCommand(GameController& gameController, Invoker& invoker, GameView& view_);
+    explicit RestartGameCommand(GameController& gameController, Invoker& invoker_, GameView& view_);
 
     /**
      * Executes the command to restart the game.

@@ -1,10 +1,11 @@
 #ifndef BAGVIEW_H
 #define BAGVIEW_H
 
-#include "Bag.h"
-#include <iostream>
 #include <map>
-#include <algorithm>
+#include <vector>
+
+#include "Tetromino.h"
+#include "Bag.h"
 
 /**
  * @class BagView
@@ -13,13 +14,6 @@
  * This class is responsible for drawing the next tetromino in the bag.
  */
 class BagView {
-public:
-    /**
-     * Draw the next tetromino in the bag.
-     * @param bag The bag to draw the next tetromino from.
-     */
-    void drawNextTetromino(const Bag &bag) const;
-private:
     /**
      * Create a mapping of tetromino IDs to symbols.
      * @return A map of tetromino IDs to symbols.
@@ -39,5 +33,13 @@ private:
      * @param grid The grid to print.
      */
     void printGrid(const std::vector<std::vector<char>> &grid) const;
+
+public:
+    /**
+     * Draw the next tetromino in the bag.
+     * @param bag The bag to draw the next tetromino from.
+     */
+    void drawNextTetromino(const Bag &bag) const;
 };
+
 #endif //BAGVIEW_H

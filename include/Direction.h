@@ -1,9 +1,6 @@
-//
-// Created by Enzo Renard on 05/03/2024.
-//
-
 #ifndef DIRECTION_H
 #define DIRECTION_H
+
 #include <utility>
 
 /**

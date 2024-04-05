@@ -1,12 +1,12 @@
 #include "Tetromino.h"
 #include <stdexcept>
 
-Tetromino::Tetromino(const int id, const Position center, std::vector<Position> cells, bool rotable_) :
-id(id), refPosition(center), cells(std::move(cells)), rotable(rotable_) {
+Tetromino::Tetromino(const int id, const Position center, std::vector<Position> cells, bool canRotate) :
+        id(id), refPosition(center), cells(std::move(cells)), canRotate_(canRotate) {
 }
 
 Tetromino& Tetromino::rotate(Rotation rotation) {
-    if (!rotable) {
+    if (!canRotate_) {
         throw std::runtime_error("Tetromino is not rotatable");
     }
     for (auto &cell: cells) {
@@ -87,6 +87,6 @@ int Tetromino::get_height() const {
     return max - min + 1;
 }
 
-bool Tetromino::isRotable() const {
-    return rotable;
+bool Tetromino::canRotate() const {
+    return canRotate_;
 }

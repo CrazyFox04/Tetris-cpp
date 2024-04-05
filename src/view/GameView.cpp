@@ -1,5 +1,7 @@
-#include "GameView.h"
+#include <iostream>
 #include <limits>
+
+#include "GameView.h"
 
 GameView::GameView(GameController& controller_) : controller(controller_) {}
 

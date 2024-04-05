@@ -1,16 +1,14 @@
-//
-// Created by Enzo Renard on 05/03/2024.
-//
-
 #ifndef INVOKER_H
 #define INVOKER_H
 
-#include "Command.h"
-#include "GameState.h"
 #include <map>
 #include <vector>
 #include <string>
 #include <memory>
+#include <utility>
+
+#include "Command.h"
+#include "GameState.h"
 
 /**
  * @class Invoker
@@ -50,7 +48,7 @@ public:
      * Executes a command based on its name if the command is valid in the current game state.
      * @param commandName The name of the command to execute.
      */
-    void execute(const std::string &name);
+    void execute(const std::string &name) const;
 
     /**
      * Get the current state of the game.

@@ -2,6 +2,7 @@
 #define TETRIS_DEV4_PROJET_TETROMINO_H
 
 #include <vector>
+
 #include "Position.h"
 
 /**
@@ -15,7 +16,7 @@ class Tetromino {
     int id; //!< The unique identifier of the Tetromino.
     Position refPosition; //!< Reference position of the Tetromino.
     std::vector<Position> cells; //!< Vector of cells that make up the Tetromino.
-    bool rotable; //!< Flag to indicate if the Tetromino is rotatable.
+    bool canRotate_; //!< Flag to indicate if the Tetromino is rotatable.
 
 public:
     /**
@@ -24,7 +25,7 @@ public:
      * @param center Reference position for the Tetromino.
      * @param cells Initial cell positions relative to the reference position.
      */
-    Tetromino(int id, Position center, std::vector<Position> cells, bool rotable);
+    Tetromino(int id, Position center, std::vector<Position> cells, bool canRotate = true);
 
     /**
      * Getter for the unique identifier of the Tetromino.
@@ -75,7 +76,7 @@ public:
      * Get the rotatibility of the Tetromino.
      * @return true if the Tetromino is rotatable, false otherwise.
      */
-    bool isRotable() const;
+    bool canRotate() const;
 
     /**
  * Rotates the Tetromino in the specified direction.

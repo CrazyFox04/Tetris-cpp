@@ -1,9 +1,6 @@
-//
-// Created by Enzo Renard on 05/03/2024.
-//
-
 #ifndef MOVEDOWNCOMMAND_H
 #define MOVEDOWNCOMMAND_H
+
 #include "Command.h"
 #include "GameController.h"
 #include "GameView.h"
@@ -17,8 +14,8 @@
  * to actually perform the movement.
  */
 class MoveDownCommand : public Command {
-    GameController& gameController; //!< Reference to the game controller.
-    GameView& view; //!< Reference to the game view.
+    GameController &gameController; //!< Reference to the game controller.
+    GameView &view; //!< Reference to the game view.
 public:
 
     /**
@@ -26,7 +23,7 @@ public:
      * Initializes the command with a reference to the GameController.
      * @param gameController Reference to the GameController that controls the game's logic.
      */
-    explicit MoveDownCommand(GameController& gameController, GameView& view);
+    explicit MoveDownCommand(GameController &gameController, GameView &view);
 
     /**
      * Executes the command to move the active tetromino downwards.
@@ -34,4 +31,5 @@ public:
      */
     void execute() override;
 };
+
 #endif //MOVEDOWNCOMMAND_H

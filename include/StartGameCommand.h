@@ -1,9 +1,6 @@
-//
-// Created by Julien Delcombel on 30/03/2024.
-//
-
 #ifndef TETRIS_STARTGAMECOMMAND_H
 #define TETRIS_STARTGAMECOMMAND_H
+
 #include "Command.h"
 #include "GameController.h"
 #include "Invoker.h"
@@ -17,9 +14,9 @@
  * the game. It relies on the GameController to actually perform the starting.
  */
 class StartGameCommand : public Command {
-    GameController& gameController; //!< Reference to the game controller.
-    Invoker& invoker; //!< Reference to the invoker.
-    GameView& view; //!< Reference to the game view.
+    GameController &gameController; //!< Reference to the game controller.
+    Invoker &invoker; //!< Reference to the invoker.
+    GameView &view; //!< Reference to the game view.
 public:
 
     /**
@@ -28,7 +25,7 @@ public:
      * @param gameController Reference to the GameController that controls the game's logic.
      * @param invoker Reference to the invoker that controls the commands.
      */
-    StartGameCommand(GameController& gameController, Invoker& invoker, GameView& gameView);
+    StartGameCommand(GameController &gameController, Invoker &invoker, GameView &gameView);
 
     /**
      * Executes the command to start the game.
@@ -36,7 +33,5 @@ public:
      */
     void execute() override;
 };
-
-
 
 #endif //TETRIS_STARTGAMECOMMAND_H

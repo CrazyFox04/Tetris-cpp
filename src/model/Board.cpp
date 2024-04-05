@@ -209,14 +209,12 @@ bool Board::isGameOver() const {
     return gameOver;
 }
 
-const Tetromino &Board::getActiveTetromino() {
+const Tetromino &Board::getActiveTetromino() const {
     return tetrominos.back();
 }
 
-std::vector<Tetromino> Board::getTetrominos() const {
-    std::vector<Tetromino> constTetrominos;
-    std::copy(tetrominos.begin(), tetrominos.end(), std::back_inserter(constTetrominos));
-    return constTetrominos;
+const std::vector<Tetromino> Board::getTetrominos() const {
+    return tetrominos;
 }
 
 int Board::getWidth() const {
@@ -227,10 +225,8 @@ int Board::getHeight() const {
     return height;
 }
 
-std::vector<std::vector<bool>> Board::getOccupied() const {
-    std::vector<std::vector<bool>> constOccupied;
-    std::copy(occupied.begin(), occupied.end(), std::back_inserter(constOccupied));
-    return constOccupied;
+const std::vector<std::vector<bool>> Board::getOccupied() const {
+   return occupied;
 }
 
 Position Board::getRefPosition() const {
@@ -256,5 +252,5 @@ void Board::clear() {
 
 bool Board::activeTetrominoIsRotatable() const {
     const Tetromino &activeTetromino = tetrominos.back();
-    return activeTetromino.isRotable();
+    return activeTetromino.canRotate();
 }

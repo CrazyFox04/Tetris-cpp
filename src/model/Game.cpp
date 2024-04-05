@@ -1,5 +1,7 @@
-#include "Game.h"
 #include <algorithm>
+#include <stdexcept>
+
+#include "Game.h"
 
 void Game::addObserver(Observer &observer) {
     observers.emplace_back(&observer);

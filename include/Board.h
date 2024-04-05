@@ -2,7 +2,8 @@
 #define TETRIS_DEV4_PROJET_BOARD_H
 
 #include <vector>
-#include <random>
+
+#include "Position.h"
 #include "Tetromino.h"
 #include "Direction.h"
 
@@ -117,7 +118,7 @@ public:
      * @param difficulty [1;20] integer that will determine the fill percentage of the board
      * @throw std::invalid_argument if the board is not large or higher enough
      */
-    Board(int width, int height, int difficulty); // difficulty will determinate the percentage of occupied cells
+    Board(int width, int height, int difficulty);
 
     /**
      * Adds a tetromino to the Board
@@ -185,13 +186,13 @@ public:
      * Getter for the active tetromino
      * @return a reference to the active tetromino
      */
-    const Tetromino &getActiveTetromino();
+    const Tetromino &getActiveTetromino() const;
 
     /**
      * Getter for the tetrominos placed on the board
      * @return a const copy of the tetrominos vector
      */
-    std::vector<Tetromino> getTetrominos() const;
+    const std::vector<Tetromino> getTetrominos() const;
 
     /**
      * Getter for the width of the board
@@ -209,7 +210,7 @@ public:
      * Getter for the occupied vector
      * @return a const copy of the occupied vector
      */
-    std::vector<std::vector<bool>> getOccupied() const;
+    const std::vector<std::vector<bool>> getOccupied() const;
 
     /**
      * Getter for the reference position of the board

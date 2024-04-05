@@ -1,7 +1,3 @@
-//
-// Created by Enzo Renard on 05/03/2024.
-//
-
 #ifndef GAMECONTROLLER_H
 #define GAMECONTROLLER_H
 
