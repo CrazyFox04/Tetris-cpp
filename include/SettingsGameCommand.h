@@ -2,7 +2,6 @@
 #define TETRIS_SETTINGSGAMECOMMAND_H
 
 #include "Command.h"
-#include "GameController.h"
 #include "GameView.h"
 
 

@@ -14,8 +14,8 @@
  * to actually perform the movement.
  */
 class MoveLeftCommand : public Command {
-    GameController& gameController; //!< Reference to the game controller.
-    GameView& view; //!< Reference to the game view.
+    GameController &gameController; //!< Reference to the game controller.
+    GameView &view; //!< Reference to the game view.
 public:
 
     /**
@@ -24,7 +24,7 @@ public:
      * @param gameController Reference to the GameController that controls the game's logic.
      * @param view Reference to the GameView that displays the game.
      */
-    explicit MoveLeftCommand(GameController& gameController, GameView& view);
+    explicit MoveLeftCommand(GameController &gameController, GameView &view);
 
     /**
      * Executes the command to move the active tetromino to the left.
@@ -32,4 +32,5 @@ public:
      */
     void execute() override;
 };
+
 #endif //MOVELEFTCOMMAND_H

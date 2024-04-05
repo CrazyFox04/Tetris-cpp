@@ -14,9 +14,9 @@
  * the game. It relies on the GameController to actually perform the starting.
  */
 class StartGameCommand : public Command {
-    GameController& gameController; //!< Reference to the game controller.
-    Invoker& invoker; //!< Reference to the invoker.
-    GameView& view; //!< Reference to the game view.
+    GameController &gameController; //!< Reference to the game controller.
+    Invoker &invoker; //!< Reference to the invoker.
+    GameView &view; //!< Reference to the game view.
 public:
 
     /**
@@ -26,7 +26,7 @@ public:
      * @param invoker Reference to the invoker that controls the commands.
      * @param gameView Reference to the GameView that displays the game.
      */
-    StartGameCommand(GameController& gameController, Invoker& invoker, GameView& gameView);
+    StartGameCommand(GameController &gameController, Invoker &invoker, GameView &gameView);
 
     /**
      * Executes the command to start the game.
@@ -34,7 +34,5 @@ public:
      */
     void execute() override;
 };
-
-
 
 #endif //TETRIS_STARTGAMECOMMAND_H

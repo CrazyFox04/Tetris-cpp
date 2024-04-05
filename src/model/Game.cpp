@@ -1,3 +1,6 @@
+#include <algorithm>
+#include <stdexcept>
+
 #include "Game.h"
 
 void Game::addObserver(Observer &observer) {
@@ -5,9 +8,9 @@ void Game::addObserver(Observer &observer) {
 }
 
 void Game::notifyObservers() {
-    for (auto &observer: observers) {
+    std::for_each(observers.begin(), observers.end(), [](std::shared_ptr<Observer>& observer) {
         observer->update();
-    }
+    });
 }
 
 void Game::removeObserver(const int pos) {
@@ -33,7 +36,7 @@ void Game::checkTargets() const {
     if (difficulty < Board::MIN_DIFFICULTY || difficulty > Board::MAX_DIFFICULTY) {
         throw std::invalid_argument("Invalid difficulty, please try again.");
     }
-    if (currentLevel < 1) {
+    if (currentLevel < 0) {
         throw std::invalid_argument("Invalid level, please try again.");
     }
     if (targetScore < 0 || targetTime < 0 || targetLine < 0) {
@@ -60,41 +63,28 @@ void Game::moveActiveTetromino(Direction2D direction) {
         try {
             board.moveActiveTetromino(direction);
         }
-        catch (const std::out_of_range &) {
+        catch (const std::exception &) {
             if (direction == Direction::DOWN) {
-                int linesCleared = board.removeCompleteLines();
-                updateScore(linesCleared, 0);
+                updateScore(board.removeCompleteLines(), 0);
                 board.addTetromino(bag.getNext());
             }
-        } catch (const std::invalid_argument &) {
-            if (direction == Direction::DOWN) {
-                int linesCleared = board.removeCompleteLines();
-                updateScore(linesCleared, 0);
-                board.addTetromino(bag.getNext());
-            }
-        } catch (const std::runtime_error &) {
-            // nop
         }
     }
     notifyObservers();
 }
 
-void Game::rotateActiveTetromino(const Rotation rotation) {
+void Game::rotateActiveTetromino(Rotation rotation) {
     if (hasStarted && !isGameOver() && !isWinner() && board.activeTetrominoIsRotatable()) {
         try {
             board.rotateActiveTetromino(rotation);
         }
         catch (const std::out_of_range &) {
-            if (board.activeTetroIsBellow(boardHeight - 1)) {
-                int linesCleared = board.removeCompleteLines();
-                updateScore(linesCleared, 0);
+            if (board.activeTetroIsBellow(boardHeight - 2)) {
+                updateScore(board.removeCompleteLines(), 0);
                 board.addTetromino(bag.getNext());
-            } else {
-                // nop
             }
         } catch (const std::invalid_argument &) {
-            int linesCleared = board.removeCompleteLines();
-            updateScore(linesCleared, 0);
+            updateScore(board.removeCompleteLines(), 0);
             board.addTetromino(bag.getNext());
         }
     }
@@ -105,19 +95,13 @@ void Game::dropActiveTetromino() {
     if (hasStarted && !isGameOver() && !isWinner()) {
         int dropDistance = 0;
         try {
-            // todo: horrible code, fix this
-            while (true) {
+            while (!board.activeTetroIsBellow(boardHeight - 1)) {
                 board.moveActiveTetromino(Direction::DOWN);
                 dropDistance++;
             }
         }
-        catch (const std::out_of_range &) {
-            int linesCleared = board.removeCompleteLines();
-            updateScore(linesCleared, dropDistance);
-            board.addTetromino(bag.getNext());
-        } catch (const std::invalid_argument &) {
-            int linesCleared = board.removeCompleteLines();
-            updateScore(linesCleared, dropDistance);
+        catch (const std::exception &) {
+            updateScore(board.removeCompleteLines(), dropDistance);
             board.addTetromino(bag.getNext());
         }
     }
@@ -169,6 +153,9 @@ Bag const &Game::getBag() const {
 }
 
 bool Game::isGameOver() const {
+    if (targetTime != 0 && targetTime <= currentTime) {
+        return true;
+    }
     return board.isGameOver();
 }
 
@@ -177,9 +164,6 @@ bool Game::isWinner() const {
         return true;
     }
     if (targetScore != 0 && targetScore <= currentScore) {
-        return true;
-    }
-    if (targetTime != 0 && targetTime <= currentTime) {
         return true;
     }
     return false;
@@ -227,11 +211,11 @@ void Game::setTargetScore(int score) {
     targetScore = score;
 }
 
-void Game::setDifficulty(int difficulty) {
+void Game::setDifficulty(int difficulty_) {
     if (hasStarted) {
         throw std::runtime_error("You can't set Game target if it's already started");
     }
-    this->difficulty = difficulty;
+    difficulty = difficulty_;
 }
 
 Game::Game()

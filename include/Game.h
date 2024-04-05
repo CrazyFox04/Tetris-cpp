@@ -1,14 +1,15 @@
 #ifndef TETRIS_DEV4_PROJET_GAME_H
 #define TETRIS_DEV4_PROJET_GAME_H
 
-#include "GameController.h"
 #include <vector>
+#include <memory>
+
+#include "GameController.h"
 #include "Observable.h"
 #include "Observer.h"
 #include "Board.h"
 #include "Bag.h"
 #include "Direction.h"
-#include <memory>
 
 /**
  * @class Game
@@ -128,13 +129,13 @@ public:
      * Getter for the game board
      * @return Constant reference to the board.
      */
-    Board const &getBoard() const override;
+    const Board &getBoard() const override;
 
     /**
      * Getter for the bag of tetrominos.
      * @return Constant reference to the bag.
      */
-    Bag const &getBag() const override;
+    const Bag &getBag() const override;
 
     /**
      * Checks if the game is over.
@@ -151,42 +152,49 @@ public:
     /**
      * Sets the width of the game board.
      * @param width The width of the game board.
+     * @throw std::runtime_error if the game has already started.
      */
     void setBoardWidth(int width) override;
 
     /**
      * Sets the height of the game board.
      * @param height The height of the game board.
+     * @throw std::runtime_error if the game has already started.
      */
     void setBoardHeight(int height) override;
 
     /**
      * Sets the starting level of the game.
      * @param level The starting level of the game.
+     * @throw std::runtime_error if the game has already started.
      */
     void setStartLevel(int level) override;
 
     /**
      * Sets the target line to clear for the game.
      * @param line The target line to clear.
+     * @throw std::runtime_error if the game has already started.
      */
     void setTargetLine(int line) override;
 
     /**
      * Sets the target time limit for the game.
      * @param time The target time limit.
+     * @throw std::runtime_error if the game has already started.
      */
     void setTargetTime(int time) override;
 
     /**
      * Sets the target score to achieve for the game.
      * @param score The target score to achieve.
+     * @throw std::runtime_error if the game has already started.
      */
     void setTargetScore(int score) override;
 
     /**
      * Sets the game difficulty level.
      * @param difficulty The game difficulty level.
+     * @throw std::runtime_error if the game has already started.
      */
     void setDifficulty(int difficulty) override;
 

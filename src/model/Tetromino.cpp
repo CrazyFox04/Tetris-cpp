@@ -1,31 +1,31 @@
 #include "Tetromino.h"
+#include <stdexcept>
 
-Tetromino::Tetromino(const int id, const Position center, std::vector<Position> cells, bool rotable_) :
-id(id), refPosition(center), cells(std::move(cells)), rotable(rotable_) {
+Tetromino::Tetromino(const int id, const Position center, std::vector<Position> cells, bool canRotate) :
+        id(id), refPosition(center), cells(std::move(cells)), canRotate_(canRotate) {
 }
 
-void Tetromino::rotateClockwise() {
+Tetromino& Tetromino::rotate(Rotation rotation) {
+    if (!canRotate_) {
+        throw std::runtime_error("Tetromino is not rotatable");
+    }
     for (auto &cell: cells) {
         if (!(cell == Position(0, 0))) {
             int x = cell.get_x();
             int y = cell.get_y();
-            cell = Position(-y, x);
+            if (rotation == Rotation::CLOCKWISE) {
+                cell = Position(-y, x);
+            } else {
+                cell = Position(y, -x);
+            }
         }
     }
+    return *this;
 }
 
-void Tetromino::rotateCounterClockwise() {
-    for (auto &cell: cells) {
-        if (!(cell == Position(0, 0))) {
-            int x = cell.get_x();
-            int y = cell.get_y();
-            cell = Position(y, -x);
-        }
-    }
-}
-
-void Tetromino::move(int dx, int dy) {
+Tetromino& Tetromino::move(int dx, int dy) {
     refPosition += Direction2D(dx, dy);
+    return *this;
 }
 
 int Tetromino::get_id() const {
@@ -87,6 +87,6 @@ int Tetromino::get_height() const {
     return max - min + 1;
 }
 
-bool Tetromino::isRotable() const {
-    return rotable;
+bool Tetromino::canRotate() const {
+    return canRotate_;
 }

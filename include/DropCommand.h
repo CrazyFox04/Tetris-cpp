@@ -15,10 +15,8 @@
  * GameController that it communicates with to execute the action.
  */
 class DropCommand : public Command {
-    // Reference to GameController to delegate the execution logic of the command.
-    GameController &gameController;
-    // Reference to the GameView to delegate the display of the command.
-    GameView &view;
+    GameController &gameController; //!< Reference to GameController to delegate the execution logic of the command.
+    GameView &view;  //!< Reference to the GameView to delegate the display of the command.
 
 public:
     /**

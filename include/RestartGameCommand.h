@@ -26,7 +26,7 @@ public:
      * @param invoker Reference to the invoker that controls the command history.
      * @param view Reference to the GameView that displays the game.
      */
-    explicit RestartGameCommand(GameController& gameController, Invoker& invoker, GameView& view_);
+    explicit RestartGameCommand(GameController& gameController, Invoker& invoker_, GameView& view_);
 
     /**
      * Executes the command to restart the game.

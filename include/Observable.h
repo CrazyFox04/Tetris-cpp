@@ -2,8 +2,6 @@
 #define OBSERVABLE_H
 
 #include "Observer.h"
-#include <vector>
-#include <memory>
 
 class Observable {
 public:

@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "BagView.h"
 
 void BagView::drawNextTetromino(const Bag &bag) const {

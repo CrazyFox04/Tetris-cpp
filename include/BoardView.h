@@ -1,10 +1,11 @@
 #ifndef BOARDVIEW_H
 #define BOARDVIEW_H
 
+#include <vector>
+
 #include "Board.h"
 #include "Position.h"
-#include <iostream>
-#include <map>
+#include "Tetromino.h"
 
 /**
  * @class BoardView
@@ -12,18 +13,6 @@
  * This class displays the board game on the console.
  */
 class BoardView {
-public:
-    /**
-     * \brief Default constructor.
-     */
-    BoardView() = default;
-
-    /**
-     * Draws the board game.
-     * @param board The board game to draw.
-     */
-    void drawBoard(const Board& board) const;
-private:
     /**
      * Initializes the board game with empty cells and occupied celles based on difficulty.
      * @param width The width of the board game.
@@ -50,5 +39,12 @@ private:
      * @param boardGame The board game to display.
      */
     void printBoard(const std::vector<std::vector<char>> &boardGame) const;
+
+public:
+    /**
+     * Draws the board game.
+     * @param board The board game to draw.
+     */
+    void drawBoard(const Board& board) const;
 };
 #endif //BOARDVIEW_H

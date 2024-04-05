@@ -1,4 +1,5 @@
 #include "Bag.h"
+#include <vector>
 #include <random>
 #include <algorithm>
 #include <stdexcept>
@@ -6,26 +7,34 @@
 Bag *Bag::instance;
 
 Bag::Bag() {
+    possibleTetrominos.reserve(7);
     possibleTetrominos.emplace_back(Tetromino{
-            1, Position(0, 0), {Position(-2, 0), Position(0, 0), Position(-1, 0), Position(1, 0)}, true
+            1, Position(0, 0),
+            {Position(-2, 0), Position(0, 0), Position(-1, 0), Position(1, 0)}
     }); // I
     possibleTetrominos.emplace_back(Tetromino{
-            2, Position(0, 0), {Position(0, 0), Position(1, 0), Position(0, 1), Position(1, 1)}, false
+            2, Position(0, 0),
+            {Position(0, 0), Position(1, 0), Position(0, 1), Position(1, 1)}, false
     }); // O
     possibleTetrominos.emplace_back(Tetromino{
-            3, Position(0, 0), {Position(-1, 0), Position(0, 0), Position(1, 0), Position(0, 1)}, true
+            3, Position(0, 0),
+            {Position(-1, 0), Position(0, 0), Position(1, 0), Position(0, 1)}
     }); // T
     possibleTetrominos.emplace_back(Tetromino{
-            4, Position(0, 0), {Position(0, 0), Position(1, 0), Position(-1, 1), Position(0, 1)}, true
+            4, Position(0, 0),
+            {Position(0, 0), Position(1, 0), Position(-1, 1), Position(0, 1)}
     }); // S
     possibleTetrominos.emplace_back(Tetromino{
-            5, Position(0, 0), {Position(-1, 0), Position(0, 0), Position(0, 1), Position(1, 1)}, true
+            5, Position(0, 0),
+            {Position(-1, 0), Position(0, 0), Position(0, 1), Position(1, 1)}
     }); // Z
     possibleTetrominos.emplace_back(Tetromino{
-            6, Position(0, 0), {Position(-1, -1), Position(-1, 0), Position(0, 0), Position(1, 0)}, true
+            6, Position(0, 0),
+            {Position(-1, -1), Position(-1, 0), Position(0, 0), Position(1, 0)}
     }); // J
     possibleTetrominos.emplace_back(Tetromino{
-            7, Position(0, 0), {Position(1, -1), Position(-1, 0), Position(0, 0), Position(1, 0)}, true
+            7, Position(0, 0),
+            {Position(1, -1), Position(-1, 0), Position(0, 0), Position(1, 0)}
     }); // L
 
     addTetrominosToBag();
@@ -43,12 +52,13 @@ void Bag::shuffle() {
     static std::random_device rd;
     static std::mt19937 g(rd());
     std::ranges::shuffle(bag, g);
-    for (auto &tetro: bag) {
-        auto rotateTimes = rd() % 4;
-        for (unsigned i = 0; i < rotateTimes; i++) {
-            tetro.rotateClockwise();
+    std::for_each(bag.begin(), bag.end(), [](Tetromino &tetro) {
+        if (tetro.canRotate()) {
+            for (unsigned i = 0; i < (rd() % 4); ++i) {
+                tetro.rotate(Rotation::CLOCKWISE);
+            }
         }
-    }
+    });
 }
 
 Tetromino Bag::getNext() {
@@ -72,25 +82,21 @@ const Tetromino &Bag::peekNext() const {
     return bag.front();
 }
 
-int Bag::size() {
+int Bag::size() const {
     return static_cast<int>(bag.size());
 }
 
 void Bag::addTetrominosToBag() {
-    for (const auto &tetromino: possibleTetrominos) {
-        bag.emplace_back(tetromino);
-    }
+    std::copy(possibleTetrominos.begin(), possibleTetrominos.end(), std::back_inserter(bag));
 }
 
 int Bag::getNumberOfTetrominos() const {
     return static_cast<int>(possibleTetrominos.size());
 }
 
-std::vector<Tetromino> Bag::getAvailableTetrominos() const {
-    std::vector<Tetromino> constTetrominos;
-    constTetrominos.reserve(possibleTetrominos.size());
-    for (const auto &tetromino: possibleTetrominos) {
-        constTetrominos.emplace_back(tetromino);
-    }
+const std::vector<Tetromino> Bag::getAvailableTetrominos() const {
+    std::vector<Tetromino> availableTetrominos;
+    std::copy(possibleTetrominos.begin(), possibleTetrominos.end(), std::back_inserter(availableTetrominos));
+    const std::vector<Tetromino> constTetrominos = availableTetrominos;
     return constTetrominos;
 }
