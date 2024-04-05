@@ -1,9 +1,6 @@
-//
-// Created by Enzo Renard on 05/03/2024.
-//
-
 #ifndef DROPCOMMAND_H
 #define DROPCOMMAND_H
+
 #include "Command.h"
 #include "GameController.h"
 #include "GameView.h"

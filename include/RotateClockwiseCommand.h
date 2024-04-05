@@ -1,5 +1,6 @@
 #ifndef ROTATECLOCKWISECOMMAND_H
 #define ROTATECLOCKWISECOMMAND_H
+
 #include "Command.h"
 #include "GameController.h"
 #include "GameView.h"

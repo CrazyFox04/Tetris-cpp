@@ -1,5 +1,6 @@
 #ifndef OBSERVABLE_H
 #define OBSERVABLE_H
+
 #include "Observer.h"
 
 class Observable {

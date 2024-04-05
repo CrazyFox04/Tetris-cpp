@@ -1,7 +1,3 @@
-//
-// Created by Enzo Renard on 05/03/2024.
-//
-
 #ifndef INVOKER_H
 #define INVOKER_H
 

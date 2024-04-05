@@ -1,5 +1,6 @@
 #ifndef TETRIS_DEV4_PROJET_POSITION_H
 #define TETRIS_DEV4_PROJET_POSITION_H
+
 #include "Direction.h"
 
 /**
