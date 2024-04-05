@@ -21,8 +21,10 @@ public:
 
     /**
      * Constructor for RestartGameCommand.
-     * Initializes the command with a reference to the GameController.
+     * Initializes the command with a reference to the GameController, the Invoker and the GameView.
      * @param gameController Reference to the GameController that controls the game's logic.
+     * @param invoker Reference to the invoker that controls the command history.
+     * @param view Reference to the GameView that displays the game.
      */
     explicit RestartGameCommand(GameController& gameController, Invoker& invoker, GameView& view_);
 

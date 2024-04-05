@@ -23,8 +23,9 @@ public:
 
     /**
      * Constructor for MoveDownCommand.
-     * Initializes the command with a reference to the GameController.
+     * Initializes the command with a reference to the GameController and GameView.
      * @param gameController Reference to the GameController that controls the game's logic.
+     * @param view Reference to the GameView that displays the game.
      */
     explicit MoveDownCommand(GameController& gameController, GameView& view);
 

@@ -19,11 +19,10 @@ public:
 
     /**
      * Constructor for SettingsGameCommand.
-     * Initializes the command with a reference to the GameController and the GameView.
-     * @param gameController Reference to the GameController that controls the game's logic.
-     * @param gameView Reference to GameView that controls the game's view.
+     * Initializes the command with a reference to the GameView.
+     * @param gameView Reference to GameView that displays the settings of the game.
      */
-    SettingsGameCommand(GameView &gameView);
+    explicit SettingsGameCommand(GameView &gameView);
 
     /**
      * Executes the command to start the game.

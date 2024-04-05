@@ -24,9 +24,10 @@ public:
 
     /**
      * Constructor for StartGameCommand.
-     * Initializes the command with a reference to the GameController.
+     * Initializes the command with a reference to the GameController, Invoker and GameView.
      * @param gameController Reference to the GameController that controls the game's logic.
      * @param invoker Reference to the invoker that controls the commands.
+     * @param gameView Reference to the GameView that displays the game.
      */
     StartGameCommand(GameController& gameController, Invoker& invoker, GameView& gameView);
 
