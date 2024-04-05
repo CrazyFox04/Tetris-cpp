@@ -1,4 +1,6 @@
 #include "Bag.h"
+#include <vector>
+#include "Tetromino.h"
 #include <random>
 #include <algorithm>
 #include <stdexcept>
@@ -6,6 +8,7 @@
 Bag *Bag::instance;
 
 Bag::Bag() {
+    possibleTetrominos.reserve(7);
     possibleTetrominos.emplace_back(Tetromino{
             1, Position(0, 0), {Position(-2, 0), Position(0, 0), Position(-1, 0), Position(1, 0)}, true
     }); // I
@@ -43,16 +46,13 @@ void Bag::shuffle() {
     static std::random_device rd;
     static std::mt19937 g(rd());
     std::ranges::shuffle(bag, g);
-    for (auto &tetro: bag) {
-        auto rotateTimes = rd() % 4;
-        for (unsigned i = 0; i < rotateTimes; i++) {
-            try {
+    std::for_each(bag.begin(), bag.end(), [](Tetromino &tetro) {
+        if (tetro.isRotable()) {
+            for (unsigned i = 0; i < (rd() % 4); ++i) {
                 tetro.rotate(Rotation::CLOCKWISE);
-            } catch (std::runtime_error &e) {
-                // nop
             }
         }
-    }
+    });
 }
 
 Tetromino Bag::getNext() {
@@ -81,20 +81,16 @@ int Bag::size() {
 }
 
 void Bag::addTetrominosToBag() {
-    for (const auto &tetromino: possibleTetrominos) {
-        bag.emplace_back(tetromino);
-    }
+    std::copy(possibleTetrominos.begin(), possibleTetrominos.end(), std::back_inserter(bag));
 }
 
 int Bag::getNumberOfTetrominos() const {
     return static_cast<int>(possibleTetrominos.size());
 }
 
-std::vector<Tetromino> Bag::getAvailableTetrominos() const {
-    std::vector<Tetromino> constTetrominos;
-    constTetrominos.reserve(possibleTetrominos.size());
-    for (const auto &tetromino: possibleTetrominos) {
-        constTetrominos.emplace_back(tetromino);
-    }
+const std::vector<Tetromino> Bag::getAvailableTetrominos() const {
+    std::vector<Tetromino> availableTetrominos;
+    std::copy(possibleTetrominos.begin(), possibleTetrominos.end(), std::back_inserter(availableTetrominos));
+    const std::vector<Tetromino> constTetrominos = availableTetrominos;
     return constTetrominos;
 }

@@ -83,7 +83,7 @@ public:
      * Get all possible Tetrominos that can be in the bag.
      * @return copy of all possible Tetrominos that can be in the bag
      */
-    std::vector<Tetromino> getAvailableTetrominos() const;
+    const std::vector<Tetromino> getAvailableTetrominos() const;
 };
 
 

@@ -1,4 +1,5 @@
 #include "Tetromino.h"
+#include <stdexcept>
 
 Tetromino::Tetromino(const int id, const Position center, std::vector<Position> cells, bool rotable_) :
 id(id), refPosition(center), cells(std::move(cells)), rotable(rotable_) {

@@ -17,7 +17,7 @@ Board::Board(const int w, const int h, const int difficulty)
 }
 
 bool Board::isBoardTooSmallForAvailableTetromino() const {
-    for (const auto &available_tetromino: Bag::getInstance().getAvailableTetrominos()) {
+    for (const auto& available_tetromino: Bag::getInstance().getAvailableTetrominos()) {
         if (available_tetromino.get_height() >= height / 2.0 || available_tetromino.get_length() >= width / 2.0) {
             return true;
         }
