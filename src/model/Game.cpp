@@ -8,7 +8,7 @@ void Game::addObserver(Observer &observer) {
 }
 
 void Game::notifyObservers() {
-    std::for_each(observers.begin(), observers.end(), [](std::shared_ptr<Observer>& observer) {
+    std::for_each(observers.begin(), observers.end(), [](std::shared_ptr<Observer> &observer) {
         observer->update();
     });
 }
@@ -221,5 +221,6 @@ void Game::setDifficulty(int difficulty_) {
 Game::Game()
         : board(), bag(Bag::getInstance()), currentScore(0), currentLevel(START_LEVEL), currentLine(0), currentTime(0),
           targetLine(DEFAULT_TARGET_LINE), targetTime(DEFAULT_TARGET_TIME), targetScore(DEFAULT_TARGET_SCORE),
-          difficulty(Board::DEFAULT_DIFFICULTY), boardWidth(Board::DEFAULT_WIDTH), boardHeight(Board::DEFAULT_HEIGHT) {
+          difficulty(Board::DEFAULT_DIFFICULTY), hasStarted(false), boardWidth(Board::DEFAULT_WIDTH),
+          boardHeight(Board::DEFAULT_HEIGHT) {
 }
