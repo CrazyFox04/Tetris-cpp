@@ -16,5 +16,6 @@ if (DOXYGEN_FOUND)
             COMMENT "Generating API documentation with Doxygen"
             VERBATIM)
 else (DOXYGEN_FOUND)
-    message("Doxygen need to be installed to generate the doxygen documentation")
+    message(WARNING "Doxygen need to be installed to generate the doxygen documentation.
+    As a result, you can't build documentation")
 endif (DOXYGEN_FOUND)
