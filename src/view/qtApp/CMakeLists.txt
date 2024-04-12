@@ -7,6 +7,7 @@ project(tetris_view_qtApp)
 
 # C++ source files of the tetris_view
 set(SOURCES
+        brol.cpp
         # todo : add Qt app sources
 )
 
