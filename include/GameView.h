@@ -31,60 +31,6 @@ class GameView {
      */
     void printNext() const;
 
-    /**
-     * Asks the player for the width of the board.
-     * @return the width of the board
-     */
-    int askWidth();
-
-    /**
-     * Asks the player for the height of the board.
-     * @return the height of the board
-     */
-    int askHeight();
-
-    /**
-     * Asks the player for the difficulty of the game.
-     * @return the difficulty of the game
-     */
-    int askDifficulty();
-
-    /**
-     * Asks the player for the level of the game.
-     * @return the level of the game
-     */
-    int askLevel();
-
-    /**
-     * Asks the player for the target number of lines to clear.
-     * @return the target number of lines to clear
-     */
-    int askTargetLines();
-
-    /**
-     * Asks the player for the target time to reach.
-     * @return the target time to reach
-     */
-    int askTargetTime();
-
-    /**
-     * Asks the player for the target score to reach.
-     * @return the target score to reach
-     */
-    int askTargetScore();
-
-    /**
-    * Asks the user for an integer input within a specified range.
-    * This method displays the given prompt, validates the input to ensure it's an integer
-    * within the specified range, and handles any input errors.
-    *
-    * @param prompt The message to display to the user.
-    * @param min The minimum allowable value.
-    * @param max The maximum allowable value.
-    * @return The validated integer input from the user.
-    */
-    int askForInt(const std::string &prompt, int min, int max);
-
 public:
     /**
     * Constructor for GameView.

@@ -66,3 +66,19 @@ void ApplicationTetris::handleInput() {
         handleInput();
     }
 }
+
+int ApplicationTetris::askForInt(const std::string& prompt, int min, int max) {
+    int value;
+    while (true) {
+        std::cout << prompt;
+        std::cin >> value;
+        if (std::cin.fail() || value < min || value > max) {
+            std::cout << "Invalid input. Please enter a number between " << min << " and " << max << "." << std::endl;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        } else {
+            break;
+        }
+    }
+    return value;
+}

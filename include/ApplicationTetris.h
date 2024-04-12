@@ -44,6 +44,18 @@ public:
      * until the game is over.
      */
     void run();
+
+    /**
+    * Asks the user for an integer input within a specified range.
+    * This method displays the given prompt, validates the input to ensure it's an integer
+    * within the specified range, and handles any input errors.
+    *
+    * @param prompt The message to display to the user.
+    * @param min The minimum allowable value.
+    * @param max The maximum allowable value.
+    * @return The validated integer input from the user.
+    */
+    static int askForInt(const std::string&prompt, int min, int max);
 };
 
 #endif //TETRIS_APPLICATIONTETRIS_H
