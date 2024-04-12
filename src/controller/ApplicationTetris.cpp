@@ -13,9 +13,8 @@
 #include "QuitGameCommand.h"
 #include "RestartGameCommand.h"
 
-ApplicationTetris::ApplicationTetris() :
-        gameController(std::unique_ptr<Game>(std::make_unique<Game>(Game()))),
-        gameView(*gameController) {
+ApplicationTetris::ApplicationTetris() : gameController(std::make_shared<Game>(GameSettings())),
+                                         gameView(*gameController) {
     initializeCommands();
 }
 
@@ -34,13 +33,14 @@ void ApplicationTetris::run() {
         if (gameController->isWinner()) {
             gameView.displayVictory();
         }
-    } while (invoker.getState() == GameState::END_GAME);
+    }
+    while (invoker.getState() == GameState::END_GAME);
 }
 
 void ApplicationTetris::initializeCommands() {
-    invoker.registerCommand("start", std::make_unique<StartGameCommand>(*gameController, invoker, gameView),
+    invoker.registerCommand("start", std::make_unique<StartGameCommand>(gameController, invoker, gameView),
                             {GameState::MAIN_MENU});
-    invoker.registerCommand("settings", std::make_unique<SettingsGameCommand>(gameView),
+    invoker.registerCommand("settings", std::make_unique<SettingsGameCommand>(*this),
                             {GameState::MAIN_MENU});
     invoker.registerCommand("a", std::make_unique<RotateCounterClockwiseCommand>(*gameController, gameView),
                             {GameState::PLAYING});
@@ -61,24 +61,61 @@ void ApplicationTetris::handleInput() {
     std::cin >> input;
     try {
         invoker.execute(input);
-    } catch (const std::runtime_error &e) {
+    }
+    catch (const std::runtime_error&e) {
         std::cout << e.what() << std::endl;
         handleInput();
     }
 }
 
-int ApplicationTetris::askForInt(const std::string& prompt, int min, int max) {
+int ApplicationTetris::askForInt(const std::string&prompt, int min, int max) {
     int value;
     while (true) {
         std::cout << prompt;
         std::cin >> value;
         if (std::cin.fail() || value < min || value > max) {
-            std::cout << "Invalid input. Please enter a number between " << min << " and " << max << "." << std::endl;
+            gameView.displayMessage(
+                "Invalid input. Please enter a number between " + std::to_string(min) + " and " + std::to_string(max) +
+                ".");
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        } else {
+        }
+        else {
             break;
         }
     }
     return value;
+}
+
+void ApplicationTetris::customSettings() {
+    int width = askForInt(
+        "Enter the width of the board (between 10 and 30): ",
+        Board::MIN_BOARD_WIDTH, Board::MAX_BOARD_WIDTH);
+    gameSettings.boardWidth = width;
+    int height = askForInt(
+        "Enter the height of the board (between 10 and 30): ",
+        Board::MIN_BOARD_HEIGHT, Board::MAX_BOARD_HEIGHT);
+    gameSettings.boardHeight = height;
+    int difficulty = askForInt(
+        "Enter the difficulty (fill randomly with more or less blocks. 1 for default): ",
+        Board::MIN_DIFFICULTY, Board::MAX_DIFFICULTY);
+    gameSettings.difficulty = difficulty;
+    int level = askForInt(
+        "Enter the starting level (sets speed. 1 for default): ",
+        1, 20);
+    gameSettings.startLevel = level;
+    int targetLines = askForInt(
+        "Enter the target number of lines to clear (0 to disable): ",
+        0, std::numeric_limits<int>::max());
+    gameSettings.targetLine = targetLines;
+    int targetTime = askForInt(
+        "Enter the target time to reach (0 to disable): ",
+        0, std::numeric_limits<int>::max());
+    gameSettings.targetTime = targetTime;
+    int targetScore = askForInt(
+        "Enter the target score to reach (0 to disable): ",
+        0, std::numeric_limits<int>::max());
+    gameSettings.targetScore = targetScore;
+    gameController = std::make_unique<Game>(gameSettings);
+    gameView.displayMessage( "Press 'start' to begin");
 }

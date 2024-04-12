@@ -31,37 +31,8 @@ void GameView::displayMenu() const {
     std::cout << "Press 'start' to begin or 'settings' to configure the game ." << std::endl;
 }
 
-void GameView::displaySettings() {
-    int width = ApplicationTetris::askForInt(
-        "Enter the width of the board (between 10 and 30): ",
-        Board::MIN_BOARD_WIDTH, Board::MAX_BOARD_WIDTH);
-    controller.setBoardWidth(width);
-    int height = ApplicationTetris::askForInt(
-        "Enter the height of the board (between 10 and 30): ",
-        Board::MIN_BOARD_HEIGHT, Board::MAX_BOARD_HEIGHT);
-    controller.setBoardHeight(height);
-    int difficulty = ApplicationTetris::askForInt(
-        "Enter the difficulty (fill randomly with more or less blocks. 1 for default): ",
-        Board::MIN_DIFFICULTY, Board::MAX_DIFFICULTY);
-    controller.setDifficulty(difficulty);
-    int level = ApplicationTetris::askForInt(
-        "Enter the starting level (sets speed. 1 for default): ",
-        1, 20);
-    controller.setStartLevel(level);
-    int targetLines = ApplicationTetris::askForInt(
-        "Enter the target number of lines to clear (0 to disable): ",
-        0, std::numeric_limits<int>::max());
-    controller.setTargetLine(targetLines);
-    int targetTime = ApplicationTetris::askForInt(
-        "Enter the target time to reach (0 to disable): ",
-        0, std::numeric_limits<int>::max());
-    controller.setTargetTime(targetTime);
-    int targetScore = ApplicationTetris::askForInt(
-        "Enter the target score to reach (0 to disable): ",
-        0, std::numeric_limits<int>::max());
-    controller.setTargetScore(targetScore);
-
-    std::cout << "Press 'start' to begin" << std::endl;
+void GameView::displayMessage(std::string message) const {
+    std::cout << message << std::endl;
 }
 
 void GameView::displayGameOver() const {

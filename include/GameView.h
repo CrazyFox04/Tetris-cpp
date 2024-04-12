@@ -70,6 +70,8 @@ public:
      * Shows the player's final score and options to restart or quit the game.
      */
     void displayVictory() const;
+
+    void displayMessage(std::string message) const;
 };
 
 #endif //GAMEVIEW_H
