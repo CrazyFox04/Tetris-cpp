@@ -13,7 +13,7 @@ struct GameStatus {
     int difficulty;
     bool hasStarted;
 
-    GameStatus() : currentScore(0), currentLevel(0), currentLine(0), currentTime(0), difficulty(1), hasStarted(false) {
+    GameStatus() : currentScore(0), currentLevel(1), currentLine(0), currentTime(0), difficulty(1), hasStarted(false) {
     }
 };
 #endif //GAMESTATUS_HPP
