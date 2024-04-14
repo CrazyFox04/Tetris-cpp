@@ -155,7 +155,7 @@ bool Game::isGameOver() const {
     if (gameStatus.currentTime != 0 && gameSettings.targetTime <= gameStatus.currentTime) {
         return true;
     }
-    return board.isGameOver();
+    return gameStatus.isOver;
 }
 
 bool Game::isWinner() const {

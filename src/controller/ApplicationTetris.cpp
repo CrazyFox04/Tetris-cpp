@@ -1,5 +1,6 @@
 #include <memory>
 #include <iostream>
+#include <limits>
 
 #include "ApplicationTetris.h"
 #include "MoveLeftCommand.h"

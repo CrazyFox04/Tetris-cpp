@@ -122,6 +122,7 @@ public:
     /**
      * Adds a tetromino to the Board
      * @param tetromino tetromino to add
+     * @throw std::out_of_range if the tetromino can't be placed because there isn't enough space on the board for it.
      */
     void addTetromino(Tetromino tetromino);
 
@@ -160,6 +161,11 @@ public:
      */
     bool isOccupied(int row, int column) const;
 
+    /**
+     * Check that a given tetromino hasn't any of its cells already occupied on the board
+     * @param tetromino tetromino to check
+     * @return true if at least one cell is occupied, false otherwise
+     */
     bool isOccupied(Tetromino &tetromino) const;
 
     /**
