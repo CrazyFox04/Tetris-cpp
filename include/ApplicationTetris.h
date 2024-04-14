@@ -14,7 +14,8 @@
  * handling user input, and orchestrating the game view and game controller.
  */
 class ApplicationTetris {
-    std::unique_ptr<GameController> gameController; //!< Controller interface for the game
+    GameSettings gameSettings;
+    std::shared_ptr<GameController> gameController; //!< Controller interface for the game
     Invoker invoker; //!< Command Invoker for the game
     GameView gameView; //!< View component for rendering the game
 
@@ -44,6 +45,23 @@ public:
      * until the game is over.
      */
     void run();
+
+    /**
+    * Asks the user for an integer input within a specified range.
+    * This method displays the given prompt, validates the input to ensure it's an integer
+    * within the specified range, and handles any input errors.
+    *
+    * @param prompt The message to display to the user.
+    * @param min The minimum allowable value.
+    * @param max The maximum allowable value.
+    * @return The validated integer input from the user.
+    */
+    int askForInt(const std::string&prompt, int min, int max);
+
+    /**
+     * Ask the user for custom game settings.
+     */
+    void customSettings();
 };
 
 #endif //TETRIS_APPLICATIONTETRIS_H

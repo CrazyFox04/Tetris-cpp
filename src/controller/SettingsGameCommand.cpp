@@ -1,8 +1,8 @@
 #include "SettingsGameCommand.h"
 
-SettingsGameCommand::SettingsGameCommand(GameView &view)
-        : gameView(view) {}
+SettingsGameCommand::SettingsGameCommand (ApplicationTetris& application_tetris)
+        : application_tetris(application_tetris) {}
 
 void SettingsGameCommand::execute() {
-    gameView.displaySettings();
+    application_tetris.customSettings();
 }

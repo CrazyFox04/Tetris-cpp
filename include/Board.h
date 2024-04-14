@@ -15,7 +15,6 @@
 class Board {
     int width; //!< Width of the board
     int height; //!< Height of the board
-    bool gameOver; //!< State of the board
     std::vector<Tetromino> tetrominos; //!< Tetrominos that are in the board
     std::vector<std::vector<bool>> occupied; //!< Summary of the occupied cells in the board
     Position refPosition; //!< Reference position of the board
@@ -123,6 +122,7 @@ public:
     /**
      * Adds a tetromino to the Board
      * @param tetromino tetromino to add
+     * @throw std::out_of_range if the tetromino can't be placed because there isn't enough space on the board for it.
      */
     void addTetromino(Tetromino tetromino);
 
@@ -161,6 +161,11 @@ public:
      */
     bool isOccupied(int row, int column) const;
 
+    /**
+     * Check that a given tetromino hasn't any of its cells already occupied on the board
+     * @param tetromino tetromino to check
+     * @return true if at least one cell is occupied, false otherwise
+     */
     bool isOccupied(Tetromino &tetromino) const;
 
     /**
@@ -175,12 +180,6 @@ public:
      * @return the number of lines deleted
      */
     int removeCompleteLines();
-
-    /**
-     * Checks if the game is over
-     * @return true if the game is over, false otherwise
-     */
-    bool isGameOver() const;
 
     /**
      * Getter for the active tetromino
