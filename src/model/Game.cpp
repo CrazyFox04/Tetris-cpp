@@ -24,7 +24,7 @@ void Game::start() {
     checkTargets();
     gameStatus.hasStarted = true;
     board = Board(gameSettings.boardWidth, gameSettings.boardHeight, gameSettings.difficulty);
-    board.addTetromino(bag.getNext());
+    tryToAddNextTetromino();
     notifyObservers();
 }
 
@@ -66,7 +66,7 @@ void Game::moveActiveTetromino(Direction2D direction) {
         catch (const std::exception&) {
             if (direction == Direction::DOWN) {
                 updateScore(board.removeCompleteLines(), 0);
-                board.addTetromino(bag.getNext());
+                tryToAddNextTetromino();
             }
         }
     }
@@ -81,11 +81,11 @@ void Game::rotateActiveTetromino(Rotation rotation) {
         catch (const std::out_of_range&) {
             if (board.activeTetroIsBellow(gameSettings.boardHeight - 2)) {
                 updateScore(board.removeCompleteLines(), 0);
-                board.addTetromino(bag.getNext());
+                tryToAddNextTetromino();
             }
         } catch (const std::invalid_argument&) {
             updateScore(board.removeCompleteLines(), 0);
-            board.addTetromino(bag.getNext());
+            tryToAddNextTetromino();
         }
     }
     notifyObservers();
@@ -102,7 +102,7 @@ void Game::dropActiveTetromino() {
         }
         catch (const std::exception&) {
             updateScore(board.removeCompleteLines(), dropDistance);
-            board.addTetromino(bag.getNext());
+            tryToAddNextTetromino();
         }
     }
     notifyObservers();
@@ -169,8 +169,16 @@ bool Game::isWinner() const {
 }
 
 Game::Game() : bag(Bag::getInstance()) {
-
 }
 
 Game::Game(GameSettings gameSettings_) : bag(Bag::getInstance()), gameSettings(gameSettings_) {
+}
+
+void Game::tryToAddNextTetromino() {
+    try {
+        board.addTetromino(bag.getNext());
+    }
+    catch (std::out_of_range&e) {
+        gameStatus.isOver = true;
+    }
 }

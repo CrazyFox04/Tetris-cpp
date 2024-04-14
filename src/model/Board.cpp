@@ -8,7 +8,7 @@ Board::Board() : Board(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_DIFFICULTY) {
 }
 
 Board::Board(const int w, const int h, const int difficulty)
-        : width(w), height(h), gameOver(false), occupied(h, std::vector<bool>(w, false)) {
+        : width(w), height(h), occupied(h, std::vector<bool>(w, false)) {
     refPosition = Position(width / 2 - 1, 0);
     if (isBoardTooSmallForAvailableTetromino()) {
         throw std::invalid_argument("Board is too small for the available tetrominos");
@@ -45,11 +45,10 @@ void Board::initialize(int difficulty) {
 void Board::addTetromino(Tetromino tetromino) {
     positionTetroOnTop(tetromino);
     if (isOutside(tetromino) || isOccupied(tetromino)) {
-        gameOver = true;
-    } else {
-        setOccupiedForTetromino(tetromino);
-        tetrominos.push_back(tetromino);
+        throw std::out_of_range("The tetromino can't be placed because there isn't enough space on the board for it.");
     }
+    setOccupiedForTetromino(tetromino);
+    tetrominos.push_back(tetromino);
 }
 
 void Board::positionTetroOnTop(Tetromino &tetromino) {
@@ -205,10 +204,6 @@ void Board::moveLinesDown(const int clearedline) {
     });
 }
 
-bool Board::isGameOver() const {
-    return gameOver;
-}
-
 const Tetromino &Board::getActiveTetromino() const {
     return tetrominos.back();
 }
@@ -242,7 +237,6 @@ void Board::clearOccupiedForActiveTetromino() {
 }
 
 void Board::clear() {
-    gameOver = false;
     tetrominos.clear();
     for (auto &row: occupied) {
         std::fill(row.begin(), row.end(), false);

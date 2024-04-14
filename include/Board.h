@@ -15,7 +15,6 @@
 class Board {
     int width; //!< Width of the board
     int height; //!< Height of the board
-    bool gameOver; //!< State of the board
     std::vector<Tetromino> tetrominos; //!< Tetrominos that are in the board
     std::vector<std::vector<bool>> occupied; //!< Summary of the occupied cells in the board
     Position refPosition; //!< Reference position of the board

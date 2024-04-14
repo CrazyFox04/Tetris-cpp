@@ -50,6 +50,12 @@ class Game : public Observable, public GameController {
  */
     void resetScore();
 
+    /**
+     * Tries to add the next tetromino to the board.
+     * If the tetromino can't be added, the game is over.
+     */
+    void tryToAddNextTetromino();
+
 public:
     Game();
 
