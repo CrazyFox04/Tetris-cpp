@@ -58,6 +58,9 @@ public:
     */
     int askForInt(const std::string&prompt, int min, int max);
 
+    /**
+     * Ask the user for custom game settings.
+     */
     void customSettings();
 };
 

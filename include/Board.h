@@ -182,12 +182,6 @@ public:
     int removeCompleteLines();
 
     /**
-     * Checks if the game is over
-     * @return true if the game is over, false otherwise
-     */
-    bool isGameOver() const;
-
-    /**
      * Getter for the active tetromino
      * @return a reference to the active tetromino
      */

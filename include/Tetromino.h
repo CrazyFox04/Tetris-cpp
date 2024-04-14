@@ -50,13 +50,13 @@ public:
      * @param dx The horizontal offset.
      * @param dy The vertical offset.
      */
-    Tetromino &move(int dx, int dy);
+    Tetromino& move(int dx, int dy);
 
     /**
      * Sets the relative cell positions of the Tetromino.
      * @param newCells The new relative cell positions.
      */
-    void set_relative_cells(const std::vector<Position> &newCells);
+    void set_relative_cells(const std::vector<Position>&newCells);
 
     /**
      * Getter for the length of the Tetromino.
@@ -85,7 +85,7 @@ public:
  * @throws runtime_error if the Tetromino is not rotatable.
      * @see Rotation
  */
-    Tetromino &rotate(Rotation rotation);
+    Tetromino& rotate(Rotation rotation);
 };
 
 /**
@@ -94,6 +94,6 @@ public:
  * @param Tetromino2 The second Tetromino.
  * @return true if the Tetrominos are equal, false otherwise.
  */
-bool operator==(const Tetromino &Tetromino1, const Tetromino &Tetromino2);
+bool operator==(const Tetromino&Tetromino1, const Tetromino&Tetromino2);
 
 #endif //TETRIS_DEV4_PROJET_TETROMINO_H

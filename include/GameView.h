@@ -71,6 +71,10 @@ public:
      */
     void displayVictory() const;
 
+    /**
+     * Displays a message to the player.
+     * @param message The message to display.
+     */
     void displayMessage(std::string message) const;
 };
 

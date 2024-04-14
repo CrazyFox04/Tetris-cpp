@@ -14,7 +14,7 @@
  * the game. It relies on the GameController and the GameView to actually perform the setting.
  */
 class SettingsGameCommand : public Command {
-    ApplicationTetris& application_tetris;
+    ApplicationTetris& application_tetris; //!< Reference to the game controller.
 
 public:
     /**
