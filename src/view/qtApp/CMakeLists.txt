@@ -8,7 +8,8 @@ project(tetris_view_qtApp)
 # C++ source files of the tetris_view
 set(SOURCES
         myQtApp.cpp
-        myQHboxLayout.cpp
+        BoardBox.cpp
+        InfoBox.cpp
 )
 
 # Find Qt6 components, suppressing warnings
