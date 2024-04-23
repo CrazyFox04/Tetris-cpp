@@ -7,12 +7,19 @@ project(tetris_view_qtApp)
 
 # C++ source files of the tetris_view
 set(SOURCES
-        myQtApp.cpp
-        myQHboxLayout.cpp
+        GameWindow.cpp
+        PathwayWidget.cpp
+        PlayerDataWidget.cpp
 )
 
 # Find Qt6 components, suppressing warnings
 find_package(Qt6 COMPONENTS Core Widgets QUIET)
+
+qt6_wrap_ui(UI_HEADERS
+        GameWindow.ui
+        PathwayWidget.ui
+        PlayerDataWidget.ui
+)
 
 # Check if Qt6 components are found
 if (DEFINED Qt6Widgets_FOUND AND DEFINED Qt6Core_FOUND)
@@ -28,7 +35,7 @@ if (DEFINED Qt6Widgets_FOUND AND DEFINED Qt6Core_FOUND)
     find_package(Qt6 COMPONENTS Core Widgets REQUIRED)
 
     # Link Qt6 libraries to the target
-    target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets)
+    target_link_libraries(${PROJECT_NAME} ${UI_HEADERS}PRIVATE Qt6::Widgets)
 
     # Include the headers folder for linker
     # Note: If needed, we can split header declarations into multiple child folders in the include folder
@@ -36,7 +43,6 @@ if (DEFINED Qt6Widgets_FOUND AND DEFINED Qt6Core_FOUND)
             ../../../include
             # If more folders or more specific folders are needed, you can add them here
     )
-
 else (DEFINED Qt6Widgets_FOUND AND DEFINED Qt6Core_FOUND)
     # Display a warning if Qt6 components are not found
     message(WARNING "Qt isn't found on your machine. As a result, you can't build tetris Qt App")

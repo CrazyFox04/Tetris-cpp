@@ -7,8 +7,10 @@ project(tetris_view_qtApp)
 
 # C++ source files of the tetris_view
 set(SOURCES
-        myQtApp.cpp
-        myQHboxLayout.cpp
+        brol.cpp
+        GameBoardWidget.cpp
+        InfoPanelWidget.cpp
+        MainWindow.cpp
 )
 
 # Find Qt6 components, suppressing warnings
@@ -36,7 +38,6 @@ if (DEFINED Qt6Widgets_FOUND AND DEFINED Qt6Core_FOUND)
             ../../../include
             # If more folders or more specific folders are needed, you can add them here
     )
-
 else (DEFINED Qt6Widgets_FOUND AND DEFINED Qt6Core_FOUND)
     # Display a warning if Qt6 components are not found
     message(WARNING "Qt isn't found on your machine. As a result, you can't build tetris Qt App")

@@ -18,12 +18,6 @@ target_link_libraries(
         tetris_controller
         tetris_model
         tetris_view_console
+        tetris_view_qtApp
         tetris_tools
 )
-
-# Link Qt View App library to compile the executable only if found
-if (DEFINED Qt6Widgets_FOUND AND DEFINED Qt6Core_FOUND)
-    target_link_libraries(
-            ${PROJECT_NAME} PRIVATE tetris_view_qtApp
-    )
-endif ()
