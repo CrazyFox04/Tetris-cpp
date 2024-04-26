@@ -10,7 +10,7 @@ class InfoBox : public QVBoxLayout {
     QHBoxLayout *scoreLayout;
     QHBoxLayout *linesLayout;
     QHBoxLayout *levelLayout;
-    QHBoxLayout *nextTetroLayout;
+    QWidget *nextTetroWidget;
 
 public:
     InfoBox();

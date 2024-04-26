@@ -11,6 +11,7 @@ set(SOURCES
         BoardBox.cpp
         InfoBox.cpp
         TetrisQtGUI.cpp
+        nextTetroWidget.cpp
 )
 
 # Find Qt6 components, suppressing warnings
