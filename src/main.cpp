@@ -1,6 +1,6 @@
-#include "myQtApp.h"
+#include "TetrisQtGUI.h"
 
 int main(int argc, char **argv) {
-    myQtApp app;
-    return app.start(argc, argv);
+    TetrisQtGUI app = TetrisQtGUI();
+    return app.launch(argc, argv);
 }

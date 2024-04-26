@@ -4,9 +4,20 @@
 
 #ifndef TETRIS_MYQTAPP_H
 #define TETRIS_MYQTAPP_H
+#include "InfoBox.h"
+#include "BoardBox.h"
+#include <QApplication>
 class myQtApp {
+    QApplication app;
+    QWidget window;
+    InfoBox myInfoBox;
+    BoardBox myBoardBox;
+    QHBoxLayout mainLayout;
+    QWidget brol;
+
 public:
-    int start(int argc, char *argv[]);
+    myQtApp(int argc, char *argv[]);
+    int start();
 };
 
 #endif //TETRIS_MYQTAPP_H

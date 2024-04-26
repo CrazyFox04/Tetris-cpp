@@ -5,8 +5,7 @@
 #ifndef TETRIS_INFOBOX_H
 #define TETRIS_INFOBOX_H
 
-#include <QVBoxLayout>
-
+#include <QHBoxLayout>
 class InfoBox : public QVBoxLayout {
     QHBoxLayout *scoreLayout;
     QHBoxLayout *linesLayout;

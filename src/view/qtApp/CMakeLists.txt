@@ -10,6 +10,7 @@ set(SOURCES
         myQtApp.cpp
         BoardBox.cpp
         InfoBox.cpp
+        TetrisQtGUI.cpp
 )
 
 # Find Qt6 components, suppressing warnings
