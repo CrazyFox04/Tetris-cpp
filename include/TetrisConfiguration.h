@@ -44,7 +44,7 @@ class TetrisConfiguration : public QFormLayout {
 
     void close();
 public:
-    TetrisConfiguration();
+    TetrisConfiguration(GameSettings* settings);
 
     int start(QApplication* myQtApp);
 };

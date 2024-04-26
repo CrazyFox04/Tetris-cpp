@@ -5,8 +5,10 @@
 #include "InfoBox.h"
 #include "BoardBox.h"
 #include <QWidget>
+#include <iostream>
 
-TetrisView::TetrisView() : window(), mainLayout(), myInfoBox(), myBoardBox() {
+TetrisView::TetrisView(std::shared_ptr<GameController> &game) : window(), mainLayout(), myInfoBox(), myBoardBox(), game(game) {
+    this->game = game;
 }
 
 int TetrisView::start(QApplication *myQtApp) {

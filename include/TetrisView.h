@@ -9,14 +9,19 @@
 #include <QHBoxLayout>
 #include <QWidget>
 #include <QApplication>
+
+#include "GameController.h"
+#include "GameSettings.hpp"
+
 class TetrisView : public QWidget {
     QWidget window;
     QHBoxLayout mainLayout;
     InfoBox myInfoBox;
     BoardBox myBoardBox;
+    std::shared_ptr<GameController> &game;
 
 public:
-    TetrisView();
+    TetrisView(std::shared_ptr<GameController> &game);
     int start(QApplication *myQtApp);
 };
 

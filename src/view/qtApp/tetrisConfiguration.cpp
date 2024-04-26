@@ -13,7 +13,7 @@
 #include <QCloseEvent>
 
 
-TetrisConfiguration::TetrisConfiguration() {
+TetrisConfiguration::TetrisConfiguration(GameSettings* settings) : settings(settings) {
     window.setWindowTitle("Tetris Configuration");
     configureWindow();
     window.setLayout(this);
@@ -31,6 +31,13 @@ void TetrisConfiguration::configureWindow() {
 }
 
 void TetrisConfiguration::close() {
+    settings->difficulty = difficultyLineEdit->text().toInt();
+    settings->boardWidth = boardWidthLineEdit->text().toInt();
+    settings->boardHeight = boardHeightLineEdit->text().toInt();
+    settings->startLevel = startLevelLineEdit->text().toInt();
+    settings->targetLine = targetLineLineEdit->text().toInt();
+    settings->targetTime = targetTimeLineEdit->text().toInt();
+    settings->targetScore = targetScoreLineEdit->text().toInt();
     window.close();
 }
 
@@ -67,7 +74,7 @@ void TetrisConfiguration::createLineEdits() {
     targetLineLineEdit = new QLineEdit(QString::number(0));
     targetTimeLineEdit = new QLineEdit(QString::number(0));
     targetScoreLineEdit = new QLineEdit(QString::number(0));
-    difficultyLineEdit = new QLineEdit(QString::number(0));
+    difficultyLineEdit = new QLineEdit(QString::number(1));
 }
 
 

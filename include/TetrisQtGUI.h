@@ -10,7 +10,7 @@
 
 class TetrisQtGUI {
     GameSettings settings;
-    std::unique_ptr<GameController> gameController;
+    std::shared_ptr<GameController> gameController;
 
 public:
     TetrisQtGUI();
