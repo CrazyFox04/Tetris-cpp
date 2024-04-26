@@ -6,7 +6,7 @@
 #include <QLabel>
 
 
-InfoBox::InfoBox() : QVBoxLayout() {
+InfoBox::InfoBox() : QVBoxLayout(), scoreLayout(), linesLayout(), levelLayout(), nextTetroLayout(){
     scoreLayout = new QHBoxLayout();
     linesLayout = new QHBoxLayout();
     levelLayout = new QHBoxLayout();

@@ -7,13 +7,12 @@
 #include <QWidget>
 #include <QApplication>
 
-myQtApp::myQtApp(int argc, char* argv[]) : app(argc, argv), window(), myInfoBox(), myBoardBox(), mainLayout(), brol() {
+myQtApp::myQtApp(int argc, char* argv[]) : app(argc, argv), window(), mainLayout(), myInfoBox(), myBoardBox() {
 }
 
 int myQtApp::start() {
-    brol.setLayout(&myInfoBox);
     mainLayout.addWidget(&myBoardBox);
-    mainLayout.addWidget(&brol);
+    mainLayout.addLayout(&myInfoBox);
     window.setLayout(&mainLayout);
     window.show();
     return app.exec();

@@ -10,10 +10,9 @@
 class myQtApp {
     QApplication app;
     QWidget window;
+    QHBoxLayout mainLayout;
     InfoBox myInfoBox;
     BoardBox myBoardBox;
-    QHBoxLayout mainLayout;
-    QWidget brol;
 
 public:
     myQtApp(int argc, char *argv[]);

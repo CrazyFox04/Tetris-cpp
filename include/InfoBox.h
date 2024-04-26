@@ -14,6 +14,5 @@ class InfoBox : public QVBoxLayout {
 
 public:
     InfoBox();
-
 };
 #endif //TETRIS_INFOBOX_H
