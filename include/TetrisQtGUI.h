@@ -4,9 +4,18 @@
 
 #ifndef TETRISQTGUI_H
 #define TETRISQTGUI_H
+#include "GameController.h"
+#include "GameSettings.hpp"
+
 
 class TetrisQtGUI {
+    GameSettings settings;
+    std::unique_ptr<GameController> gameController;
+
+    void showMainMenu(int argc, char** argv);
+
 public:
-    int launch(int argc, char** argv);
+    TetrisQtGUI();
+    int run(int argc, char** argv);
 };
 #endif //TETRISQTGUI_H

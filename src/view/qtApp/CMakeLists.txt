@@ -7,7 +7,7 @@ project(tetris_view_qtApp)
 
 # C++ source files of the tetris_view
 set(SOURCES
-        myQtApp.cpp
+        TetrisView.cpp
         BoardBox.cpp
         InfoBox.cpp
         TetrisQtGUI.cpp
