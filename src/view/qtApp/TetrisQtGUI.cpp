@@ -3,6 +3,9 @@
 //
 #include <iostream>
 #include "TetrisQtGUI.h"
+
+#include "TetrisConfiguration.h"
+#include "tetrisGameOver.h"
 #include "TetrisView.h"
 
 TetrisQtGUI::TetrisQtGUI() : settings(), gameController(){
@@ -11,7 +14,11 @@ TetrisQtGUI::TetrisQtGUI() : settings(), gameController(){
 
 int TetrisQtGUI::run(int argc, char** argv) {
     QApplication myApp = QApplication(argc, argv);
+    TetrisConfiguration tetris_configuration = TetrisConfiguration(argc, argv);
+    tetris_configuration.start(&myApp);
     TetrisView tetris_view = TetrisView(argc, argv);
     tetris_view.start(&myApp);
+    TetrisGameOver tetris_game_over = TetrisGameOver(argc, argv);
+    tetris_game_over.start(&myApp);
     return myApp.exec();
 }
