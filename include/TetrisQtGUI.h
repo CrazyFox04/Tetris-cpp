@@ -12,8 +12,6 @@ class TetrisQtGUI {
     GameSettings settings;
     std::unique_ptr<GameController> gameController;
 
-    void showMainMenu(int argc, char** argv);
-
 public:
     TetrisQtGUI();
     int run(int argc, char** argv);

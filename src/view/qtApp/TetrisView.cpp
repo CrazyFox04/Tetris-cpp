@@ -6,7 +6,7 @@
 #include "BoardBox.h"
 #include <QWidget>
 
-TetrisView::TetrisView(int argc, char* argv[]) : window(), mainLayout(), myInfoBox(), myBoardBox() {
+TetrisView::TetrisView() : window(), mainLayout(), myInfoBox(), myBoardBox() {
 }
 
 int TetrisView::start(QApplication *myQtApp) {

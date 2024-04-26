@@ -16,7 +16,7 @@ class TetrisView : public QWidget {
     BoardBox myBoardBox;
 
 public:
-    TetrisView(int argc, char *argv[]);
+    TetrisView();
     int start(QApplication *myQtApp);
 };
 

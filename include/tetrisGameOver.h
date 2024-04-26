@@ -9,7 +9,7 @@ class TetrisGameOver : public QWidget {
     QWidget window;
 
 public:
-    TetrisGameOver(int argc, char *argv[]);
+    TetrisGameOver();
     int start(QApplication *myQtApp);
 };
 #endif //TETRISGAMEOVER_H

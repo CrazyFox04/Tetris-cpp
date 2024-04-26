@@ -5,7 +5,7 @@
 #include <QWidget>
 #include <QApplication>
 
-TetrisConfiguration::TetrisConfiguration(int argc, char *argv[]) {
+TetrisConfiguration::TetrisConfiguration() {
     window.setWindowTitle("Tetris Configuration");
     window.resize(300, 200);
     window.show();

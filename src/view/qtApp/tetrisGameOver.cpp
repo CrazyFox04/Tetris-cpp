@@ -5,7 +5,7 @@
 #include <QWidget>
 #include <QApplication>
 
-TetrisGameOver::TetrisGameOver(int argc, char *argv[]) {
+TetrisGameOver::TetrisGameOver() {
     window.setWindowTitle("Tetris Game Over");
     window.resize(300, 200);
     window.show();

@@ -9,7 +9,7 @@ class TetrisConfiguration : public QWidget {
     QWidget window;
 
 public:
-    TetrisConfiguration(int argc, char *argv[]);
+    TetrisConfiguration();
     int start(QApplication *myQtApp);
 };
 #endif //TETRISCONFIGURATION_H
