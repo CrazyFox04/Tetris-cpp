@@ -24,7 +24,7 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
 
 private:
-    void drawPiece(QPainter &painter, int x, int y);
+    void drawPiece(QPainter &painter);
 };
 
 #endif //TETRIS_BOARDBOX_H

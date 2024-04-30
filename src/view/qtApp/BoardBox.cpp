@@ -16,19 +16,21 @@ BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget *parent) : game
 
 void BoardBox::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
-    painter.setBrush(Qt::blue);
-    painter.drawRect(10, 10, 100, 100); // Exemple de dessin d'un rectangle
+    drawPiece(painter);
 }
 
 void BoardBox::keyPressEvent(QKeyEvent *event) {
     switch (event->key()) {
         case Qt::Key_Q:
+            game->moveActiveTetromino(Direction::LEFT);
             std::cout << "Left" << std::endl;
             break;
         case Qt::Key_D:
+            game->moveActiveTetromino(Direction::RIGHT);
             std::cout << "Right" << std::endl;
             break;
         case Qt::Key_S:
+            game->moveActiveTetromino(Direction::DOWN);
             std::cout << "Down" << std::endl;
             break;
         case Qt::Key_Z:
@@ -41,9 +43,12 @@ void BoardBox::keyPressEvent(QKeyEvent *event) {
     update(); // Mettre à jour le widget pour redessiner
 }
 
-void BoardBox::drawPiece(QPainter &painter, int x, int y) {
-    // Dessiner une pièce de Tetris ou autre
-    painter.fillRect(x, y, 30, 30, Qt::red);
+void BoardBox::drawPiece(QPainter &painter) {
+    for (const auto & tetromino : game->getBoard().getTetrominos()) {
+        for (const auto & block : tetromino.get_relative_cells()) {
+            painter.fillRect((game->getBoard().getRefPosition().get_x() + block.get_x()) * 30,(game->getBoard().getRefPosition().get_y() + block.get_y()) * 30, 30, 30, Qt::red);
+        }
+    }
 }
 
 void BoardBox::update() {
