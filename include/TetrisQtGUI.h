@@ -5,6 +5,7 @@
 #ifndef TETRISQTGUI_H
 #define TETRISQTGUI_H
 #include "GameController.h"
+#include "Game.h"
 #include "GameSettings.hpp"
 
 

@@ -1,6 +1,7 @@
 #ifndef GAMECONTROLLER_H
 #define GAMECONTROLLER_H
 
+#include "Observable.h"
 #include "Direction.h"
 #include "Board.h"
 #include "Bag.h"
@@ -12,7 +13,7 @@
  * Defines the basic operations needed to control and interact with a game.
  * This interface is implemented by Game class.
  */
-class GameController {
+class GameController : public Observable {
 public:
     /**
      * Virtual destructor for safe polymorphic usage.
@@ -105,6 +106,10 @@ public:
  * @return True if the targets are valid, false otherwise.
  */
     virtual void checkTargets() const = 0;
+
+    virtual void addObserver(Observer &observer) = 0;
+
+    virtual void removeObserver(Observer &observer) = 0;
 };
 
 #endif //GAMECONTROLLER_H

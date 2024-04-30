@@ -9,10 +9,14 @@
 #include <QPainter>
 #include <QKeyEvent>
 
+#include "GameController.h"
+
 class BoardBox : public QWidget {
+    std::shared_ptr<GameController> game;
 
 public:
-    explicit BoardBox(QWidget *parent = nullptr);
+    explicit BoardBox(std::shared_ptr<GameController> game,QWidget *parent = nullptr);
+    void update();
 
 protected:
     void paintEvent(QPaintEvent *event) override;

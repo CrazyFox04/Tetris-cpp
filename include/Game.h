@@ -99,9 +99,9 @@ public:
 
     void notifyObservers() override;
 
-    void addObserver(Observer&observer) override;
+    void addObserver(Observer &observer) override;
 
-    void removeObserver(int pos) override;
+    void removeObserver(Observer &observer) override;
 
     /**
      * Getter for the current game score.

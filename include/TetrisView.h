@@ -9,11 +9,11 @@
 #include <QHBoxLayout>
 #include <QWidget>
 #include <QApplication>
-
+#include "Observer.h"
 #include "GameController.h"
 #include "GameSettings.hpp"
 
-class TetrisView : public QWidget {
+class TetrisView : public QWidget, public Observer {
     QWidget window;
     QHBoxLayout mainLayout;
     InfoBox myInfoBox;
@@ -21,8 +21,9 @@ class TetrisView : public QWidget {
     std::shared_ptr<GameController> &game;
 
 public:
-    TetrisView(std::shared_ptr<GameController> &game);
+    TetrisView(std::shared_ptr<GameController> game);
     int start(QApplication *myQtApp);
+    void update() override;
 };
 
 #endif //TETRIS_MYQTAPP_H

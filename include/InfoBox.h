@@ -4,15 +4,18 @@
 
 #ifndef TETRIS_INFOBOX_H
 #define TETRIS_INFOBOX_H
-
+#include "GameController.h"
+#include <QString>
 #include <QHBoxLayout>
 class InfoBox : public QVBoxLayout {
     QHBoxLayout *scoreLayout;
     QHBoxLayout *linesLayout;
     QHBoxLayout *levelLayout;
     QWidget *nextTetroWidget;
+    std::shared_ptr<GameController> game;
 
 public:
-    InfoBox();
+    InfoBox(std::shared_ptr<GameController> game);
+    void updateMe();
 };
 #endif //TETRIS_INFOBOX_H

@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <stdexcept>
+#include <iostream>
 
 #include "Game.h"
 
@@ -13,8 +14,10 @@ void Game::notifyObservers() {
     });
 }
 
-void Game::removeObserver(const int pos) {
-    observers.erase(observers.begin() + pos);
+void Game::removeObserver(Observer &observer) {
+//    observers.erase(std::remove_if(observers.begin(), observers.end(), [&observer](std::shared_ptr<Observer>&o) {
+//        return o.get() == &observer;
+//    }), observers.end());
 }
 
 void Game::start() {
@@ -105,6 +108,7 @@ void Game::dropActiveTetromino() {
             tryToAddNextTetromino();
         }
     }
+    std::cout << "Game::dropActiveTetromino" << std::endl;
     notifyObservers();
 }
 

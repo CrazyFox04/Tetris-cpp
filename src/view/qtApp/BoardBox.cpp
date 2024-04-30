@@ -7,7 +7,8 @@
 #include <QPainter>
 #include "BoardBox.h"
 
-BoardBox::BoardBox(QWidget *parent) : QWidget(parent) {
+BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget *parent) : game(), QWidget(parent) {
+    this->game = game;
     setFixedSize(300, 600);
     setStyleSheet("background-color: white;");
     setFocusPolicy(Qt::StrongFocus);
@@ -31,6 +32,7 @@ void BoardBox::keyPressEvent(QKeyEvent *event) {
             std::cout << "Down" << std::endl;
             break;
         case Qt::Key_Z:
+            game->dropActiveTetromino();
             std::cout << "Drop" << std::endl;
             break;
         default:
@@ -42,4 +44,8 @@ void BoardBox::keyPressEvent(QKeyEvent *event) {
 void BoardBox::drawPiece(QPainter &painter, int x, int y) {
     // Dessiner une pièce de Tetris ou autre
     painter.fillRect(x, y, 30, 30, Qt::red);
+}
+
+void BoardBox::update() {
+   repaint();
 }
