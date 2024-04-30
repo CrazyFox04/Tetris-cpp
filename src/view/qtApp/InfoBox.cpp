@@ -8,22 +8,26 @@
 #include "nextTetroWidget.h"
 
 
-InfoBox::InfoBox(std::shared_ptr<GameController> game) : QVBoxLayout(), scoreLayout(), linesLayout(), levelLayout(), nextTetroWidget(), game(){
+InfoBox::InfoBox(std::shared_ptr<GameController> game) : score(new QLabel(QString::number(game->getScore()))),
+                                                         lines(new QLabel(QString::number(game->getLines()))),
+                                                         level(new QLabel(QString::number(game->getLevel()))),
+                                                         nextTetroWidget(), game() {
     this->game = game;
-    scoreLayout = new QHBoxLayout();
-    linesLayout = new QHBoxLayout();
-    levelLayout = new QHBoxLayout();
-    nextTetroWidget = new NextTetroWidget();
+    QHBoxLayout *scoreLayout = new QHBoxLayout();
+    QHBoxLayout *linesLayout = new QHBoxLayout();
+    QHBoxLayout *levelLayout = new QHBoxLayout();
+    NextTetroWidget *nextTetroWidget = new NextTetroWidget();
 
     QLabel *scoreLabel = new QLabel("Score: ");
-    QLabel *score = new QLabel(QString::number(game->getScore()));
     QLabel *linesLabel = new QLabel("Lines: ");
     QLabel *levelLabel = new QLabel("Level: ");
 
     scoreLayout->addWidget(scoreLabel);
     scoreLayout->addWidget(score);
     linesLayout->addWidget(linesLabel);
+    linesLayout->addWidget(lines);
     levelLayout->addWidget(levelLabel);
+    levelLayout->addWidget(level);
 
     this->addLayout(scoreLayout);
     this->addLayout(linesLayout);
@@ -32,8 +36,8 @@ InfoBox::InfoBox(std::shared_ptr<GameController> game) : QVBoxLayout(), scoreLay
 }
 
 void InfoBox::updateMe() {
-    nextTetroWidget->update();
-    scoreLayout->removeWidget(scoreLayout->itemAt(1)->widget());
-    QLabel *score = new QLabel(QString::number(game->getScore()));
-    scoreLayout->addWidget(score);
+    //nextTetroWidget->update();
+    score->setText(QString::number(game->getScore()));
+    lines->setText(QString::number(game->getLines()));
+    level->setText(QString::number(game->getLevel()));
 }
