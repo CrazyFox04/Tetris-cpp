@@ -53,8 +53,6 @@ void BoardBox::keyPressEvent(QKeyEvent* event) {
 }
 
 void BoardBox::drawPiece(QPainter&painter) {
-    QPen pen(Qt::black);
-    painter.setPen(pen);
     for (const auto&tetromino: game->getBoard().getTetrominos()) {
         for (const auto&block: tetromino.get_relative_cells()) {
             int x = 30 + (game->getBoard().getRefPosition().get_x() + block.get_x()) * 30;
@@ -66,7 +64,6 @@ void BoardBox::drawPiece(QPainter&painter) {
             gradient.setColorAt(1, QColor("#0f380f")); // plus foncé en bas à droite
             painter.fillRect(blockRect, gradient);
 
-            // Bordure claire
             QPen pen(QColor("#9bbc0f"));
             painter.setPen(pen);
             painter.drawRect(blockRect);
