@@ -10,12 +10,14 @@
 #include <QLabel>
 #include <QHBoxLayout>
 
-class InfoBox : public QVBoxLayout {
+class InfoBox : public QWidget {
     QLabel *score;
     QLabel *lines;
     QLabel *level;
     QWidget *nextTetroWidget;
     std::shared_ptr<GameController> game;
+
+    void setupInfoWidget(QLayout *layout, const QString &labelText, QLabel *valueLabel);
 
 public:
     InfoBox(std::shared_ptr<GameController> game);

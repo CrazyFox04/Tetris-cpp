@@ -13,31 +13,53 @@ InfoBox::InfoBox(std::shared_ptr<GameController> game) : score(new QLabel(QStrin
                                                          level(new QLabel(QString::number(game->getLevel()))),
                                                          nextTetroWidget(), game() {
     this->game = game;
-    QHBoxLayout *scoreLayout = new QHBoxLayout();
-    QHBoxLayout *linesLayout = new QHBoxLayout();
-    QHBoxLayout *levelLayout = new QHBoxLayout();
-    NextTetroWidget *nextTetroWidget = new NextTetroWidget();
+    QLayout *mainLayout = new QVBoxLayout();
+    this->setLayout(mainLayout);
 
-    QLabel *scoreLabel = new QLabel("Score: ");
-    QLabel *linesLabel = new QLabel("Lines: ");
-    QLabel *levelLabel = new QLabel("Level: ");
+    setupInfoWidget(mainLayout, "Score: ", score);
+    setupInfoWidget(mainLayout, "Lines: ", lines);
+    setupInfoWidget(mainLayout, "Level: ", level);
 
-    scoreLayout->addWidget(scoreLabel);
-    scoreLayout->addWidget(score);
-    linesLayout->addWidget(linesLabel);
-    linesLayout->addWidget(lines);
-    levelLayout->addWidget(levelLabel);
-    levelLayout->addWidget(level);
+    //mainLayout->addWidget(nextTetroWidget);
+}
 
-    this->addLayout(scoreLayout);
-    this->addLayout(linesLayout);
-    this->addLayout(levelLayout);
-    this->addWidget(nextTetroWidget);
+void InfoBox::setupInfoWidget(QLayout *layout, const QString &labelText, QLabel *valueLabel) {
+    QWidget *widget = new QWidget();
+    QHBoxLayout *hLayout = new QHBoxLayout(widget);
+
+    hLayout->setContentsMargins(5, 5, 5, 5);
+    hLayout->setSpacing(5);
+
+    QLabel *combinedLabel = new QLabel(labelText + " " + valueLabel->text());
+    combinedLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    combinedLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
+
+    QString borderColor = "#0f380f";
+    QString backgroundColor = "#9bbc0f";
+    combinedLabel->setStyleSheet(QString("QLabel { font-size: 12pt; color: %1; }").arg(borderColor));
+    widget->setStyleSheet(
+            QString("QWidget { border: 2px solid %1; border-radius: 5px; "
+                    "background-color: %2; padding: 5px; margin: 0px; }").arg(
+                    borderColor, backgroundColor));
+
+    hLayout->addWidget(combinedLabel);
+    layout->addWidget(widget);
+    widget->setSizePolicy(QSizePolicy::Preferred,
+                          QSizePolicy::Maximum); // Set the size policy to maximum for the widget
 }
 
 void InfoBox::updateMe() {
-    //nextTetroWidget->update();
-    score->setText(QString::number(game->getScore()));
-    lines->setText(QString::number(game->getLines()));
-    level->setText(QString::number(game->getLevel()));
+    QString scoreText = QString("Score: %1").arg(game->getScore());
+    QString linesText = QString("Lines: %1").arg(game->getLines());
+    QString levelText = QString("Level: %1").arg(game->getLevel());
+
+    foreach (QLabel *label, this->findChildren<QLabel *>()) {
+        if (label->text().startsWith("Score:")) {
+            label->setText(scoreText);
+        } else if (label->text().startsWith("Lines:")) {
+            label->setText(linesText);
+        } else if (label->text().startsWith("Level:")) {
+            label->setText(levelText);
+        }
+    }
 }
