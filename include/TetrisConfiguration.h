@@ -10,6 +10,7 @@
 #include <QMainWindow>
 #include <QCloseEvent>
 #include <QLineEdit>
+#include <QComboBox>
 
 #include "GameSettings.hpp"
 
@@ -22,13 +23,17 @@ class TetrisConfiguration : public QFormLayout {
     QLabel* targetTimeLabel;
     QLabel* targetScoreLabel;
     QLabel* difficultyLabel;
-    QLineEdit* boardWidthLineEdit;
-    QLineEdit* boardHeightLineEdit;
-    QLineEdit* startLevelLineEdit;
+    QComboBox* boardWidthComboBox;
+    QComboBox* boardHeightComboBox;
+    QComboBox* startLevelComboBox;
+    QComboBox* difficultyComboBox;
+    //QLineEdit* boardWidthLineEdit;
+    //QLineEdit* boardHeightLineEdit;
+    //QLineEdit* startLevelLineEdit;
     QLineEdit* targetLineLineEdit;
     QLineEdit* targetTimeLineEdit;
     QLineEdit* targetScoreLineEdit;
-    QLineEdit* difficultyLineEdit;
+    //QLineEdit* difficultyLineEdit;
 
     GameSettings* settings;
 

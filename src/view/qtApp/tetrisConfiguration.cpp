@@ -31,10 +31,14 @@ void TetrisConfiguration::configureWindow() {
 }
 
 void TetrisConfiguration::close() {
-    settings->difficulty = difficultyLineEdit->text().toInt();
-    settings->boardWidth = boardWidthLineEdit->text().toInt();
-    settings->boardHeight = boardHeightLineEdit->text().toInt();
-    settings->startLevel = startLevelLineEdit->text().toInt();
+    settings->difficulty = difficultyComboBox->currentText().toInt();
+    //settings->difficulty = difficultyLineEdit->text().toInt();
+    settings->boardWidth = boardWidthComboBox->currentText().toInt();
+    //settings->boardWidth = boardWidthLineEdit->text().toInt();
+    settings->boardHeight = boardHeightComboBox->currentText().toInt();
+    //settings->boardHeight = boardHeightLineEdit->text().toInt();
+    settings->startLevel = startLevelComboBox->currentText().toInt();
+    //settings->startLevel = startLevelLineEdit->text().toInt();
     settings->targetLine = targetLineLineEdit->text().toInt();
     settings->targetTime = targetTimeLineEdit->text().toInt();
     settings->targetScore = targetScoreLineEdit->text().toInt();
@@ -43,18 +47,20 @@ void TetrisConfiguration::close() {
 
 void TetrisConfiguration::createButtons() {
     QPushButton* startButton = new QPushButton("Start");
+    QString buttonStyle = "QPushButton { border: 2px solid #0f380f; border-radius: 5px; background-color: #9bbc0f; padding: 5px; }";
+    startButton->setStyleSheet(buttonStyle);
     addRow(startButton);
     connect(startButton, &QPushButton::clicked, this, &TetrisConfiguration::close);
 }
 
 void TetrisConfiguration::addFields() {
-    addRow(boardWidthLabel, boardWidthLineEdit);
-    addRow(boardHeightLabel, boardHeightLineEdit);
-    addRow(startLevelLabel, startLevelLineEdit);
+    addRow(boardWidthLabel, boardWidthComboBox);
+    addRow(boardHeightLabel, boardHeightComboBox);
+    addRow(startLevelLabel, startLevelComboBox);
     addRow(targetLineLabel, targetLineLineEdit);
     addRow(targetTimeLabel, targetTimeLineEdit);
     addRow(targetScoreLabel, targetScoreLineEdit);
-    addRow(difficultyLabel, difficultyLineEdit);
+    addRow(difficultyLabel, difficultyComboBox);
 }
 
 void TetrisConfiguration::createLabels() {
@@ -68,13 +74,40 @@ void TetrisConfiguration::createLabels() {
 }
 
 void TetrisConfiguration::createLineEdits() {
-    boardWidthLineEdit = new QLineEdit(QString::number(Board::DEFAULT_WIDTH));
-    boardHeightLineEdit = new QLineEdit(QString::number(Board::DEFAULT_HEIGHT));
-    startLevelLineEdit = new QLineEdit(QString::number(1));
+    QString lineEditStyle = "QLineEdit { border: 2px solid #0f380f; border-radius: 5px; background-color: #9bbc0f; padding: 5px; }";
+
+    boardWidthComboBox = new QComboBox();
+    for (int w = 10; w <= 30; ++w) boardWidthComboBox->addItem(QString::number(w));
+    boardWidthComboBox->setStyleSheet(lineEditStyle);
+    boardHeightComboBox = new QComboBox();
+    for (int h = 10; h <= 30; ++h) boardHeightComboBox->addItem(QString::number(h));
+    boardHeightComboBox->setStyleSheet(lineEditStyle);
+    boardHeightComboBox->setCurrentIndex(10);
+
+    startLevelComboBox = new QComboBox();
+    for (int lvl = 1; lvl <= 10; lvl++) startLevelComboBox->addItem(QString::number(lvl));
+    startLevelComboBox->setStyleSheet(lineEditStyle);
+
+
+
+    //boardWidthLineEdit = new QLineEdit(QString::number(Board::DEFAULT_WIDTH));
+    //boardWidthLineEdit->setStyleSheet(lineEditStyle);
+    //boardHeightLineEdit = new QLineEdit(QString::number(Board::DEFAULT_HEIGHT));
+    //boardHeightLineEdit->setStyleSheet(lineEditStyle);
+    //startLevelLineEdit = new QLineEdit(QString::number(1));
+    //startLevelLineEdit->setStyleSheet(lineEditStyle);
     targetLineLineEdit = new QLineEdit(QString::number(0));
+    targetLineLineEdit->setStyleSheet(lineEditStyle);
     targetTimeLineEdit = new QLineEdit(QString::number(0));
+    targetTimeLineEdit->setStyleSheet(lineEditStyle);
     targetScoreLineEdit = new QLineEdit(QString::number(0));
-    difficultyLineEdit = new QLineEdit(QString::number(1));
+    targetScoreLineEdit->setStyleSheet(lineEditStyle);
+    //difficultyLineEdit = new QLineEdit(QString::number(1));
+    //difficultyLineEdit->setStyleSheet(lineEditStyle);
+
+    difficultyComboBox = new QComboBox();
+    for (int diff = 1; diff <= 20; diff++) difficultyComboBox->addItem(QString::number(diff));
+    difficultyComboBox->setStyleSheet(lineEditStyle);
 }
 
 
