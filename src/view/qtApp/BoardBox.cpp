@@ -9,13 +9,14 @@
 
 BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget* parent) : game(), QWidget(parent) {
     this->game = game;
-    setFixedSize(300, 600);
-    setStyleSheet("background-color: white;");
+    setFixedSize(360, 600);
+    setStyleSheet("background-color: #9bbc0f;");
     setFocusPolicy(Qt::StrongFocus);
 }
 
 void BoardBox::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
+    drawBorders(painter);
     drawPiece(painter);
 }
 
@@ -52,11 +53,41 @@ void BoardBox::keyPressEvent(QKeyEvent* event) {
 }
 
 void BoardBox::drawPiece(QPainter&painter) {
+    QPen pen(Qt::black);
+    painter.setPen(pen);
     for (const auto&tetromino: game->getBoard().getTetrominos()) {
         for (const auto&block: tetromino.get_relative_cells()) {
-            painter.fillRect((game->getBoard().getRefPosition().get_x() + block.get_x()) * 30,
-                             (game->getBoard().getRefPosition().get_y() + block.get_y()) * 30, 30, 30, Qt::red);
+            int x = 30 + (game->getBoard().getRefPosition().get_x() + block.get_x()) * 30;
+            int y = (game->getBoard().getRefPosition().get_y() + block.get_y()) * 30;
+            QRect blockRect(x, y, 30, 30);
+
+            QLinearGradient gradient(x, y, x + 30, y + 30);
+            gradient.setColorAt(0, QColor("#9bbc0f")); // plus clair en haut à gauche
+            gradient.setColorAt(1, QColor("#0f380f")); // plus foncé en bas à droite
+            painter.fillRect(blockRect, gradient);
+
+            // Bordure claire
+            QPen pen(QColor("#9bbc0f"));
+            painter.setPen(pen);
+            painter.drawRect(blockRect);
         }
+    }
+}
+
+void BoardBox::drawBorders(QPainter&painter) {
+    int brickWidth = 30;
+    int brickHeight = 15;
+    QColor darkColor("#0f380f");
+    QColor lightColor("#306230");
+
+    for (int y = 0; y < height(); y += brickHeight * 2) {
+        painter.fillRect(0, y, brickWidth, brickHeight, darkColor);
+        painter.fillRect(0, y + brickHeight, brickWidth, brickHeight, lightColor);
+    }
+
+    for (int y = 0; y < height(); y += brickHeight * 2) {
+        painter.fillRect(width() - brickWidth, y, brickWidth, brickHeight, darkColor);
+        painter.fillRect(width() - brickWidth, y + brickHeight, brickWidth, brickHeight, lightColor);
     }
 }
 

@@ -25,6 +25,7 @@ protected:
 
 private:
     void drawPiece(QPainter &painter);
+    void drawBorders(QPainter &painter);
 };
 
 #endif //TETRIS_BOARDBOX_H
