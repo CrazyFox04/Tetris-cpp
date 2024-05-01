@@ -8,15 +8,19 @@
 #include <QPainter>
 #include <QKeyEvent>
 
+#include "GameController.h"
+
 class NextTetroWidget : public QWidget {
+    std::shared_ptr<GameController> game;
 
 public:
-    explicit NextTetroWidget(QWidget *parent = nullptr);
-
+    NextTetroWidget(std::shared_ptr<GameController> game, QWidget *parent = nullptr);
+    void update();
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
-    void drawPiece(QPainter &painter, int x, int y);
+    void drawPiece(QPainter &painter);
+    std::vector<std::vector<char>> createAndFillGrid(const Tetromino &tetromino, char tSymbol) const;
 };
 #endif //NEXTTETROWIDGET_H

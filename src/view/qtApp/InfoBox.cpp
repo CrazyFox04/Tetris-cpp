@@ -8,19 +8,18 @@
 #include "nextTetroWidget.h"
 
 
-InfoBox::InfoBox(std::shared_ptr<GameController> game) : score(new QLabel(QString::number(game->getScore()))),
+InfoBox::InfoBox(std::shared_ptr<GameController> game) : game(),
+                                                         score(new QLabel(QString::number(game->getScore()))),
                                                          lines(new QLabel(QString::number(game->getLines()))),
                                                          level(new QLabel(QString::number(game->getLevel()))),
-                                                         nextTetroWidget(), game() {
+                                                         nextTetroWidget(new NextTetroWidget(game, this)) {
     this->game = game;
-    QLayout *mainLayout = new QVBoxLayout();
-    this->setLayout(mainLayout);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
     setupInfoWidget(mainLayout, "Score: ", score);
     setupInfoWidget(mainLayout, "Lines: ", lines);
     setupInfoWidget(mainLayout, "Level: ", level);
-
-    //mainLayout->addWidget(nextTetroWidget);
+    mainLayout->addWidget(nextTetroWidget);
 }
 
 void InfoBox::setupInfoWidget(QLayout *layout, const QString &labelText, QLabel *valueLabel) {
@@ -62,4 +61,5 @@ void InfoBox::updateMe() {
             label->setText(levelText);
         }
     }
+    nextTetroWidget->update();
 }
