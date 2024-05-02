@@ -22,7 +22,7 @@ int TetrisQtGUI::run(int argc, char** argv) {
     TetrisView tetris_view = TetrisView(gameController);
     gameController->addObserver(tetris_view);
     tetris_view.start(&myApp);
-    TetrisGameOver tetris_game_over = TetrisGameOver();
+    TetrisGameOver tetris_game_over = TetrisGameOver(gameController);
     tetris_game_over.start(&myApp);
     return myApp.exec();
 }

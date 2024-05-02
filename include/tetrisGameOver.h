@@ -5,11 +5,16 @@
 #ifndef TETRISGAMEOVER_H
 #define TETRISGAMEOVER_H
 #include <QWidget>
+#include "GameController.h"
+
 class TetrisGameOver : public QWidget {
-    QWidget window;
+    std::shared_ptr<GameController> game;
+
+    void configureWindow();
+    void createItems();
 
 public:
-    TetrisGameOver();
+    TetrisGameOver(std::shared_ptr<GameController> game, QWidget *parent = nullptr);
     int start(QApplication *myQtApp);
 };
 #endif //TETRISGAMEOVER_H
