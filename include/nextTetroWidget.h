@@ -22,5 +22,6 @@ protected:
 private:
     void drawPiece(QPainter &painter);
     std::vector<std::vector<char>> createAndFillGrid(const Tetromino &tetromino, char tSymbol) const;
+    QColor getColor(int id);
 };
 #endif //NEXTTETROWIDGET_H

@@ -3,7 +3,6 @@
 //
 #include "nextTetroWidget.h"
 #include <QLabel>
-#include <iostream>
 #include <QKeyEvent>
 #include <QPainter>
 #include <algorithm>
@@ -18,25 +17,33 @@ NextTetroWidget::NextTetroWidget(std::shared_ptr<GameController> game, QWidget* 
 
 void NextTetroWidget::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
-    drawPiece(painter); // Exemple de dessin d'un rectangle
+    drawPiece(painter);
 }
 
 void NextTetroWidget::drawPiece(QPainter &painter) {
     const auto &tetromino = game->getBag().peekNext();
+
     auto grid = createAndFillGrid(tetromino, 'X');
     int gridSize = grid.size();
-    int blockSize = std::min(width() / gridSize,
-                             height() / gridSize);
+    int blockSize = 10;
+
+    int xOffset = (width() - (blockSize * gridSize)) / 2;
+    int yOffset = (height() - (blockSize * gridSize)) / 2;
+
+    QColor baseColor = getColor(tetromino.get_id());
+    QColor darkerColor = baseColor.darker(150);
 
     for (int y = 0; y < gridSize; ++y) {
         for (int x = 0; x < gridSize; ++x) {
             if (grid[y][x] != ' ') {
-                QRect blockRect(x * blockSize, y * blockSize, blockSize, blockSize);
-                QLinearGradient gradient(x, y, x + 30, y + 30);
-                gradient.setColorAt(0, QColor("#0f380f"));
-                gradient.setColorAt(1, QColor("#306230"));
+                QRect blockRect(xOffset + x * blockSize, yOffset + y * blockSize, blockSize, blockSize);
+
+                QLinearGradient gradient(blockRect.topLeft(), blockRect.bottomRight());
+                gradient.setColorAt(0, baseColor);
+                gradient.setColorAt(1, darkerColor);
                 painter.fillRect(blockRect, gradient);
-                QPen pen(QColor("#9bbc0f"));
+
+                QPen pen(baseColor);
                 painter.setPen(pen);
                 painter.drawRect(blockRect);
             }
@@ -59,6 +66,19 @@ std::vector<std::vector<char>> NextTetroWidget::createAndFillGrid(const Tetromin
         }
     }
     return grid;
+}
+
+QColor NextTetroWidget::getColor(int id) {
+    static const std::vector<QColor> colors = {
+            QColor("#FF0D72"), // Rouge
+            QColor("#0DC2FF"), // Bleu
+            QColor("#0DFF72"), // Vert
+            QColor("#F538FF"), // Violet
+            QColor("#FF8E0D"), // Orange
+            QColor("#FFE138"), // Jaune
+            QColor("#3877FF"), // Bleu clair
+    };
+    return colors[id % colors.size()];
 }
 
 void NextTetroWidget::update() {
