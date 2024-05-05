@@ -9,7 +9,7 @@
 
 BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget* parent) : game(), QWidget(parent) {
     this->game = game;
-    setFixedSize(360, 600);
+    setFixedSize((game->getBoard().getWidth() + 2 )* 30, game->getBoard().getHeight() * 30);
     setStyleSheet("background-color: #9bbc0f;");
     setFocusPolicy(Qt::StrongFocus);
 }
