@@ -150,6 +150,8 @@ public:
      * @return True if the targets are valid, false otherwise.
      */
     void checkTargets() const override;
+
+    Tetromino getDroppedTetro() override;
 };
 
 

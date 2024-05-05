@@ -187,3 +187,7 @@ void Game::tryToAddNextTetromino() {
         gameStatus.isOver = true;
     }
 }
+
+Tetromino Game::getDroppedTetro() {
+   return board.getDroppedTetro();
+}

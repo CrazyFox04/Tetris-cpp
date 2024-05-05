@@ -248,3 +248,20 @@ bool Board::activeTetrominoIsRotatable() const {
     const Tetromino &activeTetromino = tetrominos.back();
     return activeTetromino.canRotate();
 }
+
+Tetromino Board::getDroppedTetro() const {
+    Tetromino activeTetromino = tetrominos.back();
+    int dropDistance = 0;
+    for (int i = 0; i < activeTetromino.get_height(); ++i) {
+       activeTetromino.move(Direction::DOWN.first, Direction::DOWN.second);
+        ++dropDistance;
+    }
+    if (isOutside(activeTetromino) || isOccupied(activeTetromino)) {
+        return tetrominos.back();
+    }
+    while (!isOccupied(activeTetromino) && !isOutside(activeTetromino)) {
+        activeTetromino.move(Direction::DOWN.first, Direction::DOWN.second);
+    }
+    activeTetromino.move(0, -1);
+    return activeTetromino;
+}

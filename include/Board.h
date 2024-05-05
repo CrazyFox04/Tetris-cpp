@@ -222,6 +222,8 @@ public:
      * @return true if the active tetromino is rotatable, false otherwise
      */
     bool activeTetrominoIsRotatable() const;
+
+    Tetromino getDroppedTetro() const;
 };
 
 #endif //TETRIS_DEV4_PROJET_BOARD_H
