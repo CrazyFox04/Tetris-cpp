@@ -62,6 +62,7 @@ void TetrisGameOver::restartGame() {
 }
 
 void TetrisGameOver::quitGame() {
+    game->restart();
     close();
     exit(0);
 }

@@ -22,4 +22,7 @@ int TetrisView::start(QApplication *myQtApp) {
 void TetrisView::update() {
     myBoardBox.update();
     myInfoBox.updateMe();
+    if (game->isGameOver()) {
+        window.close();
+    }
 }

@@ -50,6 +50,7 @@ void Game::checkTargets() const {
 void Game::restart() {
     resetScore();
     gameStatus.hasStarted = false;
+    gameStatus.isOver = false;
     start();
     notifyObservers();
 }
