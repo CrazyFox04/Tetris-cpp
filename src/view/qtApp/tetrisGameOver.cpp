@@ -16,14 +16,19 @@ TetrisGameOver::TetrisGameOver(std::shared_ptr<GameController> game, QWidget* pa
 }
 
 void TetrisGameOver::configureWindow() {
-    setWindowTitle("Tetris Game Over");
+    setWindowTitle("Tetris End Of Game");
     setFixedSize(300, 200);
 }
 
 void TetrisGameOver::createItems() {
     QVBoxLayout* layout = new QVBoxLayout(this);
 
-    QLabel* gameOverLabel = new QLabel("Game Over !!!");
+    QLabel* gameOverLabel = nullptr;
+    if (game->isGameOver()) {
+        gameOverLabel = new QLabel("Game Over !!!");
+    } else {
+         gameOverLabel = new QLabel("You've given up !!!");
+    }
     gameOverLabel->setAlignment(Qt::AlignCenter);
     layout->addWidget(gameOverLabel);
 
