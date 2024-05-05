@@ -8,11 +8,16 @@ int main(int argc, char** argv) {
         std::cerr << "Too many arguments !" << std::endl;
         return 1;
     }
+#ifdef qtAppIsBuilt
     if (argc == 2 && std::string(argv[1]) == "-c") {
         ApplicationTetris app = ApplicationTetris();
         app.run();
     }
     TetrisQtGUI app = TetrisQtGUI();
     app.run(argc, argv);
+#else
+    ApplicationTetris app = ApplicationTetris();
+    app.run();
+#endif
     return 0;
 }
