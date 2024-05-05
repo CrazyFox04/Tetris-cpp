@@ -15,6 +15,6 @@ class TetrisQtGUI {
 
 public:
     TetrisQtGUI();
-    int run(int argc, char** argv);
+    void run(int argc, char** argv);
 };
 #endif //TETRISQTGUI_H

@@ -12,7 +12,6 @@ TetrisGameOver::TetrisGameOver(std::shared_ptr<GameController> game, QWidget* pa
     this->game = game;
     configureWindow();
     createItems();
-    show();
 }
 
 void TetrisGameOver::configureWindow() {
@@ -26,8 +25,9 @@ void TetrisGameOver::createItems() {
     QLabel* gameOverLabel = nullptr;
     if (game->isGameOver()) {
         gameOverLabel = new QLabel("Game Over !!!");
-    } else {
-         gameOverLabel = new QLabel("You've given up !!!");
+    }
+    else {
+        gameOverLabel = new QLabel("You've given up !!!");
     }
     gameOverLabel->setAlignment(Qt::AlignCenter);
     layout->addWidget(gameOverLabel);
@@ -35,25 +35,38 @@ void TetrisGameOver::createItems() {
     QLabel* detailsLabel = new QLabel();
     if (game->isWinner()) {
         detailsLabel->setText("Congratulations! You Won!");
-    } else {
+    }
+    else {
         detailsLabel->setText(QString("Score: %1\nLines Completed: %2").arg(game->getScore()).arg(game->getLines()));
     }
     detailsLabel->setAlignment(Qt::AlignCenter);
     layout->addWidget(detailsLabel);
 
     QHBoxLayout* buttonLayout = new QHBoxLayout();
-    QPushButton *restartButton = new QPushButton("Restart");
-    QPushButton *quitButton = new QPushButton("Quit");
-    restartButton->setStyleSheet("QPushButton { border: 2px solid #0f380f; border-radius: 5px; background-color: #9bbc0f; padding: 5px; }");
-    quitButton->setStyleSheet("QPushButton { border: 2px solid #0f380f; border-radius: 5px; background-color: #9bbc0f; padding: 5px; }");
+    QPushButton* restartButton = new QPushButton("Restart");
+    QPushButton* quitButton = new QPushButton("Quit");
+    restartButton->setStyleSheet(
+        "QPushButton { border: 2px solid #0f380f; border-radius: 5px; background-color: #9bbc0f; padding: 5px; }");
+    quitButton->setStyleSheet(
+        "QPushButton { border: 2px solid #0f380f; border-radius: 5px; background-color: #9bbc0f; padding: 5px; }");
     buttonLayout->addWidget(restartButton);
     buttonLayout->addWidget(quitButton);
-    //connect(restartButton, &QPushButton::clicked, this, &TetrisGameOver::restartGame);
-    //connect(quitButton, &QPushButton::clicked, this, &TetrisGameOver::quitGame);
+    connect(restartButton, &QPushButton::clicked, this, &TetrisGameOver::restartGame);
+    connect(quitButton, &QPushButton::clicked, this, &TetrisGameOver::quitGame);
     layout->addLayout(buttonLayout);
-
 }
 
-int TetrisGameOver::start(QApplication *myQtApp) {
+void TetrisGameOver::restartGame() {
+    game->restart();
+    close();
+}
+
+void TetrisGameOver::quitGame() {
+    close();
+    exit(0);
+}
+
+int TetrisGameOver::start(QApplication* myQtApp) {
+    show();
     return myQtApp->exec();
 }

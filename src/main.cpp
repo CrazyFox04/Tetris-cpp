@@ -2,5 +2,5 @@
 
 int main(int argc, char **argv) {
     TetrisQtGUI app = TetrisQtGUI();
-    return app.run(argc, argv);
+    app.run(argc, argv);
 }

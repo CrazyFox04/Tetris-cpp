@@ -16,5 +16,7 @@ class TetrisGameOver : public QWidget {
 public:
     TetrisGameOver(std::shared_ptr<GameController> game, QWidget *parent = nullptr);
     int start(QApplication *myQtApp);
+    void restartGame();
+    void quitGame();
 };
 #endif //TETRISGAMEOVER_H

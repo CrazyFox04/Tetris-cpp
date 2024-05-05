@@ -13,7 +13,7 @@ TetrisQtGUI::TetrisQtGUI() : settings(), gameController(){
 
 }
 
-int TetrisQtGUI::run(int argc, char** argv) {
+void TetrisQtGUI::run(int argc, char** argv) {
     QApplication myApp = QApplication(argc, argv);
     TetrisConfiguration tetris_configuration = TetrisConfiguration(&settings);
     tetris_configuration.start(&myApp);
@@ -21,8 +21,9 @@ int TetrisQtGUI::run(int argc, char** argv) {
     gameController->start();
     TetrisView tetris_view = TetrisView(gameController);
     gameController->addObserver(tetris_view);
-    tetris_view.start(&myApp);
-    TetrisGameOver tetris_game_over = TetrisGameOver(gameController);
-    tetris_game_over.start(&myApp);
-    return myApp.exec();
+    while (true) {
+        tetris_view.start(&myApp);
+        TetrisGameOver tetris_game_over = TetrisGameOver(gameController);
+        tetris_game_over.start(&myApp);
+    }
 }

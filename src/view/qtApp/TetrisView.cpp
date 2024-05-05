@@ -9,12 +9,12 @@
 
 TetrisView::TetrisView(std::shared_ptr<GameController> game) : window(), mainLayout(), myInfoBox(game), myBoardBox(game), game(game) {
     this->game = game;
-}
-
-int TetrisView::start(QApplication *myQtApp) {
     mainLayout.addWidget(&myBoardBox);
     mainLayout.addWidget(&myInfoBox);
     window.setLayout(&mainLayout);
+}
+
+int TetrisView::start(QApplication *myQtApp) {
     window.show();
     return myQtApp->exec();
 }
