@@ -66,6 +66,22 @@ void TetrisGameOver::createItems() {
     layout->addLayout(buttonLayout);
 }
 
+void TetrisGameOver::updateItems() {
+    if (game->isGameOver()) {
+        gameOverLabel->setText("Game Over !!!");
+    }
+    else {
+        gameOverLabel->setText("You've given up !!!");
+    }
+
+    if (game->isWinner()) {
+        detailsLabel->setText("Congratulations! You Won!");
+    }
+    else {
+        detailsLabel->setText(QString("Score: %1\nLines Completed: %2").arg(game->getScore()).arg(game->getLines()));
+    }
+}
+
 void TetrisGameOver::restartGame() {
     game->restart();
     close();
@@ -78,6 +94,7 @@ void TetrisGameOver::quitGame() {
 }
 
 int TetrisGameOver::start(QApplication* myQtApp) {
+    updateItems();
     show();
     return myQtApp->exec();
 }

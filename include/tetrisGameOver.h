@@ -21,6 +21,7 @@ class TetrisGameOver : public QWidget {
 
     void configureWindow();
     void createItems();
+    void updateItems();
 
 public:
     TetrisGameOver(std::shared_ptr<GameController> game, QWidget *parent = nullptr);
