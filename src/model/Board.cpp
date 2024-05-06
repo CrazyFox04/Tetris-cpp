@@ -2,6 +2,8 @@
 #include "Bag.h"
 #include <random>
 #include <algorithm>
+#include <iostream>
+#include <ostream>
 #include <stdexcept>
 
 Board::Board() : Board(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_DIFFICULTY) {
@@ -259,7 +261,7 @@ Tetromino Board::getDroppedTetro() const {
     if (isOutside(activeTetromino) || isOccupied(activeTetromino)) {
         return tetrominos.back();
     }
-    while (!isOccupied(activeTetromino) && !isOutside(activeTetromino)) {
+    for (int i = 0; i < height && !isOccupied(activeTetromino) && !isOutside(activeTetromino); ++i) {
         activeTetromino.move(Direction::DOWN.first, Direction::DOWN.second);
     }
     activeTetromino.move(0, -1);

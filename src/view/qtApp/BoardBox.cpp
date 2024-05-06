@@ -72,12 +72,13 @@ void BoardBox::drawPiece(QPainter&painter) {
             painter.drawRect(blockRect);
         }
     }
-    if (game->getDroppedTetro() != game->getBoard().getTetrominos().back()) {
-        for (const auto& cell : game->getDroppedTetro().get_relative_cells()) {
+    auto droppedTetro = game->getDroppedTetro();
+    if (droppedTetro != game->getBoard().getTetrominos().back()) {
+        for (const auto& cell : droppedTetro.get_relative_cells()) {
             int x = 30 + (game->getBoard().getRefPosition().get_x() + cell.get_x()) * 30;
             int y = (game->getBoard().getRefPosition().get_y() + cell.get_y()) * 30;
             QRect blockRect(x, y, 30, 30);
-            QColor semiTransparent = getColor(game->getDroppedTetro().get_id());
+            QColor semiTransparent = getColor(droppedTetro.get_id());
             semiTransparent.setAlpha(80);
             painter.fillRect(blockRect, semiTransparent);
         }
