@@ -20,10 +20,10 @@ void TetrisQtGUI::run(int argc, char** argv) {
     gameController = std::make_shared<Game>(settings);
     gameController->start();
     TetrisView tetris_view = TetrisView(gameController);
+    TetrisGameOver tetris_game_over = TetrisGameOver(gameController);
     gameController->addObserver(tetris_view);
     while (true) {
         tetris_view.start(&myApp);
-        TetrisGameOver tetris_game_over = TetrisGameOver(gameController);
         tetris_game_over.start(&myApp);
     }
 }
