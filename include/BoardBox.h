@@ -31,6 +31,12 @@ private:
     void drawBorders(QPainter&painter);
 
     QColor getColor(int id);
+
+    void blinkActiveTetromino(QPainter &painter);
+
+    void drawTetrominoWithColor(QPainter &painter, const Tetromino &tetromino, const QColor &color);
+
+    void blinkCompletedLine(QPainter &painter, int lineIndex);
 };
 
 #endif //TETRIS_BOARDBOX_H

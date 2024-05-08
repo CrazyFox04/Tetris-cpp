@@ -8,6 +8,8 @@
 #include "InfoBox.h"
 #include <QHBoxLayout>
 #include <QWidget>
+#include <QLabel>
+#include <QTimer>
 #include <QApplication>
 #include "Observer.h"
 #include "GameController.h"
@@ -19,6 +21,9 @@ class TetrisView : public QWidget, public Observer {
     QHBoxLayout mainLayout;
     InfoBox myInfoBox;
     BoardBox myBoardBox;
+    QLabel levelUpLabel;
+    QTimer levelUpTimer;
+    int currentLevel;
     std::shared_ptr<GameController>&game;
 
 public:

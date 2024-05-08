@@ -118,6 +118,55 @@ void BoardBox::drawBorders(QPainter&painter) {
     }
 }
 
+// Faire clignoter le tetromino actif quand il se pose. La difficulté c'est que la méthode
+// setOccupiedForActiveTetromino est dans Board
+/**
+void BoardBox::blinkActiveTetromino(QPainter &painter) {
+    Tetromino activeTetromino = game->getBoard().getActiveTetromino();
+    for (int i = 0; i < 5; i++) {
+        QColor color = (i % 2 == 0) ? QColor(Qt::transparent) : getColor(
+                activeTetromino.get_id());
+        drawTetrominoWithColor(painter, activeTetromino, color);
+        updateQt();
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+}
+*/
+
+// Pour faire clignoter clignoter un seul tetro, je penses qu'on a besoin d'une nouvelle methode sinon
+// DrawPiece va faire clignoter tout les tetro
+/**
+void BoardBox::drawTetrominoWithColor(QPainter &painter, const Tetromino &tetromino, const QColor &color) {
+    QRect blockRect;
+    for (const auto &block: tetromino.get_relative_cells()) {
+        int x = 30 + (game->getBoard().getRefPosition().get_x() + block.get_x()) * 30;
+        int y = (game->getBoard().getRefPosition().get_y() + block.get_y()) * 30;
+        blockRect.setRect(x, y, 30, 30);
+
+        QLinearGradient gradient(x, y, x + 30, y + 30);
+        gradient.setColorAt(0, color.lighter()); // plus clair en haut à gauche
+        gradient.setColorAt(1, color.darker(150)); // plus foncé en bas à droite
+        painter.fillRect(blockRect, gradient);
+        painter.drawRect(blockRect);
+    }
+}
+*/
+
+// Faire clignoter une ligne avant de la faire disparaitre
+/**
+void BoardBox::blinkCompletedLine(QPainter &painter, int lineIndex) {
+    for (int i = 0; i < 5; i++) {
+        QColor color = (i % 2 == 0) ? QColor(Qt::transparent) : QColor("#9bbc0f");
+        for (int x = 0; x < game->getBoard().getWidth(); x++) {
+            QRect blockRect(x * 30, lineIndex * 30, 30, 30);
+            painter.fillRect(blockRect, color);
+            painter.drawRect(blockRect);
+        }
+        updateQt();
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+}
+*/
 void BoardBox::updateQt() {
     repaint();
 }
