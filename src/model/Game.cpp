@@ -107,8 +107,7 @@ void Game::rotateActiveTetromino(Rotation rotation) {
                 tryToAddNextTetromino();
             }
         } catch (const std::invalid_argument&) {
-            updateScore(board.removeCompleteLines(), 0);
-            tryToAddNextTetromino();
+            // nop
         }
         notifyObservers();
     }
