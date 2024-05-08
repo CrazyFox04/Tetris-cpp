@@ -1,15 +1,14 @@
 //
 // Created by Julien Delcombel on 23/04/2024.
 //
-#include <QLabel>
 #include <iostream>
-#include <QKeyEvent>
-#include <QPainter>
 #include "BoardBox.h"
+#include "TetrisView.h"
 
 BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget* parent) : game(), QWidget(parent) {
     this->game = game;
-    setFixedSize((game->getBoard().getWidth() + 2 )* 30, game->getBoard().getHeight() * 30);
+    connect(dynamic_cast<const QtPrivate::FunctionPointer<void(TetrisView::*)()>::Object*>(parent), &TetrisView::updateQt, this, &BoardBox::update);
+    setFixedSize((game->getBoard().getWidth() + 2) * 30, game->getBoard().getHeight() * 30);
     setStyleSheet("background-color: #9bbc0f;");
     setFocusPolicy(Qt::StrongFocus);
 }
@@ -49,37 +48,41 @@ void BoardBox::keyPressEvent(QKeyEvent* event) {
         default:
             QWidget::keyPressEvent(event);
     }
-    update(); // Mettre à jour le widget pour redessiner
 }
 
 void BoardBox::drawPiece(QPainter&painter) {
-    for (const auto&tetromino: game->getBoard().getTetrominos()) {
+    QRect blockRect;
+    QLinearGradient gradient;
+    QPen pen(QColor("#9bbc0f"));
+    painter.setPen(pen);
+
+    for (const auto tetromino: game->getBoard().getTetrominos()) {
         QColor baseColor = getColor(tetromino.get_id());
         QColor darkerColor = baseColor.darker(150);
 
         for (const auto&block: tetromino.get_relative_cells()) {
             int x = 30 + (game->getBoard().getRefPosition().get_x() + block.get_x()) * 30;
             int y = (game->getBoard().getRefPosition().get_y() + block.get_y()) * 30;
-            QRect blockRect(x, y, 30, 30);
+            blockRect.setRect(x, y, 30, 30);
 
-            QLinearGradient gradient(x, y, x + 30, y + 30);
+            gradient.setStart(x, y);
+            gradient.setFinalStop(x + 30, y + 30);
             gradient.setColorAt(0, baseColor); // plus clair en haut à gauche
             gradient.setColorAt(1, darkerColor); // plus foncé en bas à droite
             painter.fillRect(blockRect, gradient);
-
-            QPen pen(QColor("#9bbc0f"));
-            painter.setPen(pen);
             painter.drawRect(blockRect);
         }
     }
+
     auto droppedTetro = game->getDroppedTetro();
     if (droppedTetro != game->getBoard().getTetrominos().back()) {
-        for (const auto& cell : droppedTetro.get_relative_cells()) {
+        QColor semiTransparent = getColor(droppedTetro.get_id());
+        semiTransparent.setAlpha(80);
+
+        for (const auto&cell: droppedTetro.get_relative_cells()) {
             int x = 30 + (game->getBoard().getRefPosition().get_x() + cell.get_x()) * 30;
             int y = (game->getBoard().getRefPosition().get_y() + cell.get_y()) * 30;
-            QRect blockRect(x, y, 30, 30);
-            QColor semiTransparent = getColor(droppedTetro.get_id());
-            semiTransparent.setAlpha(80);
+            blockRect.setRect(x, y, 30, 30);
             painter.fillRect(blockRect, semiTransparent);
         }
     }
@@ -87,13 +90,13 @@ void BoardBox::drawPiece(QPainter&painter) {
 
 QColor BoardBox::getColor(int id) {
     static const std::vector<QColor> colors = {
-            QColor("#FF0D72"), // Rouge
-            QColor("#0DC2FF"), // Bleu
-            QColor("#0DFF72"), // Vert
-            QColor("#F538FF"), // Violet
-            QColor("#FF8E0D"), // Orange
-            QColor("#FFE138"), // Jaune
-            QColor("#3877FF"), // Bleu clair
+        QColor("#FF0D72"), // Rouge
+        QColor("#0DC2FF"), // Bleu
+        QColor("#0DFF72"), // Vert
+        QColor("#F538FF"), // Violet
+        QColor("#FF8E0D"), // Orange
+        QColor("#FFE138"), // Jaune
+        QColor("#3877FF"), // Bleu clair
     };
     return colors[id % colors.size()];
 }
@@ -118,3 +121,5 @@ void BoardBox::drawBorders(QPainter&painter) {
 void BoardBox::update() {
     repaint();
 }
+
+#include "moc_BoardBox.cpp"

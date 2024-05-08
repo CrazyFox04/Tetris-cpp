@@ -29,6 +29,7 @@ class Game : public Observable, public GameController {
     Bag&bag; ///< Reference to a Bag containing game pieces.
     GameSettings gameSettings; ///< Game settings. Immutable when a game has started
     GameStatus gameStatus; ///< Game stats of the current game
+    std::mutex gameMutex; ///< Mutex for thread safety
 
     /**
     * Updates the game score based on the number of lines cleared and the drop distance.

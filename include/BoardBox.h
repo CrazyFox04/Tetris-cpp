@@ -4,7 +4,6 @@
 
 #ifndef TETRIS_BOARDBOX_H
 #define TETRIS_BOARDBOX_H
-
 #include <QWidget>
 #include <QPainter>
 #include <QKeyEvent>
@@ -12,6 +11,7 @@
 #include "GameController.h"
 
 class BoardBox : public QWidget {
+    Q_OBJECT
     std::shared_ptr<GameController> game;
 
 public:

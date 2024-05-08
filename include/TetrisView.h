@@ -4,8 +4,8 @@
 
 #ifndef TETRIS_MYQTAPP_H
 #define TETRIS_MYQTAPP_H
-#include "InfoBox.h"
 #include "BoardBox.h"
+#include "InfoBox.h"
 #include <QHBoxLayout>
 #include <QWidget>
 #include <QApplication>
@@ -14,16 +14,24 @@
 #include "GameSettings.hpp"
 
 class TetrisView : public QWidget, public Observer {
+    Q_OBJECT
     QWidget window;
     QHBoxLayout mainLayout;
     InfoBox myInfoBox;
     BoardBox myBoardBox;
-    std::shared_ptr<GameController> &game;
+    std::shared_ptr<GameController>&game;
 
 public:
     TetrisView(std::shared_ptr<GameController> game);
-    int start(QApplication *myQtApp);
+
+    ~TetrisView() override = default;
+
+    int start(QApplication* myQtApp);
+
     void update() override;
+
+signals:
+    void updateQt();
 };
 
 #endif //TETRIS_MYQTAPP_H

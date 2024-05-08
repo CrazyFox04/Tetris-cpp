@@ -4,6 +4,9 @@
 
 #include "Game.h"
 
+#include <thread>
+#include <unistd.h>
+
 void Game::addObserver(Observer&observer) {
     observers.emplace_back(&observer);
 }
@@ -14,10 +17,10 @@ void Game::notifyObservers() {
     });
 }
 
-void Game::removeObserver(Observer &observer) {
-//    observers.erase(std::remove_if(observers.begin(), observers.end(), [&observer](std::shared_ptr<Observer>&o) {
-//        return o.get() == &observer;
-//    }), observers.end());
+void Game::removeObserver(Observer&observer) {
+    //    observers.erase(std::remove_if(observers.begin(), observers.end(), [&observer](std::shared_ptr<Observer>&o) {
+    //        return o.get() == &observer;
+    //    }), observers.end());
 }
 
 void Game::start() {
@@ -25,9 +28,25 @@ void Game::start() {
         throw std::runtime_error("Game has already started.");
     }
     checkTargets();
+    gameStatus.currentLevel = gameSettings.startLevel;
+
     gameStatus.hasStarted = true;
     board = Board(gameSettings.boardWidth, gameSettings.boardHeight, gameSettings.difficulty);
     tryToAddNextTetromino();
+    std::thread t([this]() {
+        while (!isGameOver() && !isWinner()) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000 / (gameStatus.currentLevel + 1)));
+            try {
+                board.moveActiveTetromino(Direction::DOWN);
+            }
+            catch (const std::exception&) {
+                updateScore(board.removeCompleteLines(), 0);
+                tryToAddNextTetromino();
+            }
+            notifyObservers();
+        }
+    });
+    t.detach();
     notifyObservers();
 }
 
@@ -73,8 +92,8 @@ void Game::moveActiveTetromino(Direction2D direction) {
                 tryToAddNextTetromino();
             }
         }
+        notifyObservers();
     }
-    notifyObservers();
 }
 
 void Game::rotateActiveTetromino(Rotation rotation) {
@@ -91,8 +110,8 @@ void Game::rotateActiveTetromino(Rotation rotation) {
             updateScore(board.removeCompleteLines(), 0);
             tryToAddNextTetromino();
         }
+        notifyObservers();
     }
-    notifyObservers();
 }
 
 void Game::dropActiveTetromino() {
@@ -108,9 +127,9 @@ void Game::dropActiveTetromino() {
             updateScore(board.removeCompleteLines(), dropDistance);
             tryToAddNextTetromino();
         }
+        notifyObservers();
     }
     std::cout << "Game::dropActiveTetromino" << std::endl;
-    notifyObservers();
 }
 
 void Game::updateScore(const int linesCleared, const int dropDistance) {
@@ -189,5 +208,5 @@ void Game::tryToAddNextTetromino() {
 }
 
 Tetromino Game::getDroppedTetro() {
-   return board.getDroppedTetro();
+    return board.getDroppedTetro();
 }

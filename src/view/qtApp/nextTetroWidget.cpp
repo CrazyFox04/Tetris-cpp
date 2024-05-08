@@ -21,7 +21,7 @@ void NextTetroWidget::paintEvent(QPaintEvent *event) {
 }
 
 void NextTetroWidget::drawPiece(QPainter &painter) {
-    const auto &tetromino = game->getBag().peekNext();
+    const auto tetromino = game->getBag().peekNext();
 
     auto grid = createAndFillGrid(tetromino, 'X');
     int gridSize = grid.size();
@@ -33,18 +33,21 @@ void NextTetroWidget::drawPiece(QPainter &painter) {
     QColor baseColor = getColor(tetromino.get_id());
     QColor darkerColor = baseColor.darker(150);
 
+    QPen pen(baseColor);
+    painter.setPen(pen);
+
+    QRect blockRect;
+    QLinearGradient gradient;
+
     for (int y = 0; y < gridSize; ++y) {
         for (int x = 0; x < gridSize; ++x) {
             if (grid[y][x] != ' ') {
-                QRect blockRect(xOffset + x * blockSize, yOffset + y * blockSize, blockSize, blockSize);
-
-                QLinearGradient gradient(blockRect.topLeft(), blockRect.bottomRight());
+                blockRect.setRect(xOffset + x * blockSize, yOffset + y * blockSize, blockSize, blockSize);
+                gradient.setStart(blockRect.topLeft());
+                gradient.setFinalStop(blockRect.bottomRight());
                 gradient.setColorAt(0, baseColor);
                 gradient.setColorAt(1, darkerColor);
                 painter.fillRect(blockRect, gradient);
-
-                QPen pen(baseColor);
-                painter.setPen(pen);
                 painter.drawRect(blockRect);
             }
         }

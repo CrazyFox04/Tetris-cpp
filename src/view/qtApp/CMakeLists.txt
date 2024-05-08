@@ -21,16 +21,16 @@ find_package(Qt6 COMPONENTS Core Widgets QUIET)
 
 # Check if Qt6 components are found
 if (DEFINED Qt6Widgets_FOUND AND DEFINED Qt6Core_FOUND)
-    # Add library target for tetris_view_qtApp
-    add_library(${PROJECT_NAME} STATIC ${SOURCES})
+    # Find required Qt6 components
+    find_package(Qt6 COMPONENTS Widgets REQUIRED)
 
     # Enable Qt automatic handling of UI files, moc files, and resource files
     set(CMAKE_AUTOUIC ON)
     set(CMAKE_AUTOMOC ON)
     set(CMAKE_AUTORCC ON)
 
-    # Find required Qt6 components
-    find_package(Qt6 COMPONENTS Core Widgets REQUIRED)
+    # Add library target for tetris_view_qtApp
+    add_library(${PROJECT_NAME} STATIC ${SOURCES})
 
     # Link Qt6 libraries to the target
     target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets)
@@ -41,6 +41,8 @@ if (DEFINED Qt6Widgets_FOUND AND DEFINED Qt6Core_FOUND)
             ../../../include
             # If more folders or more specific folders are needed, you can add them here
     )
+
+    set_target_properties(${PROJECT_NAME} PROPERTIES AUTOMOC ON)
 
 else (DEFINED Qt6Widgets_FOUND AND DEFINED Qt6Core_FOUND)
     # Display a warning if Qt6 components are not found
