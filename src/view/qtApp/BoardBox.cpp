@@ -7,7 +7,7 @@
 
 BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget* parent) : game(), QWidget(parent) {
     this->game = game;
-    connect(dynamic_cast<const QtPrivate::FunctionPointer<void(TetrisView::*)()>::Object*>(parent), &TetrisView::updateQt, this, &BoardBox::update);
+    connect(dynamic_cast<const QtPrivate::FunctionPointer<void(TetrisView::*)()>::Object*>(parent), SIGNAL(updateQt()), this, SLOT(update()));
     setFixedSize((game->getBoard().getWidth() + 2) * 30, game->getBoard().getHeight() * 30);
     setStyleSheet("background-color: #9bbc0f;");
     setFocusPolicy(Qt::StrongFocus);
@@ -118,7 +118,7 @@ void BoardBox::drawBorders(QPainter&painter) {
     }
 }
 
-void BoardBox::update() {
+void BoardBox::updateQt() {
     repaint();
 }
 

@@ -7,7 +7,7 @@
 #include <QWidget>
 #include <iostream>
 
-TetrisView::TetrisView(std::shared_ptr<GameController> game) : window(), mainLayout(), myInfoBox(game), myBoardBox(game, this), game(game) {
+TetrisView::TetrisView(std::shared_ptr<GameController> game) : window(), mainLayout(), myInfoBox(game, this), myBoardBox(game, this), game(game) {
     this->game = game;
     mainLayout.addWidget(&myBoardBox);
     mainLayout.addWidget(&myInfoBox);
@@ -21,8 +21,7 @@ int TetrisView::start(QApplication *myQtApp) {
 
 void TetrisView::update() {
     emit updateQt();
-    //myBoardBox.update();
-    myInfoBox.updateMe();
+    //myInfoBox.updateQt();
     if (game->isGameOver()) {
         window.close();
     }

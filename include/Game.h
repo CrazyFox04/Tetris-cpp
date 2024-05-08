@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <memory>
+#include <thread>
 
 #include "GameController.h"
 #include "Observable.h"
@@ -29,7 +30,7 @@ class Game : public Observable, public GameController {
     Bag&bag; ///< Reference to a Bag containing game pieces.
     GameSettings gameSettings; ///< Game settings. Immutable when a game has started
     GameStatus gameStatus; ///< Game stats of the current game
-    std::mutex gameMutex; ///< Mutex for thread safety
+    std::pair<bool, std::thread> autoDownThread; ///< Thread for automatic downward movement of the active tetromino
 
     /**
     * Updates the game score based on the number of lines cleared and the drop distance.
@@ -56,6 +57,8 @@ class Game : public Observable, public GameController {
      * If the tetromino can't be added, the game is over.
      */
     void tryToAddNextTetromino();
+
+    void launchAutoDown();
 
 public:
     Game();
@@ -100,9 +103,9 @@ public:
 
     void notifyObservers() override;
 
-    void addObserver(Observer &observer) override;
+    void addObserver(Observer&observer) override;
 
-    void removeObserver(Observer &observer) override;
+    void removeObserver(Observer&observer) override;
 
     /**
      * Getter for the current game score.

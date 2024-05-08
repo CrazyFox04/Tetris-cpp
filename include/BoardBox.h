@@ -15,17 +15,21 @@ class BoardBox : public QWidget {
     std::shared_ptr<GameController> game;
 
 public:
-    explicit BoardBox(std::shared_ptr<GameController> game,QWidget *parent = nullptr);
-    void update();
+    explicit BoardBox(std::shared_ptr<GameController> game, QWidget* parent = nullptr);
+
+public slots:
+    void updateQt();
 
 protected:
-    void paintEvent(QPaintEvent *event) override;
+    void paintEvent(QPaintEvent* event) override;
 
-    void keyPressEvent(QKeyEvent *event) override;
+    void keyPressEvent(QKeyEvent* event) override;
 
 private:
-    void drawPiece(QPainter &painter);
-    void drawBorders(QPainter &painter);
+    void drawPiece(QPainter&painter);
+
+    void drawBorders(QPainter&painter);
+
     QColor getColor(int id);
 };
 

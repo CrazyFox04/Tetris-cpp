@@ -6,14 +6,16 @@
 #include <QLabel>
 #include <QPainter>
 #include "nextTetroWidget.h"
+#include "TetrisView.h"
 
 
-InfoBox::InfoBox(std::shared_ptr<GameController> game) : game(),
+InfoBox::InfoBox(std::shared_ptr<GameController> game, QWidget* parent) : game(),
                                                          score(new QLabel(QString::number(game->getScore()))),
                                                          lines(new QLabel(QString::number(game->getLines()))),
                                                          level(new QLabel(QString::number(game->getLevel()))),
                                                          nextTetroWidget(new NextTetroWidget(game, this)) {
     this->game = game;
+    connect(dynamic_cast<const QtPrivate::FunctionPointer<void(TetrisView::*)()>::Object*>(parent), SIGNAL(updateQt()), this, SLOT(update()));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
     setupInfoWidget(mainLayout, "Score: ", score);
@@ -47,7 +49,7 @@ void InfoBox::setupInfoWidget(QLayout *layout, const QString &labelText, QLabel 
                           QSizePolicy::Maximum); // Set the size policy to maximum for the widget
 }
 
-void InfoBox::updateMe() {
+void InfoBox::updateQt() {
     QString scoreText = QString("Score: %1").arg(game->getScore());
     QString linesText = QString("Lines: %1").arg(game->getLines());
     QString levelText = QString("Level: %1").arg(game->getLevel());
@@ -63,3 +65,5 @@ void InfoBox::updateMe() {
     }
     nextTetroWidget->update();
 }
+
+#include "moc_InfoBox.cpp"
