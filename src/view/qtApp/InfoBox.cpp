@@ -15,7 +15,7 @@ InfoBox::InfoBox(std::shared_ptr<GameController> game, QWidget* parent) : game()
                                                          level(new QLabel(QString::number(game->getLevel()))),
                                                          nextTetroWidget(new NextTetroWidget(game, this)) {
     this->game = game;
-    connect(dynamic_cast<const QtPrivate::FunctionPointer<void(TetrisView::*)()>::Object*>(parent), SIGNAL(updateQt()), this, SLOT(update()));
+    connect(dynamic_cast<const QtPrivate::FunctionPointer<void(TetrisView::*)()>::Object*>(parent), SIGNAL(updateQt()), this, SLOT(updateQt()));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
     setupInfoWidget(mainLayout, "Score: ", score);
