@@ -2,10 +2,14 @@
 #include "BoardBox.h"
 
 #include <thread>
+#include <QPropertyAnimation>
 
 #include "TetrisView.h"
 
-BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget* parent) : game(), QWidget(parent) {
+BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget* parent) : game(), QWidget(parent),
+                                                                            m_activeTetrominoColor("#FF0A0A"),
+                                                                            numberOfTetrominoPut(
+                                                                                game->getNumberOfTetrominoPut()) {
     this->game = game;
     connect(dynamic_cast<const QtPrivate::FunctionPointer<void(TetrisView::*)()>::Object *>(parent), SIGNAL(updateQt()),
             this, SLOT(update()));
@@ -87,14 +91,17 @@ void BoardBox::drawPiece(QPainter&painter) {
             painter.fillRect(blockRect, semiTransparent);
         }
     }
-    else {
-        Tetromino activeTetromino = game->getBoard().getActiveTetromino();
-        QColor color = activeTetromino.get_ref_position().get_y() % 2 == 0
-                           ? QColor("#FF0A0A")
-                           : getColor(
-                               activeTetromino.get_id());
-        drawTetrominoWithColor(painter, activeTetromino, color);
+    if (numberOfTetrominoPut != game->getNumberOfTetrominoPut()) {
+        numberOfTetrominoPut = game->getNumberOfTetrominoPut();
+
+        animateActiveTetromino();
     }
+    if (game->getNumberOfTetrominoPut() > 1) {
+        drawTetrominoWithColor(painter, game->getBeforeLastTetromino(), activeTetrominoColor());
+    } else {
+        //drawTetrominoWithColor(painter, game->getDroppedTetro(), activeTetrominoColor());
+    }
+
 }
 
 QColor BoardBox::getColor(int id) {
@@ -142,6 +149,23 @@ void BoardBox::drawTetrominoWithColor(QPainter&painter, const Tetromino&tetromin
         painter.fillRect(blockRect, gradient);
         painter.drawRect(blockRect);
     }
+}
+
+void BoardBox::animateActiveTetromino() {
+    auto* animation = new QPropertyAnimation(this, "activeTetrominoColor");
+    animation->setDuration(500);
+    animation->setLoopCount(5);
+    animation->setStartValue(QColor("#2A00FF"));
+    animation->setEndValue(QColor(getColor(game->getBeforeLastTetromino().get_id())));
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
+}
+
+QColor BoardBox::activeTetrominoColor() const {
+    return m_activeTetrominoColor;
+}
+
+void BoardBox::setActiveTetrominoColor(const QColor&color) {
+    m_activeTetrominoColor = color;
 }
 
 // Faire clignoter une ligne avant de la faire disparaitre

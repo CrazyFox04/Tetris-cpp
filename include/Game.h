@@ -156,6 +156,10 @@ public:
     void checkTargets() const override;
 
     Tetromino getDroppedTetro() override;
+
+    int getNumberOfTetrominoPut() override;
+
+     Tetromino getBeforeLastTetromino() const override;
 };
 
 

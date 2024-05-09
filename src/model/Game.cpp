@@ -188,6 +188,7 @@ Game::Game(GameSettings gameSettings_) : bag(Bag::getInstance()), gameSettings(g
 void Game::tryToAddNextTetromino() {
     try {
         board.addTetromino(bag.getNext());
+        gameStatus.numberOfTetrominosPut++;
     }
     catch (std::out_of_range&e) {
         gameStatus.isOver = true;
@@ -218,3 +219,12 @@ void Game::launchAutoDown() {
         }
     });
 }
+
+int Game::getNumberOfTetrominoPut() {
+    return gameStatus.numberOfTetrominosPut;
+}
+
+Tetromino Game::getBeforeLastTetromino() const {
+    return board.getTetrominos().at(board.getTetrominos().size() - 2);
+}
+

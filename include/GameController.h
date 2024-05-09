@@ -107,11 +107,15 @@ public:
  */
     virtual void checkTargets() const = 0;
 
-    virtual void addObserver(Observer &observer) = 0;
+    virtual void addObserver(Observer&observer) = 0;
 
-    virtual void removeObserver(Observer &observer) = 0;
+    virtual void removeObserver(Observer&observer) = 0;
 
     virtual Tetromino getDroppedTetro() = 0;
+
+    virtual int getNumberOfTetrominoPut() = 0;
+
+    virtual Tetromino getBeforeLastTetromino() const = 0;
 };
 
 #endif //GAMECONTROLLER_H

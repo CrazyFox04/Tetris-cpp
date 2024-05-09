@@ -13,7 +13,10 @@
  */
 class BoardBox : public QWidget {
     Q_OBJECT
+    Q_PROPERTY(QColor activeTetrominoColor READ activeTetrominoColor WRITE setActiveTetrominoColor)
     std::shared_ptr<GameController> game; ///< The game controller.
+    QColor m_activeTetrominoColor;
+    int numberOfTetrominoPut;
 
 public:
     /**
@@ -22,6 +25,8 @@ public:
      * @param parent The parent widget.
      */
     explicit BoardBox(std::shared_ptr<GameController> game, QWidget* parent = nullptr);
+    QColor activeTetrominoColor() const;
+    void setActiveTetrominoColor(const QColor &color);
 
 public slots:
     void updateQt();
@@ -62,6 +67,8 @@ private:
     void drawTetrominoWithColor(QPainter &painter, const Tetromino &tetromino, const QColor &color);
 
     void blinkCompletedLine(QPainter &painter, int lineIndex);
+
+    void animateActiveTetromino();
 };
 
 #endif //TETRIS_BOARDBOX_H
