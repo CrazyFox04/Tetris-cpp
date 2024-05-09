@@ -13,7 +13,8 @@ InfoBox::InfoBox(std::shared_ptr<GameController> game, QWidget* parent) : game()
                                                          score(new QLabel(QString::number(game->getScore()))),
                                                          lines(new QLabel(QString::number(game->getLines()))),
                                                          level(new QLabel(QString::number(game->getLevel()))),
-                                                         nextTetroWidget(new NextTetroWidget(game, this)) {
+                                                         nextTetroWidget(new NextTetroWidget(game, this)),
+levelUpLabel("Level Up +1", this), levelUpTimer(this), currentLevel(game->getLevel()) {
     this->game = game;
     connect(dynamic_cast<const QtPrivate::FunctionPointer<void(TetrisView::*)()>::Object*>(parent), SIGNAL(updateQt()), this, SLOT(updateQt()));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -21,7 +22,15 @@ InfoBox::InfoBox(std::shared_ptr<GameController> game, QWidget* parent) : game()
     setupInfoWidget(mainLayout, "Score: ", score);
     setupInfoWidget(mainLayout, "Lines: ", lines);
     setupInfoWidget(mainLayout, "Level: ", level);
+    levelUpLabel.setAlignment(Qt::AlignCenter);
+    levelUpLabel.setStyleSheet("QLabel { color : white; font-size : 20px; }");
+    levelUpLabel.hide();
+    connect(&levelUpTimer, &QTimer::timeout, [&] {
+        levelUpLabel.hide();
+        levelUpTimer.stop();
+    });
     mainLayout->addWidget(nextTetroWidget);
+    mainLayout->addWidget(&levelUpLabel);
 }
 
 void InfoBox::setupInfoWidget(QLayout *layout, const QString &labelText, QLabel *valueLabel) {
@@ -53,7 +62,11 @@ void InfoBox::updateQt() {
     QString scoreText = QString("Score: %1").arg(game->getScore());
     QString linesText = QString("Lines: %1").arg(game->getLines());
     QString levelText = QString("Level: %1").arg(game->getLevel());
-
+    if (game->getLevel() > currentLevel) {
+        currentLevel = game->getLevel();
+        levelUpLabel.show();
+        levelUpTimer.start(1000);
+    }
     foreach (QLabel *label, this->findChildren<QLabel *>()) {
         if (label->text().startsWith("Score:")) {
             label->setText(scoreText);

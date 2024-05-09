@@ -8,6 +8,7 @@
 #include "GameController.h"
 #include <QString>
 #include <QLabel>
+#include <QTimer>
 #include <QHBoxLayout>
 
 class InfoBox : public QWidget {
@@ -15,8 +16,11 @@ class InfoBox : public QWidget {
     QLabel* score;
     QLabel* lines;
     QLabel* level;
+    QLabel levelUpLabel;
+    QTimer levelUpTimer;
     QWidget* nextTetroWidget;
     std::shared_ptr<GameController> game;
+    int currentLevel;
 
     void setupInfoWidget(QLayout* layout, const QString&labelText, QLabel* valueLabel);
 
