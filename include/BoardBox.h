@@ -59,8 +59,6 @@ private:
      */
     QColor getColor(int id);
 
-    void blinkActiveTetromino(QPainter &painter);
-
     void drawTetrominoWithColor(QPainter &painter, const Tetromino &tetromino, const QColor &color);
 
     void blinkCompletedLine(QPainter &painter, int lineIndex);
