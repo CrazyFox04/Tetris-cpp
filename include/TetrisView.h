@@ -1,7 +1,3 @@
-//
-// Created by Julien Delcombel on 23/04/2024.
-//
-
 #ifndef TETRIS_MYQTAPP_H
 #define TETRIS_MYQTAPP_H
 #include "BoardBox.h"
@@ -15,21 +11,43 @@
 #include "GameController.h"
 #include "GameSettings.hpp"
 
+/**
+ * @class TetrisView
+ * @brief Displays the game.
+ *
+ * This class is responsible for displaying all components of the game.
+ * It is the main view of the game.
+ */
 class TetrisView : public QWidget, public Observer {
     Q_OBJECT
-    QWidget window;
-    QHBoxLayout mainLayout;
-    InfoBox myInfoBox;
-    BoardBox myBoardBox;
-    std::shared_ptr<GameController>&game;
+    QWidget window; //!< The main window.
+    QHBoxLayout mainLayout; //!< The main layout.
+    InfoBox myInfoBox; //!< The info box.
+    BoardBox myBoardBox; //!< The board box.
+    std::shared_ptr<GameController>&game; //!< The game controller.
 
 public:
+    /**
+     * Construct a TetrisView.
+     * @param game The game controller.
+     */
     TetrisView(std::shared_ptr<GameController> game);
 
+    /**
+     * Destruct a TetrisView.
+     */
     ~TetrisView() override = default;
 
+    /**
+     * Start the game.
+     * @param myQtApp The Qt application.
+     * @return The exit code.
+     */
     int start(QApplication* myQtApp);
 
+    /**
+     * Update the view.
+     */
     void update() override;
 
 signals:

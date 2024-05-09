@@ -20,4 +20,6 @@ private:
     void setupUI();
 };
 
+// A SUPPRIMER ?
+
 #endif //TETRIS_INFOPANELWIDGET_H

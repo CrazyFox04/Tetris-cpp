@@ -1,6 +1,3 @@
-//
-// Created by Enzo Renard on 26/04/2024.
-//
 #include "TetrisConfiguration.h"
 #include <QWidget>
 #include <QApplication>

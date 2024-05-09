@@ -1,6 +1,3 @@
-//
-// Created by Enzo Renard on 26/04/2024.
-//
 #include "tetrisGameOver.h"
 #include <QWidget>
 #include <QApplication>

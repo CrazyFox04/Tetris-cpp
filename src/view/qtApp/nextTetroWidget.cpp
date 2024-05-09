@@ -1,12 +1,9 @@
-//
-// Created by Enzo Renard on 26/04/2024.
-//
 #include "nextTetroWidget.h"
 #include <QLabel>
 #include <QKeyEvent>
 #include <QPainter>
 #include <algorithm>
-#include "BoardBox.h"
+
 
 NextTetroWidget::NextTetroWidget(std::shared_ptr<GameController> game, QWidget* parent) : game(), QWidget(parent) {
     this->game = game;

@@ -14,43 +14,73 @@
 
 #include "GameSettings.hpp"
 
+/**
+ * @class TetrisConfiguration
+ * @brief The TetrisConfiguration class
+ * The oppeing window of the game.
+ * It invites the user to configure the game settings.
+ * It allows the user to start the game.
+ */
 class TetrisConfiguration : public QFormLayout {
-    QWidget window;
-    QLabel* boardWidthLabel;
-    QLabel* boardHeightLabel;
-    QLabel* startLevelLabel;
-    QLabel* targetLineLabel;
-    QLabel* targetTimeLabel;
-    QLabel* targetScoreLabel;
-    QLabel* difficultyLabel;
-    QComboBox* boardWidthComboBox;
-    QComboBox* boardHeightComboBox;
-    QComboBox* startLevelComboBox;
-    QComboBox* difficultyComboBox;
-    //QLineEdit* boardWidthLineEdit;
-    //QLineEdit* boardHeightLineEdit;
-    //QLineEdit* startLevelLineEdit;
-    QLineEdit* targetLineLineEdit;
-    QLineEdit* targetTimeLineEdit;
-    QLineEdit* targetScoreLineEdit;
-    //QLineEdit* difficultyLineEdit;
+    QWidget window; //!< The main window.
+    QLabel* boardWidthLabel; //!< The board width label.
+    QLabel* boardHeightLabel; //!< The board height label.
+    QLabel* startLevelLabel; //!< The start level label.
+    QLabel* targetLineLabel; //!< The target line label.
+    QLabel* targetTimeLabel; //!< The target time label.
+    QLabel* targetScoreLabel; //!< The target score label.
+    QLabel* difficultyLabel; //!< The difficulty label.
+    QComboBox* boardWidthComboBox; //!< The board width combo box.
+    QComboBox* boardHeightComboBox; //!< The board height combo box.
+    QComboBox* startLevelComboBox; //!< The start level combo box.
+    QComboBox* difficultyComboBox; //!< The difficulty combo box.
+    QLineEdit* targetLineLineEdit; //!< The target line line edit.
+    QLineEdit* targetTimeLineEdit; //!< The target time line edit.
+    QLineEdit* targetScoreLineEdit; //!< The target score line edit.
 
-    GameSettings* settings;
+    GameSettings* settings; //!< The game settings.
 
+    /**
+     * Configure the window.
+     */
     void configureWindow();
 
+    /**
+     * Create the necessary items.
+     */
     void createLabels();
 
+    /**
+     * Create the necessary items.
+     */
     void createLineEdits();
 
+    /**
+     * Add the fields to the form layout.
+     */
     void addFields();
 
+    /**
+     * Create the necessary items.
+     */
     void createButtons();
 
+    /**
+     * Register the settings and close the window.
+     */
     void close();
 public:
+    /**
+     * Construct a TetrisConfiguration.
+     * @param settings The game settings.
+     */
     TetrisConfiguration(GameSettings* settings);
 
+    /**
+     * Launch the configuration window.
+     * @param myQtApp The Qt application.
+     * @return The exit code.
+     */
     int start(QApplication* myQtApp);
 };
 #endif //TETRISCONFIGURATION_H

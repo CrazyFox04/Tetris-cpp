@@ -1,6 +1,3 @@
-//
-// Created by Julien Delcombel on 23/04/2024.
-//
 #include <iostream>
 #include "BoardBox.h"
 #include "TetrisView.h"
