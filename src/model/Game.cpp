@@ -228,3 +228,6 @@ Tetromino Game::getBeforeLastTetromino() const {
     return board.getTetrominos().at(board.getTetrominos().size() - 2);
 }
 
+int Game::getTime() const {
+    return gameStatus.currentTime;
+}

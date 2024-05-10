@@ -159,7 +159,9 @@ public:
 
     int getNumberOfTetrominoPut() override;
 
-     Tetromino getBeforeLastTetromino() const override;
+    Tetromino getBeforeLastTetromino() const override;
+
+    int getTime() const override;
 };
 
 

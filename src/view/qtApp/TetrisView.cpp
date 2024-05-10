@@ -18,7 +18,7 @@ int TetrisView::start(QApplication *myQtApp) {
 
 void TetrisView::update() {
     emit updateQt();
-    if (game->isGameOver()) {
+    if (game->isGameOver() || game->isWinner()) {
         window.close();
     }
 }
