@@ -6,7 +6,7 @@
 
 NextTetroWidget::NextTetroWidget(std::shared_ptr<GameController> game, QWidget *parent) : game(), QWidget(parent) {
     this->game = game;
-    setFixedSize(80, 50);
+    setFixedSize(100, 70);
     setStyleSheet(
             "background-color: #9bbc0f; border: 2px solid #0f380f; border-radius: 5px; padding: 5px; margin: 0px;");
     setFocusPolicy(Qt::StrongFocus);
@@ -17,8 +17,8 @@ void NextTetroWidget::paintEvent(QPaintEvent *event) {
     QRect blockRect;
     int tetroWidth = game->getBag().peekNext().get_length();
     int tetroHeight = game->getBag().peekNext().get_height();
-    int centerX = width() / 2 - tetroWidth / 2;
-    int centerY = height() / 2 - tetroHeight / 2;
+    int centerX = width() / 2 - tetroWidth / 2 - 5;
+    int centerY = height() / 2 - tetroHeight / 2 - 5;
     for (const auto &cell: game->getBag().peekNext().get_relative_cells()) {
         int x = centerX + cell.get_x() * 10;
         int y = centerY + cell.get_y() * 10;
