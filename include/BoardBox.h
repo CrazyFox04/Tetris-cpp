@@ -51,29 +51,10 @@ protected:
 
 private:
     /**
-     * Draw the tetrominos on the board.
-     * @param painter The painter to use.
-     */
-    void drawPiece(QPainter&painter);
-
-    /**
      * Draw the borders of the board.
      * @param painter The painter to use.
      */
     void drawBorders(QPainter&painter);
-
-    /**
-     * Get the color of a tetromino.
-     * @param id The ID of the tetromino.
-     * @return The color of the tetromino.
-     */
-    QColor getColor(int id);
-
-    void drawTetrominoWithColor(QPainter &painter, const Tetromino &tetromino, const QColor &color);
-
-    void blinkCompletedLine(QPainter &painter, int lineIndex);
-
-    void animateActiveTetromino();
 };
 
 #endif //TETRIS_BOARDBOX_H
