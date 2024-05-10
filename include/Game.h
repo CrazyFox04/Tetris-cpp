@@ -31,6 +31,7 @@ class Game : public Observable, public GameController {
     GameSettings gameSettings; ///< Game settings. Immutable when a game has started
     GameStatus gameStatus; ///< Game stats of the current game
     std::pair<bool, std::thread> autoDownThread; ///< Thread for automatic downward movement of the active tetromino
+    std::pair<bool, std::thread> countDownThread; ///< Thread for the countdown timer
 
     /**
     * Updates the game score based on the number of lines cleared and the drop distance.
@@ -162,6 +163,8 @@ public:
     Tetromino getBeforeLastTetromino() const override;
 
     int getTime() const override;
+
+    void launchCountDown();
 };
 
 

@@ -34,6 +34,7 @@ void Game::start() {
     board = Board(gameSettings.boardWidth, gameSettings.boardHeight, gameSettings.difficulty);
     tryToAddNextTetromino();
     launchAutoDown();
+    launchCountDown();
     notifyObservers();
 }
 
@@ -163,7 +164,7 @@ Bag const& Game::getBag() const {
 }
 
 bool Game::isGameOver() const {
-    if (gameStatus.currentTime != 0 && gameSettings.targetTime <= gameStatus.currentTime) {
+    if (gameSettings.targetTime != 0 && gameSettings.targetTime <= gameStatus.currentTime) {
         return true;
     }
     return gameStatus.isOver;
@@ -182,7 +183,8 @@ bool Game::isWinner() const {
 Game::Game() : bag(Bag::getInstance()) {
 }
 
-Game::Game(GameSettings gameSettings_) : bag(Bag::getInstance()), gameSettings(gameSettings_), autoDownThread(false, std::thread()) {
+Game::Game(GameSettings gameSettings_) : bag(Bag::getInstance()), gameSettings(gameSettings_),
+                                         autoDownThread(false, std::thread()), countDownThread(false, std::thread()) {
 }
 
 void Game::tryToAddNextTetromino() {
@@ -230,4 +232,18 @@ Tetromino Game::getBeforeLastTetromino() const {
 
 int Game::getTime() const {
     return gameStatus.currentTime;
+}
+
+void Game::launchCountDown() {
+    if (countDownThread.second.joinable()) {
+        countDownThread.first = false;
+        countDownThread.second.join();
+    }
+    countDownThread.first = true;
+    countDownThread.second = std::thread([this]() {
+        while (!isGameOver() && !isWinner()) {
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+            gameStatus.currentTime++;
+        }
+    });
 }
