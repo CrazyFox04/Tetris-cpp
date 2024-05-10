@@ -55,6 +55,8 @@ private:
      * @param painter The painter to use.
      */
     void drawBorders(QPainter&painter);
+
+    void paintOccupied();
 };
 
 #endif //TETRIS_BOARDBOX_H

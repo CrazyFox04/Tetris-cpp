@@ -6,7 +6,11 @@
 #include "TetrisView.h"
 #include <memory>
 
-BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget* parent) : game(), QWidget(parent), tetroViews(), dropVisualizationTetro(new TetroView(game, game->getDroppedTetro(), true, this)) {
+BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget* parent) : game(), QWidget(parent), tetroViews(),
+                                                                            dropVisualizationTetro(
+                                                                                new TetroView(
+                                                                                    game, game->getDroppedTetro(), true,
+                                                                                    this)) {
     this->game = game;
     connect(dynamic_cast<const QtPrivate::FunctionPointer<void(TetrisView::*)()>::Object *>(parent), SIGNAL(updateQt()),
             this, SLOT(updateQt()));
@@ -14,9 +18,27 @@ BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget* parent) : game
     setStyleSheet("background-color: #9bbc0f;");
     setFocusPolicy(Qt::StrongFocus);
     layout = new QGridLayout(this);
-    layout->setContentsMargins(0,0,0,0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(dropVisualizationTetro, 0, 0);
     setLayout(layout);
+    paintOccupied();
+}
+
+void BoardBox::paintOccupied() {
+    std::vector<Position> occupied{};
+    auto occupiedFromGame = game->getBoard().getOccupied();
+    for (int i = 0; i < game->getBoard().getHeight() - 2; ++i) {
+        for (int j = 0; j < game->getBoard().getWidth() - 2; ++j) {
+            if (occupiedFromGame.at(i).at(j)) {
+                occupied.emplace_back(i, j);
+            }
+        }
+    }
+    // todo change center to match occupied vector to tetromino coordinates system
+    auto bigOccupied = Tetromino(0, {0,0}, occupied, false);
+    auto tetroView = new TetroView(game, bigOccupied, false, this);
+    tetroView->setColor(QColor("#000000"));
+    layout->addWidget(tetroView, 0, 0);
 }
 
 void BoardBox::paintEvent(QPaintEvent* event) {
@@ -83,14 +105,14 @@ void BoardBox::updateQt() {
         tetroView->show();
     }
     if (tetroViews.size() > 1) {
-        tetroViews.at(tetroViews.size()-2)->makeItBlink(1000);
+        tetroViews.at(tetroViews.size() - 2)->makeItBlink(1000);
     }
     dropVisualizationTetro->updateQt(game->getDroppedTetro());
     dropVisualizationTetro->getColorFromTetro();
 }
 
 void BoardBox::restart() {
-    for (const auto & tetro_view : tetroViews) {
+    for (const auto&tetro_view: tetroViews) {
         layout->removeWidget(tetro_view);
         tetro_view->hide();
         delete tetro_view;
