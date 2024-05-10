@@ -36,23 +36,10 @@ protected:
 
 private:
     /**
-     * Draw the piece.
-     * @param painter The painter.
-     */
-    void drawPiece(QPainter &painter);
-    /**
-     * Create and fill the grid.
-     * @param tetromino The tetromino.
-     * @param tSymbol The symbol of the tetromino.
-     * @return The grid.
-     */
-    std::vector<std::vector<char>> createAndFillGrid(const Tetromino &tetromino, char tSymbol) const;
-
-    /**
      * Get the color of the tetromino.
      * @param id The id of the tetromino.
      * @return The color.
      */
-    QColor getColor(int id);
+    QColor getColor(const Tetromino&tetromino);
 };
 #endif //NEXTTETROWIDGET_H
