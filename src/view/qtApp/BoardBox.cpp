@@ -3,11 +3,12 @@
 
 #include <thread>
 #include <QPropertyAnimation>
+#include "ColorAnimation.h"
 
 #include "TetrisView.h"
 
 BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget* parent) : game(), QWidget(parent),
-                                                                            m_activeTetrominoColor("#FF0A0A"),
+                                                                            m_activeTetrominoColor(Qt::white),
                                                                             numberOfTetrominoPut(
                                                                                 game->getNumberOfTetrominoPut()) {
     this->game = game;
@@ -143,19 +144,20 @@ void BoardBox::drawTetrominoWithColor(QPainter&painter, const Tetromino&tetromin
         int y = (game->getBoard().getRefPosition().get_y() + block.get_y()) * 30;
         blockRect.setRect(x, y, 30, 30);
 
-        QLinearGradient gradient(x, y, x + 30, y + 30);
-        gradient.setColorAt(0, color.lighter()); // plus clair en haut à gauche
-        gradient.setColorAt(1, color.darker(150)); // plus foncé en bas à droite
-        painter.fillRect(blockRect, gradient);
+        // QLinearGradient gradient(x, y, x + 30, y + 30);
+        // gradient.setColorAt(0, color.lighter()); // plus clair en haut à gauche
+        // gradient.setColorAt(1, color.darker(150)); // plus foncé en bas à droite
+        // painter.fillRect(blockRect, gradient);
+        painter.fillRect(blockRect, color);
         painter.drawRect(blockRect);
     }
 }
 
 void BoardBox::animateActiveTetromino() {
-    auto* animation = new QPropertyAnimation(this, "activeTetrominoColor");
+    auto* animation = new ColorAnimation(this, "activeTetrominoColor");
     animation->setDuration(500);
     animation->setLoopCount(5);
-    animation->setStartValue(QColor("#2A00FF"));
+    animation->setStartValue(QColor(Qt::white));
     animation->setEndValue(QColor(getColor(game->getBeforeLastTetromino().get_id())));
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }

@@ -9,6 +9,7 @@ project(tetris_view_qtApp)
 set(SOURCES
         TetrisView.cpp
         BoardBox.cpp
+        ColorAnimation.cpp
         InfoBox.cpp
         TetrisQtGUI.cpp
         nextTetroWidget.cpp
