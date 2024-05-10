@@ -3,8 +3,12 @@
 #include <QWidget>
 #include <QPainter>
 #include <QKeyEvent>
-
 #include "GameController.h"
+#include "TetroView.h"
+#include <memory>
+#include <qgridlayout.h>
+#include <QStackedLayout>
+#include <QList>
 /**
  * @class BoardBox
  * @brief Displays the game board.
@@ -13,10 +17,10 @@
  */
 class BoardBox : public QWidget {
     Q_OBJECT
-    Q_PROPERTY(QColor activeTetrominoColor READ activeTetrominoColor WRITE setActiveTetrominoColor)
     std::shared_ptr<GameController> game; ///< The game controller.
-    QColor m_activeTetrominoColor;
-    int numberOfTetrominoPut;
+    QList<TetroView*> tetroViews; ///< The tetrominos to display.
+    TetroView* dropVisualizationTetro; ///< The active tetro if dropped.
+    QGridLayout* layout; ///< The layout of the board.
 
 public:
     /**
@@ -27,6 +31,7 @@ public:
     explicit BoardBox(std::shared_ptr<GameController> game, QWidget* parent = nullptr);
     QColor activeTetrominoColor() const;
     void setActiveTetrominoColor(const QColor &color);
+    void restart();
 
 public slots:
     void updateQt();

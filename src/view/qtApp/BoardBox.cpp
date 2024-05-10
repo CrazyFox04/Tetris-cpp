@@ -1,28 +1,30 @@
 #include <iostream>
 #include "BoardBox.h"
-
 #include <thread>
-#include <QPropertyAnimation>
 #include "ColorAnimation.h"
 
 #include "TetrisView.h"
+#include <memory>
 
-BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget* parent) : game(), QWidget(parent),
-                                                                            m_activeTetrominoColor(Qt::white),
-                                                                            numberOfTetrominoPut(
-                                                                                game->getNumberOfTetrominoPut()) {
+BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget* parent) : game(), QWidget(parent), tetroViews(), dropVisualizationTetro(new TetroView(game, game->getDroppedTetro(), true, this)) {
     this->game = game;
     connect(dynamic_cast<const QtPrivate::FunctionPointer<void(TetrisView::*)()>::Object *>(parent), SIGNAL(updateQt()),
-            this, SLOT(update()));
+            this, SLOT(updateQt()));
     setFixedSize((game->getBoard().getWidth() + 2) * 30, game->getBoard().getHeight() * 30);
     setStyleSheet("background-color: #9bbc0f;");
     setFocusPolicy(Qt::StrongFocus);
+    layout = new QGridLayout(this);
+    layout->setContentsMargins(0,0,0,0);
+    layout->addWidget(dropVisualizationTetro, 0, 0);
+    setLayout(layout);
 }
 
 void BoardBox::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
     drawBorders(painter);
-    drawPiece(painter);
+    for (auto&tetro_view: tetroViews) {
+        tetro_view->update();
+    }
 }
 
 void BoardBox::keyPressEvent(QKeyEvent* event) {
@@ -54,55 +56,6 @@ void BoardBox::keyPressEvent(QKeyEvent* event) {
         default:
             QWidget::keyPressEvent(event);
     }
-}
-
-void BoardBox::drawPiece(QPainter&painter) {
-    QRect blockRect;
-    QLinearGradient gradient;
-    QPen pen(QColor("#9bbc0f"));
-    painter.setPen(pen);
-
-    for (const auto tetromino: game->getBoard().getTetrominos()) {
-        QColor baseColor = getColor(tetromino.get_id());
-        QColor darkerColor = baseColor.darker(150);
-
-        for (const auto&block: tetromino.get_relative_cells()) {
-            int x = 30 + (game->getBoard().getRefPosition().get_x() + block.get_x()) * 30;
-            int y = (game->getBoard().getRefPosition().get_y() + block.get_y()) * 30;
-            blockRect.setRect(x, y, 30, 30);
-
-            gradient.setStart(x, y);
-            gradient.setFinalStop(x + 30, y + 30);
-            gradient.setColorAt(0, baseColor); // plus clair en haut à gauche
-            gradient.setColorAt(1, darkerColor); // plus foncé en bas à droite
-            painter.fillRect(blockRect, gradient);
-            painter.drawRect(blockRect);
-        }
-    }
-
-    auto droppedTetro = game->getDroppedTetro();
-    if (droppedTetro != game->getBoard().getTetrominos().back()) {
-        QColor semiTransparent = getColor(droppedTetro.get_id());
-        semiTransparent.setAlpha(80);
-
-        for (const auto&cell: droppedTetro.get_relative_cells()) {
-            int x = 30 + (game->getBoard().getRefPosition().get_x() + cell.get_x()) * 30;
-            int y = (game->getBoard().getRefPosition().get_y() + cell.get_y()) * 30;
-            blockRect.setRect(x, y, 30, 30);
-            painter.fillRect(blockRect, semiTransparent);
-        }
-    }
-    if (numberOfTetrominoPut != game->getNumberOfTetrominoPut()) {
-        numberOfTetrominoPut = game->getNumberOfTetrominoPut();
-
-        animateActiveTetromino();
-    }
-    if (game->getNumberOfTetrominoPut() > 1) {
-        drawTetrominoWithColor(painter, game->getBeforeLastTetromino(), activeTetrominoColor());
-    } else {
-        //drawTetrominoWithColor(painter, game->getDroppedTetro(), activeTetrominoColor());
-    }
-
 }
 
 QColor BoardBox::getColor(int id) {
@@ -162,14 +115,6 @@ void BoardBox::animateActiveTetromino() {
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
-QColor BoardBox::activeTetrominoColor() const {
-    return m_activeTetrominoColor;
-}
-
-void BoardBox::setActiveTetrominoColor(const QColor&color) {
-    m_activeTetrominoColor = color;
-}
-
 // Faire clignoter une ligne avant de la faire disparaitre
 /**
 void BoardBox::blinkCompletedLine(QPainter &painter, int lineIndex) {
@@ -186,7 +131,32 @@ void BoardBox::blinkCompletedLine(QPainter &painter, int lineIndex) {
 }
 */
 void BoardBox::updateQt() {
-    repaint();
+    if (tetroViews.size() > game->getBoard().getTetrominos().size()) {
+        restart();
+    }
+    for (int i = 0; i < tetroViews.size(); ++i) {
+        tetroViews.at(i)->updateQt(game->getBoard().getTetrominos().at(i));
+    }
+    for (int i = tetroViews.size(); i < game->getBoard().getTetrominos().size(); ++i) {
+        auto tetroView = new TetroView(game, game->getBoard().getTetrominos().at(i), false, this);
+        tetroViews.append(tetroView);
+        layout->addWidget(tetroView, 0, 0);
+        tetroView->show();
+    }
+    if (tetroViews.size() > 1) {
+        tetroViews.at(tetroViews.size()-2)->makeItBlink(1000);
+    }
+    dropVisualizationTetro->updateQt(game->getDroppedTetro());
+    dropVisualizationTetro->getColorFromTetro();
+}
+
+void BoardBox::restart() {
+    for (const auto & tetro_view : tetroViews) {
+        layout->removeWidget(tetro_view);
+        tetro_view->hide();
+        delete tetro_view;
+    }
+    tetroViews.clear();
 }
 
 #include "moc_BoardBox.cpp"

@@ -12,6 +12,7 @@ set(SOURCES
         ColorAnimation.cpp
         InfoBox.cpp
         TetrisQtGUI.cpp
+        TetroView.cpp
         nextTetroWidget.cpp
         tetrisConfiguration.cpp
         tetrisGameOver.cpp
