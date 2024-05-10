@@ -241,7 +241,7 @@ void Game::launchCountDown() {
     }
     countDownThread.first = true;
     countDownThread.second = std::thread([this]() {
-        while (!isGameOver() && !isWinner()) {
+        while (!isGameOver() && !isWinner() && countDownThread.first) {
             std::this_thread::sleep_for(std::chrono::seconds(1));
             gameStatus.currentTime++;
         }
