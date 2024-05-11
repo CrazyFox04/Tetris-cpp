@@ -19,6 +19,7 @@ class BoardBox : public QWidget {
     Q_OBJECT
     std::shared_ptr<GameController> game; ///< The game controller.
     QList<TetroView*> tetroViews; ///< The tetrominos to display.
+    TetroView* blockView;
     TetroView* dropVisualizationTetro; ///< The active tetro if dropped.
     QGridLayout* layout; ///< The layout of the board.
 
@@ -56,7 +57,7 @@ private:
      */
     void drawBorders(QPainter&painter);
 
-    void paintOccupied();
+    void initPaintOccupied();
 };
 
 #endif //TETRIS_BOARDBOX_H

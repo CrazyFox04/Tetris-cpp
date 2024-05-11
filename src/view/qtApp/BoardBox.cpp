@@ -21,24 +21,24 @@ BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget* parent) : game
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(dropVisualizationTetro, 0, 0);
     setLayout(layout);
-    paintOccupied();
+    initPaintOccupied();
 }
 
-void BoardBox::paintOccupied() {
+void BoardBox::initPaintOccupied() {
     std::vector<Position> occupied{};
     auto occupiedFromGame = game->getBoard().getOccupied();
-    for (int i = 0; i < game->getBoard().getHeight() - 2; ++i) {
-        for (int j = 0; j < game->getBoard().getWidth() - 2; ++j) {
+    for (int i = 0; i < game->getBoard().getHeight(); ++i) {
+        for (int j = 0; j < game->getBoard().getWidth(); ++j) {
             if (occupiedFromGame.at(i).at(j)) {
-                occupied.emplace_back(i, j);
+                occupied.emplace_back(j, i);
             }
         }
     }
     // todo change center to match occupied vector to tetromino coordinates system
-    auto bigOccupied = Tetromino(0, {0,0}, occupied, false);
-    auto tetroView = new TetroView(game, bigOccupied, false, this);
-    tetroView->setColor(QColor("#000000"));
-    layout->addWidget(tetroView, 0, 0);
+    auto bigOccupied = Tetromino(0, {-4,0}, occupied, false);
+    blockView = new TetroView(game, bigOccupied, false, this);
+    blockView->setColor(QColor("#000000"));
+    layout->addWidget(blockView, 0, 0);
 }
 
 void BoardBox::paintEvent(QPaintEvent* event) {
@@ -95,6 +95,19 @@ void BoardBox::updateQt() {
     if (tetroViews.size() > game->getBoard().getTetrominos().size()) {
         restart();
     }
+
+    std::vector<Position> occupied{};
+    auto occupiedFromGame = game->getBoard().getOccupied();
+    for (int i = 0; i < game->getBoard().getHeight(); ++i) {
+        for (int j = 0; j < game->getBoard().getWidth(); ++j) {
+            if (occupiedFromGame.at(i).at(j)) {
+                occupied.emplace_back(j, i);
+            }
+        }
+    }
+    auto bigOccupied = Tetromino(0, {-4,0}, occupied, false);
+    blockView->updateQt(bigOccupied);
+
     for (int i = 0; i < tetroViews.size(); ++i) {
         tetroViews.at(i)->updateQt(game->getBoard().getTetrominos().at(i));
     }
