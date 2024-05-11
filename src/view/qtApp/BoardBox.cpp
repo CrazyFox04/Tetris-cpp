@@ -34,8 +34,7 @@ void BoardBox::initPaintOccupied() {
             }
         }
     }
-    // todo change center to match occupied vector to tetromino coordinates system
-    auto bigOccupied = Tetromino(0, {-4,0}, occupied, false);
+    auto bigOccupied = Tetromino(0, {-game->getBoard().getRefPosition().get_x(),0}, occupied, false);
     blockView = new TetroView(game, bigOccupied, false, this);
     blockView->setColor(QColor("#000000"));
     layout->addWidget(blockView, 0, 0);

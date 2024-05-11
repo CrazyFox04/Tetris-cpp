@@ -61,7 +61,11 @@ class Game : public Observable, public GameController {
 
     void launchAutoDown();
 
+    static int getTimeBetweenDown(int level);
+
 public:
+    static constexpr int MAX_START_LEVEL = 20; ///< Maximum start level for the game.
+
     Game();
 
     /**

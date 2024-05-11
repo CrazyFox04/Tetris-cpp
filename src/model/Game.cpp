@@ -209,7 +209,7 @@ void Game::launchAutoDown() {
     autoDownThread.first = true;
     autoDownThread.second = std::thread([this]() {
         while (!isGameOver() && !isWinner() && autoDownThread.first) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000 / (gameStatus.currentLevel + 1)));
+            std::this_thread::sleep_for(std::chrono::milliseconds(getTimeBetweenDown(gameStatus.currentLevel)));
             try {
                 board.moveActiveTetromino(Direction::DOWN);
             }
@@ -220,6 +220,22 @@ void Game::launchAutoDown() {
             notifyObservers();
         }
     });
+}
+
+int Game::getTimeBetweenDown(const int level) {
+    if (level <= 1) {
+        return round(((60 - level) / 60.0) * 1000);
+    }
+    if (level <= 7) {
+        return round(((53 - level % 7 * 4) / 60.0) * 1000);
+    }
+    if (level < 12) {
+        return round(((28 - level % 12 * 5) / 60.0) * 1000);
+    }
+    if (level == 12) {
+        return round((8 / 60.0) * 1000);
+    }
+    return round(((9 - level % 13) / 60.0) * 1000);
 }
 
 int Game::getNumberOfTetrominoPut() {

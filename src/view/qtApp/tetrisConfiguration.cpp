@@ -82,27 +82,17 @@ void TetrisConfiguration::createLineEdits() {
     boardHeightComboBox->setCurrentIndex(10);
 
     startLevelComboBox = new QComboBox();
-    for (int lvl = 1; lvl <= 10; lvl++) startLevelComboBox->addItem(QString::number(lvl));
+    for (int lvl = 1; lvl <= Game::MAX_START_LEVEL ; lvl++) startLevelComboBox->addItem(QString::number(lvl));
     startLevelComboBox->setStyleSheet(lineEditStyle);
 
-
-
-    //boardWidthLineEdit = new QLineEdit(QString::number(Board::DEFAULT_WIDTH));
-    //boardWidthLineEdit->setStyleSheet(lineEditStyle);
-    //boardHeightLineEdit = new QLineEdit(QString::number(Board::DEFAULT_HEIGHT));
-    //boardHeightLineEdit->setStyleSheet(lineEditStyle);
-    //startLevelLineEdit = new QLineEdit(QString::number(1));
-    //startLevelLineEdit->setStyleSheet(lineEditStyle);
     targetLineLineEdit = new QLineEdit(QString::number(0));
     targetLineLineEdit->setStyleSheet(lineEditStyle);
     targetTimeLineEdit = new QLineEdit(QString::number(0));
     targetTimeLineEdit->setStyleSheet(lineEditStyle);
     targetScoreLineEdit = new QLineEdit(QString::number(0));
     targetScoreLineEdit->setStyleSheet(lineEditStyle);
-    //difficultyLineEdit = new QLineEdit(QString::number(1));
-    //difficultyLineEdit->setStyleSheet(lineEditStyle);
-
     difficultyComboBox = new QComboBox();
+
     for (int diff = 1; diff <= 20; diff++) difficultyComboBox->addItem(QString::number(diff));
     difficultyComboBox->setStyleSheet(lineEditStyle);
 }
