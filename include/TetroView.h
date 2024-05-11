@@ -20,6 +20,8 @@ class TetroView : public QWidget {
     QColor color;
     bool isGhost;
     bool hasBlinked;
+
+    QLinearGradient getGradient(int x, int y) const;
 public:
     TetroView(std::shared_ptr<GameController> game, Tetromino tetromino, bool isGhost, QWidget* parent = nullptr);
 

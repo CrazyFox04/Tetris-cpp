@@ -19,9 +19,16 @@ void TetroView::paintEvent(QPaintEvent* event) {
         int x = 30 + (game->getBoard().getRefPosition().get_x() + cell.get_x()) * 30;
         int y = (game->getBoard().getRefPosition().get_y() + cell.get_y()) * 30;
         blockRect.setRect(x, y, 30, 30);
-        painter.fillRect(blockRect, color);
+        painter.fillRect(blockRect, getGradient(x,y));
         painter.drawRect(blockRect);
     }
+}
+
+QLinearGradient TetroView::getGradient(int x, int y) const {
+    QLinearGradient gradient = QLinearGradient(x, y, x + 30, y + 30);
+    gradient.setColorAt(0, color); // plus clair en haut à gauche
+    gradient.setColorAt(1, color.darker(250));
+    return gradient;
 }
 
 void TetroView::updateQt(Tetromino tetromino) {
@@ -29,6 +36,7 @@ void TetroView::updateQt(Tetromino tetromino) {
 }
 
 void TetroView::setColor(QColor color) {
+
     this->color = color;
 }
 
