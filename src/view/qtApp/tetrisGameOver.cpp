@@ -6,8 +6,8 @@
 #include <QVBoxLayout>
 
 TetrisGameOver::TetrisGameOver(std::shared_ptr<GameController> game, QWidget* parent) : QWidget(parent), game(game),
-    layout(nullptr), gameOverLabel(nullptr), detailsLabel(nullptr), buttonLayout(nullptr), restartButton(nullptr),
-    quitButton(nullptr) {
+    layout(new QVBoxLayout(this)), gameOverLabel( new QLabel()), detailsLabel(new QLabel()), buttonLayout(new QHBoxLayout()), restartButton(new QPushButton("Restart")),
+    quitButton(new QPushButton("Quit")) {
     this->game = game;
     configureWindow();
     createItems();
@@ -15,11 +15,6 @@ TetrisGameOver::TetrisGameOver(std::shared_ptr<GameController> game, QWidget* pa
 
 TetrisGameOver::~TetrisGameOver() {
     delete layout;
-    delete gameOverLabel;
-    delete detailsLabel;
-    delete buttonLayout;
-    delete restartButton;
-    delete quitButton;
 }
 
 void TetrisGameOver::configureWindow() {
@@ -28,18 +23,12 @@ void TetrisGameOver::configureWindow() {
 }
 
 void TetrisGameOver::createItems() {
-    layout = new QVBoxLayout(this);
-    gameOverLabel = new QLabel();
-    detailsLabel = new QLabel();
     gameOverLabel->setAlignment(Qt::AlignCenter);
     layout->addWidget(gameOverLabel);
 
     detailsLabel->setAlignment(Qt::AlignCenter);
     layout->addWidget(detailsLabel);
 
-    buttonLayout = new QHBoxLayout();
-    restartButton = new QPushButton("Restart");
-    quitButton = new QPushButton("Quit");
     restartButton->setStyleSheet(
         "QPushButton { border: 2px solid #0f380f; border-radius: 5px; background-color: #9bbc0f; padding: 5px; }");
     quitButton->setStyleSheet(

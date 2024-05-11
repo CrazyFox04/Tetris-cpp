@@ -22,7 +22,7 @@
  * It allows the user to start the game.
  */
 class TetrisConfiguration : public QFormLayout {
-    QWidget window; //!< The main window.
+    QWidget* window; //!< The main window.
     QLabel* boardWidthLabel; //!< The board width label.
     QLabel* boardHeightLabel; //!< The board height label.
     QLabel* startLevelLabel; //!< The start level label.
@@ -69,6 +69,7 @@ class TetrisConfiguration : public QFormLayout {
      * Register the settings and close the window.
      */
     void close();
+
 public:
     /**
      * Construct a TetrisConfiguration.

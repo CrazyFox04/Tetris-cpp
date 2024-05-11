@@ -10,36 +10,31 @@
 #include <QCloseEvent>
 
 
-TetrisConfiguration::TetrisConfiguration(GameSettings* settings) : settings(settings) {
-    window.setWindowTitle("Tetris Configuration");
+TetrisConfiguration::TetrisConfiguration(GameSettings* settings) : settings(settings), window(new QWidget()) {
+    window->setWindowTitle("Tetris Configuration");
     configureWindow();
-    window.setLayout(this);
-    window.show();
+    window->setLayout(this);
+    window->show();
 }
 
-
 void TetrisConfiguration::configureWindow() {
-    window.resize(300, 200);
+    window->resize(300, 200);
     createLabels();
     createLineEdits();
     addFields();
     createButtons();
-    window.show();
+    window->show();
 }
 
 void TetrisConfiguration::close() {
     settings->difficulty = difficultyComboBox->currentText().toInt();
-    //settings->difficulty = difficultyLineEdit->text().toInt();
     settings->boardWidth = boardWidthComboBox->currentText().toInt();
-    //settings->boardWidth = boardWidthLineEdit->text().toInt();
     settings->boardHeight = boardHeightComboBox->currentText().toInt();
-    //settings->boardHeight = boardHeightLineEdit->text().toInt();
     settings->startLevel = startLevelComboBox->currentText().toInt();
-    //settings->startLevel = startLevelLineEdit->text().toInt();
     settings->targetLine = targetLineLineEdit->text().toInt();
     settings->targetTime = targetTimeLineEdit->text().toInt();
     settings->targetScore = targetScoreLineEdit->text().toInt();
-    window.close();
+    window->close();
 }
 
 void TetrisConfiguration::createButtons() {
@@ -99,5 +94,6 @@ void TetrisConfiguration::createLineEdits() {
 
 
 int TetrisConfiguration::start(QApplication* myQtApp) {
+    window->show();
     return myQtApp->exec();
 }
