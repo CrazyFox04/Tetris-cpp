@@ -105,7 +105,7 @@ void BoardBox::updateQt() {
             }
         }
     }
-    auto bigOccupied = Tetromino(0, {-4,0}, occupied, false);
+    auto bigOccupied = Tetromino(0, {-game->getBoard().getRefPosition().get_x(),0}, occupied, false);
     blockView->updateQt(bigOccupied);
 
     for (int i = 0; i < tetroViews.size(); ++i) {
