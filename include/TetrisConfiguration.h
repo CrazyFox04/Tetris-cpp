@@ -70,6 +70,8 @@ class TetrisConfiguration : public QFormLayout {
      */
     void close();
 
+    void setValues();
+
 public:
     /**
      * Construct a TetrisConfiguration.

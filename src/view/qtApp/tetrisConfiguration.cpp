@@ -23,7 +23,18 @@ void TetrisConfiguration::configureWindow() {
     createLineEdits();
     addFields();
     createButtons();
+    setValues();
     window->show();
+}
+
+void TetrisConfiguration::setValues() {
+    boardWidthComboBox->setCurrentText(QString::number(settings->boardWidth));
+    boardHeightComboBox->setCurrentText(QString::number(settings->boardHeight));
+    startLevelComboBox->setCurrentText(QString::number(settings->startLevel));
+    targetLineLineEdit->setText(QString::number(settings->targetLine));
+    targetTimeLineEdit->setText(QString::number(settings->targetTime));
+    targetScoreLineEdit->setText(QString::number(settings->targetScore));
+    difficultyComboBox->setCurrentText(QString::number(settings->difficulty));
 }
 
 void TetrisConfiguration::close() {
