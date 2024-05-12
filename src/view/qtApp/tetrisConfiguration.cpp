@@ -10,21 +10,19 @@
 #include <QCloseEvent>
 
 
-TetrisConfiguration::TetrisConfiguration(GameSettings* settings) : settings(settings), window(new QWidget()) {
-    window->setWindowTitle("Tetris Configuration");
+TetrisConfiguration::TetrisConfiguration(GameSettings* settings) : settings(settings), layout(new QFormLayout()) {
+    setWindowTitle("Tetris Configuration");
     configureWindow();
-    window->setLayout(this);
-    window->show();
+    setLayout(layout);
 }
 
 void TetrisConfiguration::configureWindow() {
-    window->resize(300, 200);
+    resize(300, 200);
     createLabels();
     createLineEdits();
     addFields();
     createButtons();
     setValues();
-    window->show();
 }
 
 void TetrisConfiguration::setValues() {
@@ -37,7 +35,7 @@ void TetrisConfiguration::setValues() {
     difficultyComboBox->setCurrentText(QString::number(settings->difficulty));
 }
 
-void TetrisConfiguration::close() {
+void TetrisConfiguration::closeWidget() {
     settings->difficulty = difficultyComboBox->currentText().toInt();
     settings->boardWidth = boardWidthComboBox->currentText().toInt();
     settings->boardHeight = boardHeightComboBox->currentText().toInt();
@@ -45,25 +43,25 @@ void TetrisConfiguration::close() {
     settings->targetLine = targetLineLineEdit->text().toInt();
     settings->targetTime = targetTimeLineEdit->text().toInt();
     settings->targetScore = targetScoreLineEdit->text().toInt();
-    window->close();
+    close();
 }
 
 void TetrisConfiguration::createButtons() {
     QPushButton* startButton = new QPushButton("Start");
     QString buttonStyle = "QPushButton { border: 2px solid #0f380f; border-radius: 5px; background-color: #9bbc0f; padding: 5px; }";
     startButton->setStyleSheet(buttonStyle);
-    addRow(startButton);
-    connect(startButton, &QPushButton::clicked, this, &TetrisConfiguration::close);
+    layout->addRow(startButton);
+    connect(startButton, &QPushButton::clicked, this, &TetrisConfiguration::closeWidget);
 }
 
 void TetrisConfiguration::addFields() {
-    addRow(boardWidthLabel, boardWidthComboBox);
-    addRow(boardHeightLabel, boardHeightComboBox);
-    addRow(startLevelLabel, startLevelComboBox);
-    addRow(targetLineLabel, targetLineLineEdit);
-    addRow(targetTimeLabel, targetTimeLineEdit);
-    addRow(targetScoreLabel, targetScoreLineEdit);
-    addRow(difficultyLabel, difficultyComboBox);
+    layout->addRow(boardWidthLabel, boardWidthComboBox);
+    layout->addRow(boardHeightLabel, boardHeightComboBox);
+    layout->addRow(startLevelLabel, startLevelComboBox);
+    layout->addRow(targetLineLabel, targetLineLineEdit);
+    layout->addRow(targetTimeLabel, targetTimeLineEdit);
+    layout->addRow(targetScoreLabel, targetScoreLineEdit);
+    layout->addRow(difficultyLabel, difficultyComboBox);
 }
 
 void TetrisConfiguration::createLabels() {
@@ -105,6 +103,8 @@ void TetrisConfiguration::createLineEdits() {
 
 
 int TetrisConfiguration::start(QApplication* myQtApp) {
-    window->show();
+    show();
     return myQtApp->exec();
 }
+
+#include "moc_TetrisConfiguration.cpp"

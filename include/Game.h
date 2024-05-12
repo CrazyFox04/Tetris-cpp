@@ -68,6 +68,8 @@ public:
 
     Game();
 
+    ~Game();
+
     /**
      * Constructs a Game with default parameters.
      * @param gameSettings game's settings
@@ -161,8 +163,6 @@ public:
     void checkTargets() const override;
 
     Tetromino getDroppedTetro() override;
-
-    int getNumberOfTetrominoPut() override;
 
     Tetromino getBeforeLastTetromino() const override;
 

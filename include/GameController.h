@@ -113,8 +113,6 @@ public:
 
     virtual Tetromino getDroppedTetro() = 0;
 
-    virtual int getNumberOfTetrominoPut() = 0;
-
     virtual Tetromino getBeforeLastTetromino() const = 0;
 
   virtual int getTime() const = 0;

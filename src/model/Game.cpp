@@ -4,7 +4,7 @@
 #include <thread>
 
 #include "Game.h"
-
+#include <math.h>
 #include <thread>
 #include <unistd.h>
 
@@ -19,9 +19,9 @@ void Game::notifyObservers() {
 }
 
 void Game::removeObserver(Observer&observer) {
-    //    observers.erase(std::remove_if(observers.begin(), observers.end(), [&observer](std::shared_ptr<Observer>&o) {
-    //        return o.get() == &observer;
-    //    }), observers.end());
+    erase_if(observers, [&observer](std::shared_ptr<Observer>&o) {
+        return o.get() == &observer;
+    });
 }
 
 void Game::start() {
@@ -187,10 +187,20 @@ Game::Game(GameSettings gameSettings_) : bag(Bag::getInstance()), gameSettings(g
                                          autoDownThread(false, std::thread()), countDownThread(false, std::thread()) {
 }
 
+Game::~Game() {
+    if (autoDownThread.first && autoDownThread.second.joinable()) {
+        autoDownThread.first = false;
+        autoDownThread.second.join();
+    }
+    if (countDownThread.first && countDownThread.second.joinable()) {
+        countDownThread.first = false;
+        countDownThread.second.join();
+    }
+}
+
 void Game::tryToAddNextTetromino() {
     try {
         board.addTetromino(bag.getNext());
-        gameStatus.numberOfTetrominosPut++;
     }
     catch (std::out_of_range&e) {
         gameStatus.isOver = true;
@@ -230,16 +240,12 @@ int Game::getTimeBetweenDown(const int level) {
         return round(((53 - level % 7 * 4) / 60.0) * 1000);
     }
     if (level < 12) {
-        return round(((28 - level % 12 * 5) / 60.0) * 1000);
+        return round(((28 - (level % 12) * 5) / 60.0) * 1000);
     }
     if (level == 12) {
         return round((8 / 60.0) * 1000);
     }
     return round(((9 - level % 13) / 60.0) * 1000);
-}
-
-int Game::getNumberOfTetrominoPut() {
-    return gameStatus.numberOfTetrominosPut;
 }
 
 Tetromino Game::getBeforeLastTetromino() const {

@@ -13,10 +13,9 @@ struct GameStatus {
     int difficulty;
     bool hasStarted;
     bool isOver;
-    int numberOfTetrominosPut;
 
     GameStatus() : currentScore(0), currentLevel(1), currentLine(0), currentTime(0), difficulty(1), hasStarted(false),
-                   isOver(false), numberOfTetrominosPut(0) {
+                   isOver(false) {
     }
 };
 #endif //GAMESTATUS_HPP

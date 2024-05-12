@@ -20,7 +20,6 @@
  */
 class TetrisView : public QWidget, public Observer {
     Q_OBJECT
-    QWidget* window; //!< The main window.
     QHBoxLayout* mainLayout; //!< The main layout.
     InfoBox* myInfoBox; //!< The info box.
     BoardBox* myBoardBox; //!< The board box.
@@ -33,11 +32,7 @@ public:
      */
     TetrisView(std::shared_ptr<GameController> game);
 
-    /**
-     * Destruct a TetrisView.
-     */
-    ~TetrisView() override = default;
-
+    ~TetrisView();
     /**
      * Start the game.
      * @param myQtApp The Qt application.
