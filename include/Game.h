@@ -25,7 +25,7 @@
  * NOTE :: Observer/Observable pattern will be implemented truly in the final GUI iteration.
  */
 class Game : public Observable, public GameController {
-    std::vector<std::shared_ptr<Observer>> observers; ///< List of observers to notify on state change.
+    std::vector<Observer*> observers; ///< List of observers to notify on state change.
     Board board; ///< The game board.
     Bag&bag; ///< Reference to a Bag containing game pieces.
     GameSettings gameSettings; ///< Game settings. Immutable when a game has started
@@ -110,9 +110,9 @@ public:
 
     void notifyObservers() override;
 
-    void addObserver(Observer&observer) override;
+    void addObserver(Observer* observer) override;
 
-    void removeObserver(Observer&observer) override;
+    void removeObserver(Observer* observer) override;
 
     /**
      * Getter for the current game score.

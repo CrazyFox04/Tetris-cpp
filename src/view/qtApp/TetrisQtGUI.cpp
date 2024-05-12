@@ -15,16 +15,16 @@ void TetrisQtGUI::run(int argc, char** argv) {
     while (true) {
         auto* tetris_configuration = new TetrisConfiguration(&settings);
         tetris_configuration->start(&myApp);
+        delete tetris_configuration;
         gameController = std::make_shared<Game>(settings);
         gameController->start();
         auto* tetris_view = new TetrisView(gameController);
         auto* tetris_game_over = new TetrisGameOver(gameController);
-        gameController->addObserver(*tetris_view);
+        gameController->addObserver(tetris_view);
         tetris_view->start(&myApp);
+        gameController->removeObserver(tetris_view);
+        delete tetris_view;
         tetris_game_over->start(&myApp);
-        gameController->removeObserver(*tetris_view);
-        //delete tetris_view; TODO : produce a sigsev
         delete tetris_game_over;
-        delete tetris_configuration;
     }
 }

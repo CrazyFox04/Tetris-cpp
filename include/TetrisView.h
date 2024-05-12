@@ -32,7 +32,7 @@ public:
      */
     TetrisView(std::shared_ptr<GameController> game);
 
-    ~TetrisView();
+    virtual ~TetrisView() = default;
     /**
      * Start the game.
      * @param myQtApp The Qt application.

@@ -22,9 +22,5 @@ void TetrisView::update() {
     }
 }
 
-TetrisView::~TetrisView() {
-    delete mainLayout;
-}
-
 
 #include "moc_TetrisView.cpp"

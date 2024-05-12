@@ -8,19 +8,19 @@
 #include <thread>
 #include <unistd.h>
 
-void Game::addObserver(Observer&observer) {
-    observers.emplace_back(&observer);
+void Game::addObserver(Observer* observer) {
+    observers.emplace_back(observer);
 }
 
 void Game::notifyObservers() {
-    std::for_each(observers.begin(), observers.end(), [](std::shared_ptr<Observer>&observer) {
+    std::ranges::for_each(observers, [](Observer* observer) {
         observer->update();
     });
 }
 
-void Game::removeObserver(Observer&observer) {
-    erase_if(observers, [&observer](std::shared_ptr<Observer>&o) {
-        return o.get() == &observer;
+void Game::removeObserver(Observer* observer) {
+    std::erase_if(observers, [observer](Observer* observerList) {
+        return observerList == observer;
     });
 }
 
