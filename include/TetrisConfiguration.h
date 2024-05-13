@@ -24,7 +24,9 @@
  */
 class TetrisConfiguration : public QWidget {
     Q_OBJECT
-    QFormLayout* layout; //!< The main window.
+    QVBoxLayout* layout; //!< The main window.
+    QFormLayout* formLayout; //!< The form layout.
+    QLabel* titleLabel; //!< The title label.
     QLabel* boardWidthLabel; //!< The board width label.
     QLabel* boardHeightLabel; //!< The board height label.
     QLabel* startLevelLabel; //!< The start level label.
