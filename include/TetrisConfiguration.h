@@ -11,6 +11,7 @@
 #include <QCloseEvent>
 #include <QLineEdit>
 #include <QComboBox>
+#include <QPushButton>
 
 #include "GameSettings.hpp"
 
@@ -38,6 +39,7 @@ class TetrisConfiguration : public QWidget {
     QLineEdit* targetLineLineEdit; //!< The target line line edit.
     QLineEdit* targetTimeLineEdit; //!< The target time line edit.
     QLineEdit* targetScoreLineEdit; //!< The target score line edit.
+    QPushButton* startButton; //!< The start button.
 
     GameSettings* settings; //!< The game settings.
 
@@ -45,11 +47,6 @@ class TetrisConfiguration : public QWidget {
      * Configure the window.
      */
     void configureWindow();
-
-    /**
-     * Create the necessary items.
-     */
-    void createLabels();
 
     /**
      * Create the necessary items.
@@ -79,6 +76,8 @@ public:
      * @param settings The game settings.
      */
     TetrisConfiguration(GameSettings* settings);
+
+    virtual ~TetrisConfiguration() = default;
 
     /**
      * Launch the configuration window.

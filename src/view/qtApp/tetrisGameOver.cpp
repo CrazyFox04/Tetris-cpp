@@ -8,13 +8,9 @@
 TetrisGameOver::TetrisGameOver(std::shared_ptr<GameController> game, QWidget* parent) : QWidget(parent), game(game),
     layout(new QVBoxLayout(this)), gameOverLabel( new QLabel()), detailsLabel(new QLabel()), buttonLayout(new QHBoxLayout()), restartButton(new QPushButton("Restart")),
     quitButton(new QPushButton("Quit")) {
-    this->game = game;
     configureWindow();
     createItems();
-}
-
-TetrisGameOver::~TetrisGameOver() {
-    delete layout;
+    setLayout(layout);
 }
 
 void TetrisGameOver::configureWindow() {

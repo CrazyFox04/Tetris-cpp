@@ -48,7 +48,7 @@ public:
     /**
      * Destruct a TetrisGameOver.
      */
-    ~TetrisGameOver();
+    virtual ~TetrisGameOver() = default;
 
     /**
      * Start the game over window.

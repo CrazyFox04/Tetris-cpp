@@ -233,19 +233,19 @@ void Game::launchAutoDown() {
 }
 
 int Game::getTimeBetweenDown(const int level) {
-    if (level <= 1) {
-        return round(((60 - level) / 60.0) * 1000);
+    if (level == 1) {
+        return 1000;
     }
     if (level <= 7) {
-        return round(((53 - level % 7 * 4) / 60.0) * 1000);
+        return round(((53 - (level - 2) * 4) / 60.0) * 1000);
     }
     if (level < 12) {
-        return round(((28 - (level % 12) * 5) / 60.0) * 1000);
+        return round(((28 - (level - 8) * 5) / 60.0) * 1000);
     }
     if (level == 12) {
         return round((8 / 60.0) * 1000);
     }
-    return round(((9 - level % 13) / 60.0) * 1000);
+    return round((((9 - (level - 13)) / 60.0) * 1000));
 }
 
 Tetromino Game::getBeforeLastTetromino() const {
