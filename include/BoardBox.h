@@ -58,6 +58,14 @@ private:
     void drawBorders(QPainter&painter);
 
     void initPaintOccupied();
+
+    void updateBlocks();
+
+    void updateTetros();
+
+    void animatePreviousTetro();
+
+    void updateTetroVisualization();
 };
 
 #endif //TETRIS_BOARDBOX_H

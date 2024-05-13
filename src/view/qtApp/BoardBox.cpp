@@ -22,6 +22,7 @@ BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget* parent) : game
     layout->addWidget(dropVisualizationTetro, 0, 0);
     setLayout(layout);
     initPaintOccupied();
+    updateTetros();
 }
 
 void BoardBox::initPaintOccupied() {
@@ -34,7 +35,7 @@ void BoardBox::initPaintOccupied() {
             }
         }
     }
-    auto bigOccupied = Tetromino(0, {-game->getBoard().getRefPosition().get_x(),0}, occupied, false);
+    auto bigOccupied = Tetromino(0, {-game->getBoard().getRefPosition().get_x(), 0}, occupied, false);
     blockView = new TetroView(game, bigOccupied, false, this);
     blockView->setColor(QColor("#000000"));
     layout->addWidget(blockView, 0, 0);
@@ -94,7 +95,13 @@ void BoardBox::updateQt() {
     if (tetroViews.size() > game->getBoard().getTetrominos().size()) {
         restart();
     }
+    updateBlocks();
+    updateTetros();
+    animatePreviousTetro();
+    updateTetroVisualization();
+}
 
+void BoardBox::updateBlocks() {
     std::vector<Position> occupied{};
     auto occupiedFromGame = game->getBoard().getOccupied();
     for (int i = 0; i < game->getBoard().getHeight(); ++i) {
@@ -104,9 +111,11 @@ void BoardBox::updateQt() {
             }
         }
     }
-    auto bigOccupied = Tetromino(0, {-game->getBoard().getRefPosition().get_x(),0}, occupied, false);
+    auto bigOccupied = Tetromino(0, {-game->getBoard().getRefPosition().get_x(), 0}, occupied, false);
     blockView->updateQt(bigOccupied);
+}
 
+void BoardBox::updateTetros() {
     for (int i = 0; i < tetroViews.size(); ++i) {
         tetroViews.at(i)->updateQt(game->getBoard().getTetrominos().at(i));
     }
@@ -116,9 +125,15 @@ void BoardBox::updateQt() {
         layout->addWidget(tetroView, 0, 0);
         tetroView->show();
     }
+}
+
+void BoardBox::animatePreviousTetro() {
     if (tetroViews.size() > 1) {
         tetroViews.at(tetroViews.size() - 2)->makeItBlink(1000);
     }
+}
+
+void BoardBox::updateTetroVisualization() {
     dropVisualizationTetro->updateQt(game->getDroppedTetro());
     dropVisualizationTetro->getColorFromTetro();
 }
