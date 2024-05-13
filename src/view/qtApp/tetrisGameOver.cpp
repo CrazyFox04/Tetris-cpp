@@ -6,11 +6,12 @@
 #include <QVBoxLayout>
 
 TetrisGameOver::TetrisGameOver(std::shared_ptr<GameController> game, QWidget* parent) : QWidget(parent), game(game),
-    layout(new QVBoxLayout(this)), gameOverLabel( new QLabel()), detailsLabel(new QLabel()), buttonLayout(new QHBoxLayout()), restartButton(new QPushButton("Restart")),
+    layout(new QVBoxLayout(this)), gameOverLabel( new QLabel(this)), detailsLabel(new QLabel(this)), buttonLayout(new QHBoxLayout(this)), restartButton(new QPushButton("Restart", this)),
     quitButton(new QPushButton("Quit")) {
     configureWindow();
     createItems();
     setLayout(layout);
+    updateItems();
 }
 
 void TetrisGameOver::configureWindow() {
@@ -69,11 +70,13 @@ void TetrisGameOver::updateItems() {
 void TetrisGameOver::restartGame() {
     game->restart();
     close();
+    deleteLater();
 }
 
 void TetrisGameOver::quitGame() {
     game->restart();
     close();
+    deleteLater();
     exit(0);
 }
 

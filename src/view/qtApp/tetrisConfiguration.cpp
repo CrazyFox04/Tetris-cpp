@@ -61,6 +61,7 @@ void TetrisConfiguration::closeWidget() {
     settings->targetTime = targetTimeLineEdit->text().toInt();
     settings->targetScore = targetScoreLineEdit->text().toInt();
     close();
+    deleteLater();
 }
 
 void TetrisConfiguration::createButtons() {

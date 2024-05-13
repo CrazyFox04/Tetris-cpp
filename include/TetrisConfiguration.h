@@ -85,5 +85,8 @@ public:
      * @return The exit code.
      */
     int start(QApplication* myQtApp);
+
+signals:
+    void startTetrisView();
 };
 #endif //TETRISCONFIGURATION_H

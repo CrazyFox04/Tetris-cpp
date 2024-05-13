@@ -6,24 +6,47 @@
 #include <iostream>
 #include "Game.h"
 
-TetrisQtGUI::TetrisQtGUI() : settings(), gameController(){
-
+TetrisQtGUI::TetrisQtGUI() :  settings(), gameController(std::make_shared<Game>(settings)) {
 }
 
 void TetrisQtGUI::run(int argc, char** argv) {
-    QApplication myApp = QApplication(argc, argv);
-    auto* tetris_configuration = new TetrisConfiguration(&settings);
-    while (true) {
-        tetris_configuration->start(&myApp);
+    QApplication* myApp = new QApplication(argc, argv);
+    tetris_configuration = new TetrisConfiguration(&settings);
+    gameController->start();
+    tetris_view = new TetrisView(gameController);
+    tetris_game_over = new TetrisGameOver(gameController);
+    myApp->setQuitOnLastWindowClosed(false);
+    configureEndOfConfiguration();
+    myApp->exec();
+}
+
+void TetrisQtGUI::configureEndOfConfiguration() {
+    QObject::connect(tetris_configuration, &QObject::destroyed, [=]() mutable {
+        std::cout << "TetrisConfiguration destroyed" << std::endl;
         gameController = std::make_shared<Game>(settings);
         gameController->start();
-        auto* tetris_view = new TetrisView(gameController);
+        tetris_view = new TetrisView(gameController);
         gameController->addObserver(tetris_view);
-        tetris_view->start(&myApp);
-        gameController->removeObserver(tetris_view);
-        delete tetris_view;
-        auto* tetris_game_over = new TetrisGameOver(gameController);
-        tetris_game_over->start(&myApp);
-        delete tetris_game_over;
-    }
+        tetris_view->show();
+        configureEndOfGame();
+    });
+    tetris_configuration->show();
+}
+
+void TetrisQtGUI::configureEndOfGame() {
+    QObject::connect(tetris_view, &QObject::destroyed, [=]()mutable {
+        std::cout << "TetrisView destroyed" << std::endl;
+        tetris_game_over = new TetrisGameOver(gameController);
+        tetris_game_over->show();
+        configureEndOfGameOver();
+    });
+}
+
+void TetrisQtGUI::configureEndOfGameOver() {
+    QObject::connect(tetris_game_over, &QObject::destroyed, [=]() mutable {
+        std::cout << "TetrisGameOver destroyed" << std::endl;
+        tetris_configuration = new TetrisConfiguration(&settings);
+        tetris_configuration->show();
+        configureEndOfConfiguration();
+    });
 }

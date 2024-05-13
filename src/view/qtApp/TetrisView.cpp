@@ -19,6 +19,8 @@ void TetrisView::update() {
     emit updateQt();
     if (game->isGameOver() || game->isWinner()) {
         close();
+        game->removeObserver(this);
+        deleteLater();
     }
 }
 
