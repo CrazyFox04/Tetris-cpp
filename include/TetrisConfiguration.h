@@ -5,6 +5,7 @@
 #ifndef TETRISCONFIGURATION_H
 #define TETRISCONFIGURATION_H
 #include <QWidget>
+#include <QVBoxLayout>
 #include <QFormLayout>
 #include <QLabel>
 #include <QMainWindow>
@@ -12,6 +13,7 @@
 #include <QLineEdit>
 #include <QComboBox>
 #include <QPushButton>
+#include <QApplication>
 
 #include "GameSettings.hpp"
 

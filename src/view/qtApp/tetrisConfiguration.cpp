@@ -1,13 +1,9 @@
 #include "TetrisConfiguration.h"
-#include <QWidget>
-#include <QApplication>
-#include <QLabel>
-#include <QComboBox>
-#include <QLineEdit>
-#include <QPushButton>
 #include "Game.h"
 #include "TetrisView.h"
+
 #include <QCloseEvent>
+#include <QList>
 
 
 TetrisConfiguration::TetrisConfiguration(GameSettings *settings)
@@ -116,20 +112,26 @@ void TetrisConfiguration::addFields() {
 }
 
 void TetrisConfiguration::createLineEdits() {
-    QString lineEditStyle =
-            "QLineEdit { border-radius: 5px; background-color: #354F52; padding: 5px; color: #CAD2C5; }";
+    QString commonStyle =
+            "border-radius: 5px; background-color: #354F52; padding: 5px; color: #CAD2C5; text-align: center;";
+    QString lineEditStyle = "QLineEdit { " + commonStyle + " }";
     QString comboBoxStyle =
-            "QComboBox { border-radius: 5px; background-color: #354F52; padding: 5px; color : #CAD2C5;}";
+            "QComboBox { " + commonStyle + " }"
+                                           "QComboBox::drop-down { border-width: 0px; }"
+                                           "QComboBox::down-arrow { width: 0px; }";
 
     for (int w = 10; w <= 30; ++w) boardWidthComboBox->addItem(QString::number(w));
     boardWidthComboBox->setStyleSheet(comboBoxStyle);
+    boardWidthComboBox->setEditable(true);
 
     for (int h = 10; h <= 30; ++h) boardHeightComboBox->addItem(QString::number(h));
     boardHeightComboBox->setStyleSheet(comboBoxStyle);
     boardHeightComboBox->setCurrentIndex(10);
+    boardHeightComboBox->setEditable(true);
 
     for (int lvl = 1; lvl <= 20; lvl++) startLevelComboBox->addItem(QString::number(lvl));
     startLevelComboBox->setStyleSheet(comboBoxStyle);
+    startLevelComboBox->setEditable(true);
 
     targetLineLineEdit->setStyleSheet(lineEditStyle);
     targetTimeLineEdit->setStyleSheet(lineEditStyle);
@@ -137,6 +139,19 @@ void TetrisConfiguration::createLineEdits() {
 
     for (int diff = 1; diff <= 20; diff++) difficultyComboBox->addItem(QString::number(diff));
     difficultyComboBox->setStyleSheet(comboBoxStyle);
+    difficultyComboBox->setEditable(true);
+
+    // Align the text to the center
+    QList<QComboBox *> comboBoxes = {boardHeightComboBox, boardWidthComboBox, startLevelComboBox, difficultyComboBox};
+    for (auto comboBox: comboBoxes) {
+        comboBox->lineEdit()->setAlignment(Qt::AlignCenter);
+        comboBox->lineEdit()->setReadOnly(true); // Make the line edit read-only
+    }
+
+    QList<QLineEdit *> lineEdits = {targetLineLineEdit, targetTimeLineEdit, targetScoreLineEdit};
+    for (auto lineEdit: lineEdits) {
+        lineEdit->setAlignment(Qt::AlignCenter);
+    }
 }
 
 int TetrisConfiguration::start(QApplication *myQtApp) {
