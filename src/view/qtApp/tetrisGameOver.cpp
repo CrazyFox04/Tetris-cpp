@@ -5,9 +5,11 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
-TetrisGameOver::TetrisGameOver(std::shared_ptr<GameController> game, QWidget* parent) : QWidget(parent), game(game),
-    layout(new QVBoxLayout(this)), gameOverLabel( new QLabel(this)), detailsLabel(new QLabel(this)), buttonLayout(new QHBoxLayout(this)), restartButton(new QPushButton("Restart", this)),
-    quitButton(new QPushButton("Quit")) {
+TetrisGameOver::TetrisGameOver(std::shared_ptr<GameController> game, QWidget *parent)
+        : QWidget(parent), game(game), layout(new QVBoxLayout(this)),
+          gameOverLabel(new QLabel(this)), detailsLabel(new QLabel(this)),
+          buttonLayout(new QHBoxLayout), restartButton(new QPushButton("Restart", this)),
+          quitButton(new QPushButton("Quit", this)) {
     configureWindow();
     createItems();
     setLayout(layout);
@@ -17,24 +19,33 @@ TetrisGameOver::TetrisGameOver(std::shared_ptr<GameController> game, QWidget* pa
 void TetrisGameOver::configureWindow() {
     setWindowTitle("Tetris End Of Game");
     setFixedSize(500, 300);
+    setStyleSheet("background-color: #84A98C;");
 }
 
 void TetrisGameOver::createItems() {
+    QString boutonStyle = "QPushButton { border-radius: 5px; background-color: #354F52; padding: 5px; color: #CAD2C5}";
     gameOverLabel->setAlignment(Qt::AlignCenter);
+    gameOverLabel->setStyleSheet("QLabel { font-size: 24px; color : #2F3E46;}");
     layout->addWidget(gameOverLabel);
 
     detailsLabel->setAlignment(Qt::AlignCenter);
+    detailsLabel->setStyleSheet("QLabel { font-size: 16px; color : #2F3E46;}");
     layout->addWidget(detailsLabel);
 
-    restartButton->setStyleSheet(
-        "QPushButton { border: 2px solid #0f380f; border-radius: 5px; background-color: #9bbc0f; padding: 5px; }");
-    quitButton->setStyleSheet(
-        "QPushButton { border: 2px solid #0f380f; border-radius: 5px; background-color: #9bbc0f; padding: 5px; }");
+    restartButton->setStyleSheet(boutonStyle);
+    quitButton->setStyleSheet(boutonStyle);
+    restartButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    quitButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+
     buttonLayout->addWidget(restartButton);
     buttonLayout->addWidget(quitButton);
+    buttonLayout->setSpacing(20);
+    buttonLayout->setContentsMargins(10, 0, 10, 0);
+
+    layout->addLayout(buttonLayout);
+
     connect(restartButton, &QPushButton::clicked, this, &TetrisGameOver::restartGame);
     connect(quitButton, &QPushButton::clicked, this, &TetrisGameOver::quitGame);
-    layout->addLayout(buttonLayout);
 }
 
 void TetrisGameOver::updateItems() {
@@ -58,11 +69,10 @@ void TetrisGameOver::updateItems() {
         seconds -= std::chrono::duration_cast<std::chrono::seconds>(minutes);
 
         detailsLabel->setText(QString("You've finished the game in %1 hours, %2 minutes and %3 seconds!")
-                              .arg(hours.count())
-                              .arg(minutes.count())
-                              .arg(seconds.count()));
-    }
-    else {
+                                      .arg(hours.count())
+                                      .arg(minutes.count())
+                                      .arg(seconds.count()));
+    } else {
         detailsLabel->setText(QString("Score: %1\nLines Completed: %2").arg(game->getScore()).arg(game->getLines()));
     }
 }
@@ -80,7 +90,7 @@ void TetrisGameOver::quitGame() {
     exit(0);
 }
 
-int TetrisGameOver::start(QApplication* myQtApp) {
+int TetrisGameOver::start(QApplication *myQtApp) {
     updateItems();
     show();
     return myQtApp->exec();
