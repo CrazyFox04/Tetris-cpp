@@ -112,13 +112,10 @@ void TetrisConfiguration::addFields() {
 }
 
 void TetrisConfiguration::createLineEdits() {
-    QString commonStyle =
-            "border-radius: 5px; background-color: #354F52; padding: 5px; color: #CAD2C5; text-align: center;";
-    QString lineEditStyle = "QLineEdit { " + commonStyle + " }";
+    QString lineEditStyle =
+            "QLineEdit { border-radius: 5px; background-color: #354F52; padding: 5px; color: #CAD2C5; }";
     QString comboBoxStyle =
-            "QComboBox { " + commonStyle + " }"
-                                           "QComboBox::drop-down { border-width: 0px; }"
-                                           "QComboBox::down-arrow { width: 0px; }";
+            "QComboBox { border-radius: 5px; background-color: #354F52; padding: 5px; color: #CAD2C5; }";
 
     for (int w = 10; w <= 30; ++w) boardWidthComboBox->addItem(QString::number(w));
     boardWidthComboBox->setStyleSheet(comboBoxStyle);
