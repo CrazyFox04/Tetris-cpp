@@ -62,16 +62,19 @@ void Bag::shuffle() {
 }
 
 Tetromino Bag::getNext() {
-    if (bag.empty()) {
-        addTetrominosToBag();
-        shuffle();
+    if (bag.size() <= 1) {
+        if (bag.size() == 1) {
+            Tetromino next = Tetromino(bag.front());
+            addTetrominosToBag();
+            shuffle();
+            bag.insert(bag.begin(), next);
+        } else {
+            addTetrominosToBag();
+            shuffle();
+        }
     }
     Tetromino next = Tetromino(bag.front());
     bag.erase(bag.begin());
-    if (bag.empty()) {
-        addTetrominosToBag();
-        shuffle();
-    }
     return next;
 }
 
