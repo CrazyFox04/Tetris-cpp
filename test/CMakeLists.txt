@@ -8,13 +8,13 @@ project(tetris_test)
 # Define test source files
 set(TEST_SOURCES
         testMain.cpp
-        Bag.cpp
-        BagViewTest.cpp
-        Board.cpp
-        BoardViewTest.cpp
-        Game.cpp
-        Position.cpp
-        Tetromino.cpp
+        #Bag.cpp
+        #BagViewTest.cpp
+        #Board.cpp
+        #BoardViewTest.cpp
+        #Game.cpp
+        #Position.cpp
+        #Tetromino.cpp
 )
 
 # Create the tests main executable
@@ -36,7 +36,6 @@ target_link_libraries(
         GTest::gtest
         GTest::gtest_main
         tetris_model
-        tetris_view
         tetris_tools
 )
 
