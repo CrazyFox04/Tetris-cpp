@@ -60,10 +60,10 @@ void TetrisConfiguration::setValues() {
     boardWidthComboBox->setCurrentText(QString::number(settings->boardWidth));
     boardHeightComboBox->setCurrentText(QString::number(settings->boardHeight));
     startLevelComboBox->setCurrentText(QString::number(settings->startLevel));
+    difficultyComboBox->setCurrentText(QString::number(settings->difficulty));
     targetLineLineEdit->setText(QString::number(settings->targetLine));
     targetTimeLineEdit->setText(QString::number(settings->targetTime));
     targetScoreLineEdit->setText(QString::number(settings->targetScore));
-    difficultyComboBox->setCurrentText(QString::number(settings->difficulty));
 }
 
 void TetrisConfiguration::closeWidget() {
@@ -91,10 +91,10 @@ void TetrisConfiguration::addFields() {
     formLayout->addRow(boardWidthLabel, boardWidthComboBox);
     formLayout->addRow(boardHeightLabel, boardHeightComboBox);
     formLayout->addRow(startLevelLabel, startLevelComboBox);
+    formLayout->addRow(difficultyLabel, difficultyComboBox);
     formLayout->addRow(targetLineLabel, targetLineLineEdit);
     formLayout->addRow(targetTimeLabel, targetTimeLineEdit);
     formLayout->addRow(targetScoreLabel, targetScoreLineEdit);
-    formLayout->addRow(difficultyLabel, difficultyComboBox);
 
     QList<QLabel *> labels = {boardWidthLabel, boardHeightLabel, startLevelLabel,
                               targetLineLabel, targetTimeLabel, targetScoreLabel, difficultyLabel};
@@ -123,23 +123,21 @@ void TetrisConfiguration::createLineEdits() {
     for (int w = 10; w <= 30; ++w) boardWidthComboBox->addItem(QString::number(w));
     boardWidthComboBox->setStyleSheet(comboBoxStyle);
     boardWidthComboBox->setEditable(true);
-
     for (int h = 10; h <= 30; ++h) boardHeightComboBox->addItem(QString::number(h));
     boardHeightComboBox->setStyleSheet(comboBoxStyle);
     boardHeightComboBox->setCurrentIndex(10);
     boardHeightComboBox->setEditable(true);
-
     for (int lvl = 1; lvl <= 20; lvl++) startLevelComboBox->addItem(QString::number(lvl));
     startLevelComboBox->setStyleSheet(comboBoxStyle);
     startLevelComboBox->setEditable(true);
+    for (int diff = 1; diff <= 20; diff++) difficultyComboBox->addItem(QString::number(diff));
+    difficultyComboBox->setStyleSheet(comboBoxStyle);
+    difficultyComboBox->setEditable(true);
 
     targetLineLineEdit->setStyleSheet(lineEditStyle);
     targetTimeLineEdit->setStyleSheet(lineEditStyle);
     targetScoreLineEdit->setStyleSheet(lineEditStyle);
 
-    for (int diff = 1; diff <= 20; diff++) difficultyComboBox->addItem(QString::number(diff));
-    difficultyComboBox->setStyleSheet(comboBoxStyle);
-    difficultyComboBox->setEditable(true);
 
     // Align the text to the center
     QList<QComboBox *> comboBoxes = {boardHeightComboBox, boardWidthComboBox, startLevelComboBox, difficultyComboBox};
