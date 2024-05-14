@@ -6,16 +6,12 @@
 #include "TetrisView.h"
 #include <memory>
 
-BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget* parent) : game(), QWidget(parent), tetroViews(),
-                                                                            dropVisualizationTetro(
-                                                                                new TetroView(
-                                                                                    game, game->getDroppedTetro(), true,
-                                                                                    this)) {
-    this->game = game;
-    connect(dynamic_cast<const QtPrivate::FunctionPointer<void(TetrisView::*)()>::Object *>(parent), SIGNAL(updateQt()),
-            this, SLOT(updateQt()));
+BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget *parent)
+        : game(game), QWidget(parent), tetroViews(),
+          dropVisualizationTetro(new TetroView(game, game->getDroppedTetro(), true, this)) {
+    connect(dynamic_cast<const QObject *>(parent), SIGNAL(updateQt()), this, SLOT(updateQt()));
     setFixedSize((game->getBoard().getWidth() + 2) * 30, game->getBoard().getHeight() * 30);
-    setStyleSheet("background-color: #9bbc0f;");
+    setStyleSheet("background-color: #52796F;");
     setFocusPolicy(Qt::StrongFocus);
     layout = new QGridLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -37,7 +33,7 @@ void BoardBox::initPaintOccupied() {
     }
     auto bigOccupied = Tetromino(0, {-game->getBoard().getRefPosition().get_x(), 0}, occupied, false);
     blockView = new TetroView(game, bigOccupied, false, this);
-    blockView->setColor(QColor("#000000"));
+    blockView->setColor(QColor("#354F52"));
     layout->addWidget(blockView, 0, 0);
 }
 
@@ -60,7 +56,7 @@ void BoardBox::keyPressEvent(QKeyEvent* event) {
         case Qt::Key_S:
             game->moveActiveTetromino(Direction::DOWN);
             break;
-        case Qt::Key_Z:
+        case Qt::Key_Space:
             game->dropActiveTetromino();
             break;
         case Qt::Key_A:
@@ -77,8 +73,8 @@ void BoardBox::keyPressEvent(QKeyEvent* event) {
 void BoardBox::drawBorders(QPainter&painter) {
     int brickWidth = 30;
     int brickHeight = 15;
-    QColor darkColor("#0f380f");
-    QColor lightColor("#306230");
+    QColor darkColor("#2F3E46");
+    QColor lightColor("#354F52");
 
     for (int y = 0; y < height(); y += brickHeight * 2) {
         painter.fillRect(0, y, brickWidth, brickHeight, darkColor);

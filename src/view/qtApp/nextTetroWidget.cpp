@@ -8,13 +8,16 @@ NextTetroWidget::NextTetroWidget(std::shared_ptr<GameController> game, QWidget *
     this->game = game;
     setFixedSize(100, 70);
     setStyleSheet(
-            "background-color: #9bbc0f; border: 2px solid #0f380f; border-radius: 5px; padding: 5px; margin: 0px;");
+            "background-color: #354F52; border-radius: 5px; padding: 5px; margin: 0px;");
     setFocusPolicy(Qt::StrongFocus);
 }
 
 void NextTetroWidget::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     QRect blockRect;
+    QPen pen;
+    pen.setColor("#354F52");
+    painter.setPen(pen);
     int tetroWidth = game->getBag().peekNext().get_length();
     int tetroHeight = game->getBag().peekNext().get_height();
     int centerX = width() / 2 - tetroWidth / 2 - 5;

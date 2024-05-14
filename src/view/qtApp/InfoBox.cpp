@@ -14,12 +14,19 @@ levelUpLabel("Level Up +1", this), levelUpTimer(this), currentLevel(game->getLev
     this->game = game;
     connect(dynamic_cast<const QtPrivate::FunctionPointer<void(TetrisView::*)()>::Object*>(parent), SIGNAL(updateQt()), this, SLOT(updateQt()));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(10, 10, 10, 10);
+    mainLayout->setSpacing(10);
 
     setupInfoWidget(mainLayout, "Score: ", score);
     setupInfoWidget(mainLayout, "Lines: ", lines);
     setupInfoWidget(mainLayout, "Level: ", level);
+    QLabel* nextTetroLabel = new QLabel("Coming Next", this);
+    nextTetroLabel->setAlignment(Qt::AlignCenter);
+    nextTetroLabel->setStyleSheet("QLabel { color : #CAD2C5; font-size : 14px; }");
+    mainLayout->addWidget(nextTetroLabel);
+
     levelUpLabel.setAlignment(Qt::AlignCenter);
-    levelUpLabel.setStyleSheet("QLabel { color : white; font-size : 20px; }");
+    levelUpLabel.setStyleSheet("QLabel { color : #CAD2C5; font-size : 24px; }");
     levelUpLabel.hide();
     connect(&levelUpTimer, &QTimer::timeout, [&] {
         levelUpLabel.hide();
@@ -40,18 +47,14 @@ void InfoBox::setupInfoWidget(QLayout *layout, const QString &labelText, QLabel 
     combinedLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     combinedLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
 
-    QString borderColor = "#0f380f";
-    QString backgroundColor = "#9bbc0f";
-    combinedLabel->setStyleSheet(QString("QLabel { font-size: 12pt; color: %1; }").arg(borderColor));
+    combinedLabel->setStyleSheet(QString("QLabel { font-size: 14pt; color: #CAD2C5; }"));
     widget->setStyleSheet(
-            QString("QWidget { border: 2px solid %1; border-radius: 5px; "
-                    "background-color: %2; padding: 5px; margin: 0px; }").arg(
-                    borderColor, backgroundColor));
+            QString("QWidget { border-radius: 5px; background-color: #354F52; padding: 5px; margin: 0px; }"));
 
     hLayout->addWidget(combinedLabel);
     layout->addWidget(widget);
     widget->setSizePolicy(QSizePolicy::Preferred,
-                          QSizePolicy::Maximum); // Set the size policy to maximum for the widget
+                          QSizePolicy::Maximum);
 }
 
 void InfoBox::updateQt() {

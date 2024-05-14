@@ -15,6 +15,9 @@ TetroView::TetroView(std::shared_ptr<GameController> game, Tetromino tetromino, 
 void TetroView::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
     QRect blockRect;
+    QPen pen;
+    pen.setColor("#84A98C");
+    painter.setPen(pen);
     for (const auto&cell: tetromino.get_relative_cells()) {
         int x = 30 + (game->getBoard().getRefPosition().get_x() + cell.get_x()) * 30;
         int y = (game->getBoard().getRefPosition().get_y() + cell.get_y()) * 30;
@@ -76,7 +79,7 @@ void TetroView::makeItBlink(int blinkTime) {
         auto* animation = new ColorAnimation(this, "color");
         animation->setDuration(500);
         animation->setLoopCount(blinkTime/500);
-        animation->setStartValue(QColor(Qt::white));
+        animation->setStartValue("#354F52");
         animation->setEndValue(getColor(tetromino));
         animation->start(QAbstractAnimation::DeleteWhenStopped);
     }
