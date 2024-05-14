@@ -95,6 +95,6 @@ protected:
     void closeEvent(QCloseEvent* event) override;
 
 signals:
-    void startTetrisView();
+    void exitGame();
 };
 #endif //TETRISCONFIGURATION_H

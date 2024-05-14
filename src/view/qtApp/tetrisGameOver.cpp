@@ -5,11 +5,11 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
-TetrisGameOver::TetrisGameOver(std::shared_ptr<GameController> game, QWidget *parent)
-        : QWidget(parent), game(game), layout(new QVBoxLayout(this)),
-          gameOverLabel(new QLabel(this)), detailsLabel(new QLabel(this)),
-          buttonLayout(new QHBoxLayout), restartButton(new QPushButton("Restart", this)),
-          quitButton(new QPushButton("Quit", this)) {
+TetrisGameOver::TetrisGameOver(std::shared_ptr<GameController> game, QWidget* parent)
+    : QWidget(parent), game(game), layout(new QVBoxLayout(this)),
+      gameOverLabel(new QLabel(this)), detailsLabel(new QLabel(this)),
+      buttonLayout(new QHBoxLayout), restartButton(new QPushButton("Restart", this)),
+      quitButton(new QPushButton("Quit", this)) {
     configureWindow();
     createItems();
     setLayout(layout);
@@ -51,10 +51,12 @@ void TetrisGameOver::createItems() {
 void TetrisGameOver::updateItems() {
     if (game->isGameOver()) {
         gameOverLabel->setText("Game Over !!!");
-    } else {
+    }
+    else {
         if (game->isWinner()) {
             gameOverLabel->setText("Congratulations! You've won !!!");
-        } else {
+        }
+        else {
             gameOverLabel->setText("You've given up !!!");
         }
     }
@@ -69,10 +71,11 @@ void TetrisGameOver::updateItems() {
         seconds -= std::chrono::duration_cast<std::chrono::seconds>(minutes);
 
         detailsLabel->setText(QString("You've finished the game in %1 hours, %2 minutes and %3 seconds!")
-                                      .arg(hours.count())
-                                      .arg(minutes.count())
-                                      .arg(seconds.count()));
-    } else {
+            .arg(hours.count())
+            .arg(minutes.count())
+            .arg(seconds.count()));
+    }
+    else {
         detailsLabel->setText(QString("Score: %1\nLines Completed: %2").arg(game->getScore()).arg(game->getLines()));
     }
 }
@@ -84,14 +87,14 @@ void TetrisGameOver::restartGame() {
 }
 
 void TetrisGameOver::quitGame() {
-    game->restart();
-    close();
+    emit exitGame();
     deleteLater();
-    exit(0);
 }
 
-int TetrisGameOver::start(QApplication *myQtApp) {
+int TetrisGameOver::start(QApplication* myQtApp) {
     updateItems();
     show();
     return myQtApp->exec();
 }
+
+#include "moc_tetrisGameOver.cpp"

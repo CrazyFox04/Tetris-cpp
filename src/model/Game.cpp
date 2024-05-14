@@ -117,7 +117,6 @@ void Game::dropActiveTetromino() {
         }
         notifyObservers();
     }
-    std::cout << "Game::dropActiveTetromino" << std::endl;
 }
 
 void Game::updateScore(const int linesCleared, const int dropDistance) {

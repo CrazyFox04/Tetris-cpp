@@ -14,6 +14,7 @@
  * It allows the user to restart or quit the game.
  */
 class TetrisGameOver : public QWidget {
+    Q_OBJECT
     std::shared_ptr<GameController> game; //!< The game controller.
     QVBoxLayout* layout; //!< The layout.
     QLabel* gameOverLabel; //!< The game over label.
@@ -43,7 +44,7 @@ public:
      * @param game The game controller.
      * @param parent The parent widget.
      */
-    TetrisGameOver(std::shared_ptr<GameController> game, QWidget *parent = nullptr);
+    TetrisGameOver(std::shared_ptr<GameController> game, QWidget* parent = nullptr);
 
     /**
      * Destruct a TetrisGameOver.
@@ -55,7 +56,7 @@ public:
      * @param myQtApp The Qt application.
      * @return The exit code.
      */
-    int start(QApplication *myQtApp);
+    int start(QApplication* myQtApp);
 
     /**
      * Manage the restart Button
@@ -66,5 +67,8 @@ public:
      * Manage the quit Button
      */
     void quitGame();
+
+signals:
+    void exitGame();
 };
 #endif //TETRISGAMEOVER_H

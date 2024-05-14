@@ -1,9 +1,9 @@
 #ifndef TETRISQTGUI_H
 #define TETRISQTGUI_H
+
 #include "GameController.h"
 #include "Game.h"
 #include "GameSettings.hpp"
-
 
 class TetrisGameOver;
 class TetrisView;
@@ -14,6 +14,7 @@ class TetrisConfiguration;
  * This class is responsible for running the game.
  */
 class TetrisQtGUI {
+    bool wantToExit; //!< The exit flag.
     GameSettings settings; //!< The game settings.
     std::shared_ptr<GameController> gameController; //!< The game controller.
     TetrisConfiguration* tetris_configuration; //!< The configuration window.
@@ -21,8 +22,13 @@ class TetrisQtGUI {
     TetrisGameOver* tetris_game_over; //!< The game over window.
 
     void configureEndOfConfiguration();
+
     void configureEndOfGame();
+
     void configureEndOfGameOver();
+
+    void exitProperly();
+
 public:
     /**
      * Construct a TetrisQtGUI.

@@ -157,9 +157,11 @@ int TetrisConfiguration::start(QApplication *myQtApp) {
 
 void TetrisConfiguration::closeEvent(QCloseEvent* event) {
     if (wantToExit) {
-        exit(0);
+        emit exitGame();
+        deleteLater();
+    } else {
+        QWidget::closeEvent(event);
     }
-    QWidget::closeEvent(event);
 }
 
 #include "moc_TetrisConfiguration.cpp"
