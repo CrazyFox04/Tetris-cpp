@@ -120,7 +120,7 @@ void Game::dropActiveTetromino() {
 }
 
 void Game::updateScore(const int linesCleared, const int dropDistance) {
-    if (gameStatus.currentLevel * 10 <= gameStatus.currentLine) {
+    if (gameStatus.currentLevel * 10 <= gameStatus.currentLine + 10*(gameSettings.startLevel-1)) {
         gameStatus.currentLevel++;
     }
     gameStatus.currentLine += linesCleared;
