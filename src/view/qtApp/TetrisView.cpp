@@ -19,10 +19,18 @@ int TetrisView::start(QApplication *myQtApp) {
 void TetrisView::update() {
     emit updateQt();
     if (game->isGameOver() || game->isWinner()) {
-        close();
-        game->removeObserver(this);
-        deleteLater();
+       endOfGame();
     }
+}
+
+void TetrisView::endOfGame() {
+    close();
+    game->removeObserver(this);
+    deleteLater();
+}
+
+void TetrisView::closeEvent(QCloseEvent *event) {
+   endOfGame();
 }
 
 

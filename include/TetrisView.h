@@ -25,6 +25,7 @@ class TetrisView : public QWidget, public Observer {
     BoardBox* myBoardBox; //!< The board box.
     std::shared_ptr<GameController> game; //!< The game controller.
 
+    void endOfGame();
 public:
     /**
      * Construct a TetrisView.
@@ -44,6 +45,9 @@ public:
      * Update the view.
      */
     void update() override;
+
+protected:
+    void closeEvent(QCloseEvent* event) override;
 
 signals:
     void updateQt();
