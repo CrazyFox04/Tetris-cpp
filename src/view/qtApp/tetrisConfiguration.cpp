@@ -7,7 +7,7 @@
 
 
 TetrisConfiguration::TetrisConfiguration(GameSettings *settings)
-        : settings(settings), layout(new QVBoxLayout(this)), formLayout(new QFormLayout(this)),
+        : wantToExit(true), settings(settings), layout(new QVBoxLayout(this)), formLayout(new QFormLayout(this)),
           titleLabel(new QLabel("TETRIS", this)),
           boardWidthLabel(new QLabel("Board Width", this)),
           boardHeightLabel(new QLabel("Board Height", this)),
@@ -74,6 +74,7 @@ void TetrisConfiguration::closeWidget() {
     settings->targetLine = targetLineLineEdit->text().toInt();
     settings->targetTime = targetTimeLineEdit->text().toInt();
     settings->targetScore = targetScoreLineEdit->text().toInt();
+    wantToExit = false;
     close();
     deleteLater();
 }
@@ -152,6 +153,13 @@ void TetrisConfiguration::createLineEdits() {
 int TetrisConfiguration::start(QApplication *myQtApp) {
     show();
     return myQtApp->exec();
+}
+
+void TetrisConfiguration::closeEvent(QCloseEvent* event) {
+    if (wantToExit) {
+        exit(0);
+    }
+    QWidget::closeEvent(event);
 }
 
 #include "moc_TetrisConfiguration.cpp"

@@ -26,6 +26,7 @@
  */
 class TetrisConfiguration : public QWidget {
     Q_OBJECT
+    bool wantToExit;
     QVBoxLayout* layout; //!< The main window.
     QFormLayout* formLayout; //!< The form layout.
     QLabel* titleLabel; //!< The title label.
@@ -89,6 +90,9 @@ public:
      * @return The exit code.
      */
     int start(QApplication* myQtApp);
+
+protected:
+    void closeEvent(QCloseEvent* event) override;
 
 signals:
     void startTetrisView();
