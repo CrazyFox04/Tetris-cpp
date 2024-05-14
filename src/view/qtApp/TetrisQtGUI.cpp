@@ -12,7 +12,7 @@ TetrisQtGUI::TetrisQtGUI() : wantToExit(false), settings(), gameController(std::
 void TetrisQtGUI::run(int argc, char** argv) {
     QApplication* myApp = new QApplication(argc, argv);
     tetris_configuration = new TetrisConfiguration(&settings);
-    gameController->start();
+    //gameController->start();
     tetris_view = new TetrisView(gameController);
     tetris_game_over = new TetrisGameOver(gameController);
     myApp->setQuitOnLastWindowClosed(false);

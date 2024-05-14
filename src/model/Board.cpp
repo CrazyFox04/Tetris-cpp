@@ -252,6 +252,9 @@ bool Board::activeTetrominoIsRotatable() const {
 }
 
 Tetromino Board::getDroppedTetro() const {
+    if (tetrominos.empty()) {
+        return Tetromino(0, refPosition, std::vector<Position>(), false);
+    }
     Tetromino activeTetromino = tetrominos.back();
     int dropDistance = 0;
     for (int i = 0; i < activeTetromino.get_height(); ++i) {

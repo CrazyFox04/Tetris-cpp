@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <thread>
+#include <mutex>
 
 #include "GameController.h"
 #include "Observable.h"
@@ -32,6 +33,7 @@ class Game : public Observable, public GameController {
     GameStatus gameStatus; ///< Game stats of the current game
     std::pair<bool, std::thread> autoDownThread; ///< Thread for automatic downward movement of the active tetromino
     std::pair<bool, std::thread> countDownThread; ///< Thread for the countdown timer
+    std::mutex mutex;
 
     /**
     * Updates the game score based on the number of lines cleared and the drop distance.

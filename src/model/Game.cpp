@@ -7,6 +7,7 @@
 #include <math.h>
 #include <thread>
 #include <unistd.h>
+#include <mutex>
 
 void Game::addObserver(Observer* observer) {
     observers.emplace_back(observer);
@@ -71,6 +72,7 @@ void Game::resetScore() {
 }
 
 void Game::moveActiveTetromino(Direction2D direction) {
+    mutex.lock();
     if (gameStatus.hasStarted && !isGameOver() && !isWinner()) {
         try {
             board.moveActiveTetromino(direction);
@@ -83,9 +85,11 @@ void Game::moveActiveTetromino(Direction2D direction) {
         }
         notifyObservers();
     }
+    mutex.unlock();
 }
 
 void Game::rotateActiveTetromino(Rotation rotation) {
+    mutex.lock();
     if (gameStatus.hasStarted && !isGameOver() && !isWinner() && board.activeTetrominoIsRotatable()) {
         try {
             board.rotateActiveTetromino(rotation);
@@ -100,9 +104,11 @@ void Game::rotateActiveTetromino(Rotation rotation) {
         }
         notifyObservers();
     }
+    mutex.unlock();
 }
 
 void Game::dropActiveTetromino() {
+    mutex.lock();
     if (gameStatus.hasStarted && !isGameOver() && !isWinner()) {
         int dropDistance = 0;
         try {
@@ -117,10 +123,11 @@ void Game::dropActiveTetromino() {
         }
         notifyObservers();
     }
+    mutex.unlock();
 }
 
 void Game::updateScore(const int linesCleared, const int dropDistance) {
-    if (gameStatus.currentLevel * 10 <= gameStatus.currentLine + 10*(gameSettings.startLevel-1)) {
+    if (gameStatus.currentLevel * 10 <= gameStatus.currentLine + 10 * (gameSettings.startLevel - 1)) {
         gameStatus.currentLevel++;
     }
     gameStatus.currentLine += linesCleared;
@@ -219,14 +226,7 @@ void Game::launchAutoDown() {
     autoDownThread.second = std::thread([this]() {
         while (!isGameOver() && !isWinner() && autoDownThread.first) {
             std::this_thread::sleep_for(std::chrono::milliseconds(getTimeBetweenDown(gameStatus.currentLevel)));
-            try {
-                board.moveActiveTetromino(Direction::DOWN);
-            }
-            catch (const std::exception&) {
-                updateScore(board.removeCompleteLines(), 0);
-                tryToAddNextTetromino();
-            }
-            notifyObservers();
+            moveActiveTetromino(Direction::DOWN);
         }
     });
 }
