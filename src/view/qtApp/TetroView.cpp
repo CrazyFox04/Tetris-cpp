@@ -6,8 +6,8 @@
 #include "ColorAnimation.h"
 
 TetroView::TetroView(std::shared_ptr<GameController> game, Tetromino tetromino, bool isGhost,
-                     QWidget* parent) : tetromino(tetromino), game(), isGhost(isGhost), hasBlinked(false),
-                                        QWidget(parent) {
+                     QWidget* parent) : QWidget(parent), tetromino(tetromino), game(), isGhost(isGhost),
+                                        hasBlinked(false) {
     this->game = game;
     color = getColor(tetromino);
 }
@@ -22,7 +22,7 @@ void TetroView::paintEvent(QPaintEvent* event) {
         int x = 30 + (game->getBoard().getRefPosition().get_x() + cell.get_x()) * 30;
         int y = (game->getBoard().getRefPosition().get_y() + cell.get_y()) * 30;
         blockRect.setRect(x, y, 30, 30);
-        painter.fillRect(blockRect, getGradient(x,y));
+        painter.fillRect(blockRect, getGradient(x, y));
         painter.drawRect(blockRect);
     }
 }
@@ -39,7 +39,6 @@ void TetroView::updateQt(Tetromino tetromino) {
 }
 
 void TetroView::setColor(QColor color) {
-
     this->color = color;
 }
 
@@ -47,7 +46,8 @@ void TetroView::getColorFromTetro() {
     if (isGhost) {
         color = getColor(tetromino);
         color.setAlpha(80);
-    } else {
+    }
+    else {
         color = getColor(tetromino);
     }
 }
@@ -78,14 +78,14 @@ void TetroView::makeItBlink(int blinkTime) {
         hasBlinked = true;
         auto* animation = new ColorAnimation(this, "color");
         animation->setDuration(500);
-        animation->setLoopCount(blinkTime/500);
+        animation->setLoopCount(blinkTime / 500);
         animation->setStartValue("#354F52");
         animation->setEndValue(getColor(tetromino));
         animation->start(QAbstractAnimation::DeleteWhenStopped);
     }
 }
 
-QColor TetroView::getCurrentColor() const{
+QColor TetroView::getCurrentColor() const {
     return color;
 }
 

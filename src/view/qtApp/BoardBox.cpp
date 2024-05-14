@@ -7,7 +7,7 @@
 #include <memory>
 
 BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget *parent)
-        : game(game), QWidget(parent), tetroViews(),
+        : QWidget(parent), game(game), tetroViews(),
           dropVisualizationTetro(new TetroView(game, game->getDroppedTetro(), true, this)) {
     connect(dynamic_cast<const QObject *>(parent), SIGNAL(updateQt()), this, SLOT(updateQt()));
     setFixedSize((game->getBoard().getWidth() + 2) * 30, game->getBoard().getHeight() * 30);

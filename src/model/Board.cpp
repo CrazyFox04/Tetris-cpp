@@ -256,10 +256,8 @@ Tetromino Board::getDroppedTetro() const {
         return Tetromino(0, refPosition, std::vector<Position>(), false);
     }
     Tetromino activeTetromino = tetrominos.back();
-    int dropDistance = 0;
     for (int i = 0; i < activeTetromino.get_height(); ++i) {
        activeTetromino.move(Direction::DOWN.first, Direction::DOWN.second);
-        ++dropDistance;
     }
     if (isOutside(activeTetromino) || isOccupied(activeTetromino)) {
         return tetrominos.back();

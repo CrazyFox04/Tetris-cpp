@@ -5,19 +5,18 @@
 #include "TetrisView.h"
 
 
-InfoBox::InfoBox(std::shared_ptr<GameController> game, QWidget* parent) : QWidget(parent),game(),
+InfoBox::InfoBox(std::shared_ptr<GameController> game, QWidget* parent) : QWidget(parent),
                                                                           score(new QLabel(
                                                                               QString::number(game->getScore()))),
                                                                           lines(new QLabel(
                                                                               QString::number(game->getLines()))),
                                                                           level(new QLabel(
                                                                               QString::number(game->getLevel()))),
-                                                                          nextTetroWidget(
-                                                                              new NextTetroWidget(game, this)),
                                                                           levelUpLabel("Level Up +1", this),
-                                                                          levelUpTimer(this),
+                                                                          levelUpTimer(this), nextTetroWidget(
+                                                                              new NextTetroWidget(game, this)),
+                                                                          game(game),
                                                                           currentLevel(game->getLevel()) {
-    this->game = game;
     connect(dynamic_cast<const QtPrivate::FunctionPointer<void(TetrisView::*)()>::Object *>(parent), SIGNAL(updateQt()),
             this, SLOT(updateQt()));
     QVBoxLayout* mainLayout = new QVBoxLayout(this);

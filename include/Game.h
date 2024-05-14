@@ -25,7 +25,7 @@
  *
  * NOTE :: Observer/Observable pattern will be implemented truly in the final GUI iteration.
  */
-class Game : public Observable, public GameController {
+class Game : public GameController {
     std::vector<Observer*> observers; ///< List of observers to notify on state change.
     Board board; ///< The game board.
     Bag&bag; ///< Reference to a Bag containing game pieces.

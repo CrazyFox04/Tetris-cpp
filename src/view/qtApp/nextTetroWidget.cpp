@@ -4,8 +4,7 @@
 #include <QPainter>
 #include <algorithm>
 
-NextTetroWidget::NextTetroWidget(std::shared_ptr<GameController> game, QWidget *parent) : game(), QWidget(parent) {
-    this->game = game;
+NextTetroWidget::NextTetroWidget(std::shared_ptr<GameController> game, QWidget *parent) : QWidget(parent), game(game) {
     setFixedSize(100, 70);
     setStyleSheet(
             "background-color: #354F52; border-radius: 5px; padding: 5px; margin: 0px;");
