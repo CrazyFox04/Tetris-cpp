@@ -5,15 +5,22 @@
 #include "TetrisView.h"
 
 
-InfoBox::InfoBox(std::shared_ptr<GameController> game, QWidget* parent) : game(),
-                                                         score(new QLabel(QString::number(game->getScore()))),
-                                                         lines(new QLabel(QString::number(game->getLines()))),
-                                                         level(new QLabel(QString::number(game->getLevel()))),
-                                                         nextTetroWidget(new NextTetroWidget(game, this)),
-levelUpLabel("Level Up +1", this), levelUpTimer(this), currentLevel(game->getLevel()) {
+InfoBox::InfoBox(std::shared_ptr<GameController> game, QWidget* parent) : QWidget(parent),game(),
+                                                                          score(new QLabel(
+                                                                              QString::number(game->getScore()), this)),
+                                                                          lines(new QLabel(
+                                                                              QString::number(game->getLines()), this)),
+                                                                          level(new QLabel(
+                                                                              QString::number(game->getLevel()), this)),
+                                                                          nextTetroWidget(
+                                                                              new NextTetroWidget(game, this)),
+                                                                          levelUpLabel("Level Up +1", this),
+                                                                          levelUpTimer(this),
+                                                                          currentLevel(game->getLevel()) {
     this->game = game;
-    connect(dynamic_cast<const QtPrivate::FunctionPointer<void(TetrisView::*)()>::Object*>(parent), SIGNAL(updateQt()), this, SLOT(updateQt()));
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    connect(dynamic_cast<const QtPrivate::FunctionPointer<void(TetrisView::*)()>::Object *>(parent), SIGNAL(updateQt()),
+            this, SLOT(updateQt()));
+    QVBoxLayout* mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(10, 10, 10, 10);
     mainLayout->setSpacing(10);
 
@@ -36,20 +43,20 @@ levelUpLabel("Level Up +1", this), levelUpTimer(this), currentLevel(game->getLev
     mainLayout->addWidget(&levelUpLabel);
 }
 
-void InfoBox::setupInfoWidget(QLayout *layout, const QString &labelText, QLabel *valueLabel) {
-    QWidget *widget = new QWidget();
-    QHBoxLayout *hLayout = new QHBoxLayout(widget);
+void InfoBox::setupInfoWidget(QLayout* layout, const QString&labelText, QLabel* valueLabel) {
+    QWidget* widget = new QWidget();
+    QHBoxLayout* hLayout = new QHBoxLayout(widget);
 
     hLayout->setContentsMargins(5, 5, 5, 5);
     hLayout->setSpacing(5);
 
-    QLabel *combinedLabel = new QLabel(labelText + " " + valueLabel->text());
+    QLabel* combinedLabel = new QLabel(labelText + " " + valueLabel->text());
     combinedLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     combinedLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
 
     combinedLabel->setStyleSheet(QString("QLabel { font-size: 14pt; color: #CAD2C5; }"));
     widget->setStyleSheet(
-            QString("QWidget { border-radius: 5px; background-color: #354F52; padding: 5px; margin: 0px; }"));
+        QString("QWidget { border-radius: 5px; background-color: #354F52; padding: 5px; margin: 0px; }"));
 
     hLayout->addWidget(combinedLabel);
     layout->addWidget(widget);
@@ -66,12 +73,14 @@ void InfoBox::updateQt() {
         levelUpLabel.show();
         levelUpTimer.start(1000);
     }
-    foreach (QLabel *label, this->findChildren<QLabel *>()) {
+    foreach(QLabel *label, this->findChildren<QLabel *>()) {
         if (label->text().startsWith("Score:")) {
             label->setText(scoreText);
-        } else if (label->text().startsWith("Lines:")) {
+        }
+        else if (label->text().startsWith("Lines:")) {
             label->setText(linesText);
-        } else if (label->text().startsWith("Level:")) {
+        }
+        else if (label->text().startsWith("Level:")) {
             label->setText(levelText);
         }
     }

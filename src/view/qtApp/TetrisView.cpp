@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <iostream>
 
-TetrisView::TetrisView(std::shared_ptr<GameController> game) : mainLayout(new QHBoxLayout()), myInfoBox(new InfoBox(game, this)), myBoardBox(new BoardBox(game, this)), game(game) {
+TetrisView::TetrisView(std::shared_ptr<GameController> game) : mainLayout(new QHBoxLayout(this)), myInfoBox(new InfoBox(game, this)), myBoardBox(new BoardBox(game, this)), game(game) {
     mainLayout->addWidget(myBoardBox);
     mainLayout->addWidget(myInfoBox);
     setLayout(mainLayout);

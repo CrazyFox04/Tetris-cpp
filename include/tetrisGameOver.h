@@ -44,7 +44,7 @@ public:
      * @param game The game controller.
      * @param parent The parent widget.
      */
-    TetrisGameOver(std::shared_ptr<GameController> game, QWidget* parent = nullptr);
+    TetrisGameOver(std::shared_ptr<GameController> game);
 
     /**
      * Destruct a TetrisGameOver.

@@ -5,10 +5,10 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
-TetrisGameOver::TetrisGameOver(std::shared_ptr<GameController> game, QWidget* parent)
-    : QWidget(parent), game(game), layout(new QVBoxLayout(this)),
+TetrisGameOver::TetrisGameOver(std::shared_ptr<GameController> game)
+    :game(game), layout(new QVBoxLayout(this)),
       gameOverLabel(new QLabel(this)), detailsLabel(new QLabel(this)),
-      buttonLayout(new QHBoxLayout), restartButton(new QPushButton("Restart", this)),
+      buttonLayout(new QHBoxLayout()), restartButton(new QPushButton("Restart", this)),
       quitButton(new QPushButton("Quit", this)) {
     configureWindow();
     createItems();
@@ -91,10 +91,5 @@ void TetrisGameOver::quitGame() {
     deleteLater();
 }
 
-int TetrisGameOver::start(QApplication* myQtApp) {
-    updateItems();
-    show();
-    return myQtApp->exec();
-}
 
 #include "moc_tetrisGameOver.cpp"

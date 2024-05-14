@@ -7,7 +7,7 @@
 
 
 TetrisConfiguration::TetrisConfiguration(GameSettings *settings)
-        : wantToExit(true), settings(settings), layout(new QVBoxLayout(this)), formLayout(new QFormLayout(this)),
+        :  wantToExit(true), settings(settings), layout(new QVBoxLayout(this)), formLayout(new QFormLayout()),
           titleLabel(new QLabel("TETRIS", this)),
           boardWidthLabel(new QLabel("Board Width", this)),
           boardHeightLabel(new QLabel("Board Height", this)),
