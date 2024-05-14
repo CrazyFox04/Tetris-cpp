@@ -18,15 +18,25 @@ void NextTetroWidget::paintEvent(QPaintEvent *event) {
     QPen pen;
     pen.setColor("#354F52");
     painter.setPen(pen);
+
     int tetroWidth = game->getBag().peekNext().get_length();
     int tetroHeight = game->getBag().peekNext().get_height();
     int centerX = width() / 2 - tetroWidth / 2 - 5;
     int centerY = height() / 2 - tetroHeight / 2 - 5;
+
+    QColor color = getColor(game->getBag().peekNext());
+
     for (const auto &cell: game->getBag().peekNext().get_relative_cells()) {
         int x = centerX + cell.get_x() * 10;
         int y = centerY + cell.get_y() * 10;
         blockRect.setRect(x, y, 10, 10);
-        painter.fillRect(blockRect, getColor(game->getBag().peekNext()));
+
+        // Create a gradient
+        QLinearGradient gradient(blockRect.topLeft(), blockRect.bottomRight());
+        gradient.setColorAt(0, color);  // Start color
+        gradient.setColorAt(1, color.darker(250));   // End color
+
+        painter.fillRect(blockRect, QBrush(gradient));
         painter.drawRect(blockRect);
     }
 }
