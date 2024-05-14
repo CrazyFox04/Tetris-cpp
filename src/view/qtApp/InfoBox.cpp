@@ -7,11 +7,11 @@
 
 InfoBox::InfoBox(std::shared_ptr<GameController> game, QWidget* parent) : QWidget(parent),game(),
                                                                           score(new QLabel(
-                                                                              QString::number(game->getScore()), this)),
+                                                                              QString::number(game->getScore()))),
                                                                           lines(new QLabel(
-                                                                              QString::number(game->getLines()), this)),
+                                                                              QString::number(game->getLines()))),
                                                                           level(new QLabel(
-                                                                              QString::number(game->getLevel()), this)),
+                                                                              QString::number(game->getLevel()))),
                                                                           nextTetroWidget(
                                                                               new NextTetroWidget(game, this)),
                                                                           levelUpLabel("Level Up +1", this),
