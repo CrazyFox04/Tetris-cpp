@@ -19,9 +19,6 @@ jobs:
           - os: macos-latest
             cxx: clang++
             cc: clang
-          #- os: windows-latest
-          #  cxx: cl
-          #  cc: cl
 
     steps:
     - uses: actions/checkout@v2
@@ -37,16 +34,7 @@ jobs:
       run: |
         brew install boost qt
         echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> $GITHUB_ENV
-
-    #- name: Install dependencies (Windows)
-    #  if: matrix.os == 'windows-latest'
-    #  run: |
-    #    choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' -y
-    #    choco install qt6-base-dev -y
-    #    choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --includeOptional" -y
-    #    $qtPath = Get-ChildItem 'C:\Qt\6*\msvc*\bin' | Sort-Object Name | Select-Object -Last 1
-    #    echo "$qtPath" >> $GITHUB_PATH
-
+        
     - name: Create Build Environment
       run: cmake -E make_directory ${{github.workspace}}/build
 
@@ -62,31 +50,3 @@ jobs:
       working-directory: ${{github.workspace}}/build
       shell: bash
       run: ctest -C Release
-
-    - name: Package artifacts
-      if: success()
-      run: |
-        cd ${{ github.workspace }}/build
-        zip -r tetris-${{ matrix.os }}.zip .
-
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: main
-        release_name: Release main
-        body: N/A
-        draft: false
-        prerelease: false
-
-    - name: Upload to Release Action
-      uses: actions/upload-release-asset@v1
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/build/tetris-${{ matrix.os }}.zip
-        asset_name: tetris-${{ matrix.os }}.zip
-        asset_content_type: application/zip
