@@ -21,24 +21,40 @@ class TetrisQtGUI {
     TetrisView* tetris_view; //!< The game view.
     TetrisGameOver* tetris_game_over; //!< The game over window.
 
+    /**
+     * @brief Configures the end of the configuration window.
+     *
+     * This method connects signals and slots to handle the end of the configuration phase.
+     * It starts the game if the user proceeds, or exits the application if the user wants to exit.
+     */
     void configureEndOfConfiguration();
 
+    /**
+     * @brief Configures the end of the game view.
+     *
+     * This method connects signals and slots to handle the end of the game phase.
+     * It transitions to the game over screen when the game view is destroyed.
+     */
     void configureEndOfGame();
 
+    /**
+    * @brief Configures the end of the game over window.
+    *
+    * This method connects signals and slots to handle the end of the game over phase.
+    * It either restarts the configuration window or exits the application based on user input.
+    */
     void configureEndOfGameOver();
-
-    void exitProperly();
 
 public:
     /**
-     * Construct a TetrisQtGUI.
+     * @brief Constructs a TetrisQtGUI object.
      */
     TetrisQtGUI();
 
     /**
-     * Main function to run the game.
-     * @param argc
-     * @param argv
+     * @brief Runs the TetrisQtGUI application.
+     * @param argc Argument count.
+     * @param argv Argument values.
      */
     void run(int argc, char** argv);
 };

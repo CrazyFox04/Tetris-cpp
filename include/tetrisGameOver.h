@@ -69,6 +69,9 @@ public:
     void quitGame();
 
 signals:
+    /**
+     * @brief Signal emitted when the user wants to exit the game.
+     */
     void exitGame();
 };
 #endif //TETRISGAMEOVER_H

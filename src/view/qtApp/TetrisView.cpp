@@ -1,7 +1,6 @@
 #include "InfoBox.h"
 #include "BoardBox.h"
 #include "TetrisView.h"
-#include <QWidget>
 #include <iostream>
 
 TetrisView::TetrisView(std::shared_ptr<GameController> game) : mainLayout(new QHBoxLayout(this)), myInfoBox(new InfoBox(game, this)), myBoardBox(new BoardBox(game, this)), game(game) {
@@ -32,6 +31,5 @@ void TetrisView::endOfGame() {
 void TetrisView::closeEvent(QCloseEvent *event) {
    endOfGame();
 }
-
 
 #include "moc_TetrisView.cpp"

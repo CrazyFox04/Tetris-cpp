@@ -48,12 +48,6 @@ public:
     Bag& operator=(const Bag&) = delete;
 
     /**
-     * Get the number of possible tetrominos.
-     * @return number of possible tetrominos
-     */
-    int getNumberOfTetrominos() const;
-
-    /**
      * Get the singleton instance of the bag.
      * @return singleton instance of the bag
      */

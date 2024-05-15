@@ -14,7 +14,7 @@
  * handling user input, and orchestrating the game view and game controller.
  */
 class ApplicationTetris {
-    GameSettings gameSettings;
+    GameSettings gameSettings; //!< Game settings
     std::shared_ptr<GameController> gameController; //!< Controller interface for the game
     Invoker invoker; //!< Command Invoker for the game
     GameView gameView; //!< View component for rendering the game

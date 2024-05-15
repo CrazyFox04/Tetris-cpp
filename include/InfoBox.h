@@ -41,6 +41,9 @@ public:
     InfoBox(std::shared_ptr<GameController> game, QWidget* parent = nullptr);
 
 public slots:
+    /**
+     * Update the info box.
+     */
     void updateQt();
 };
 

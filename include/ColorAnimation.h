@@ -1,7 +1,3 @@
-//
-// Created by Enzo Renard on 10/05/2024.
-//
-
 #ifndef COLORANIMATION_H
 #define COLORANIMATION_H
 #include <QPropertyAnimation>

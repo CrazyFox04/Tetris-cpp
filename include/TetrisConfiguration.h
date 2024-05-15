@@ -1,7 +1,3 @@
-//
-// Created by Enzo Renard on 26/04/2024.
-//
-
 #ifndef TETRISCONFIGURATION_H
 #define TETRISCONFIGURATION_H
 #include <QWidget>
@@ -45,56 +41,67 @@ class TetrisConfiguration : public QWidget {
     QLineEdit* targetTimeLineEdit; //!< The target time line edit.
     QLineEdit* targetScoreLineEdit; //!< The target score line edit.
     QPushButton* startButton; //!< The start button.
-
     GameSettings* settings; //!< The game settings.
 
     /**
-     * Configure the window.
-     */
+    * @brief Configures the window properties and layout.
+    */
     void configureWindow();
 
-    /**
-     * Create the necessary items.
-     */
+
     void createLineEdits();
 
     /**
-     * Add the fields to the form layout.
-     */
+    * @brief Adds the fields to the form layout.
+    */
     void addFields();
 
     /**
-     * Create the necessary items.
-     */
+    * @brief Creates the buttons for the window.
+    */
     void createButtons();
 
     /**
-     * Register the settings and close the window.
-     */
+    * @brief Closes the widget and updates the game settings with the user input.
+    */
     void closeWidget();
 
+    /**
+    * @brief Sets the initial values for the input fields based on the provided game settings.
+    */
     void setValues();
 
 public:
     /**
-     * Construct a TetrisConfiguration.
-     * @param settings The game settings.
+     * @brief Constructs a TetrisConfiguration widget.
+     * @param settings A pointer to the GameSettings instance.
      */
     TetrisConfiguration(GameSettings* settings);
 
+    /**
+     * @brief Destructor for TetrisConfiguration.
+     */
     virtual ~TetrisConfiguration() = default;
 
     /**
-     * Launch the configuration window.
-     * @param myQtApp The Qt application.
-     * @return The exit code.
+     * @brief Starts the application event loop and shows the configuration window.
+     * @param myQtApp A pointer to the QApplication instance.
+     * @return The result of the application event loop.
      */
     int start(QApplication* myQtApp);
 
 protected:
+    /**
+     * @brief Handles the close event of the widget.
+     * @param event The close event.
+     */
     void closeEvent(QCloseEvent* event) override;
 
 signals:
+
+    /**
+     * @brief Signal emitted when the user wants to exit the game.
+     */
     void exitGame();
 };
 #endif //TETRISCONFIGURATION_H

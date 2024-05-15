@@ -22,8 +22,6 @@
  * The Game class controls the game state, including the game board, score, levels, and time.
  * It implements the GameController interface for handling game actions and the Observable interface
  * for observer pattern functionality, allowing communication with various observers.
- *
- * NOTE :: Observer/Observable pattern will be implemented truly in the final GUI iteration.
  */
 class Game : public GameController {
     std::vector<Observer*> observers; ///< List of observers to notify on state change.
@@ -33,7 +31,7 @@ class Game : public GameController {
     GameStatus gameStatus; ///< Game stats of the current game
     std::pair<bool, std::thread> autoDownThread; ///< Thread for automatic downward movement of the active tetromino
     std::pair<bool, std::thread> countDownThread; ///< Thread for the countdown timer
-    std::mutex mutex;
+    std::mutex mutex; ///< Mutex for thread safety.
 
     /**
     * Updates the game score based on the number of lines cleared and the drop distance.
@@ -51,8 +49,8 @@ class Game : public GameController {
     int getPoints(int lines, int dropDistance) const;
 
     /**
- * Resets the game score and stats
- */
+    * Resets the game score and stats
+    */
     void resetScore();
 
     /**
@@ -61,15 +59,29 @@ class Game : public GameController {
      */
     void tryToAddNextTetromino();
 
+    /**
+     * @brief Launches the auto down thread for moving the tetromino down periodically.
+     */
     void launchAutoDown();
 
+    /**
+     * @brief Gets the time between automatic downward movements based on the current level.
+     * @param level The current game level.
+     * @return Time in milliseconds between automatic downward movements.
+     */
     static int getTimeBetweenDown(int level);
 
 public:
     static constexpr int MAX_START_LEVEL = 20; ///< Maximum start level for the game.
 
+    /**
+     * @brief Constructs a Game object.
+     */
     Game();
 
+    /**
+     * @brief Destructor for the Game object.
+     */
     ~Game();
 
     /**
@@ -110,10 +122,21 @@ public:
     */
     void dropActiveTetromino() override;
 
+    /**
+     * @brief Notifies all observers of a state change.
+     */
     void notifyObservers() override;
 
+    /**
+     * @brief Adds an observer to the list.
+     * @param observer The observer to add.
+     */
     void addObserver(Observer* observer) override;
 
+    /**
+     * @brief Removes an observer from the list.
+     * @param observer The observer to remove.
+     */
     void removeObserver(Observer* observer) override;
 
     /**
@@ -164,12 +187,27 @@ public:
      */
     void checkTargets() const override;
 
+    /**
+     * @brief Gets the tetromino that has been dropped.
+     * @return The dropped tetromino.
+     */
     Tetromino getDroppedTetro() override;
 
+    /**
+     * @brief Gets the tetromino before the last one.
+     * @return The tetromino before the last one.
+     */
     Tetromino getBeforeLastTetromino() const override;
 
+    /**
+     * @brief Gets the current game time.
+     * @return The current game time.
+     */
     int getTime() const override;
 
+    /**
+     * @brief Launches the countdown timer thread.
+     */
     void launchCountDown();
 };
 

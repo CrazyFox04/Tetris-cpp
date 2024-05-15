@@ -85,10 +85,6 @@ void Bag::addTetrominosToBag() {
     bag.insert(bag.end(), possibleTetrominos.begin(), possibleTetrominos.end());
 }
 
-int Bag::getNumberOfTetrominos() const {
-    return static_cast<int>(possibleTetrominos.size());
-}
-
 const std::vector<Tetromino> Bag::getAvailableTetrominos() const {
     std::vector<Tetromino> availableTetrominos;
     std::copy(possibleTetrominos.begin(), possibleTetrominos.end(), std::back_inserter(availableTetrominos));

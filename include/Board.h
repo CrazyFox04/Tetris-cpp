@@ -223,6 +223,10 @@ public:
      */
     bool activeTetrominoIsRotatable() const;
 
+    /**
+     *
+     * @return
+     */
     Tetromino getDroppedTetro() const;
 };
 

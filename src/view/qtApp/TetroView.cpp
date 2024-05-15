@@ -1,6 +1,3 @@
-//
-// Created by Enzo Renard on 10/05/2024.
-//
 #include "TetroView.h"
 
 #include "ColorAnimation.h"

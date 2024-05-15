@@ -25,6 +25,12 @@ class TetrisView : public QWidget, public Observer {
     BoardBox* myBoardBox; //!< The board box.
     std::shared_ptr<GameController> game; //!< The game controller.
 
+    /**
+     * @brief Handles the end of the game.
+     *
+     * This method is called when the game ends, either because the player has won or the game is over.
+     * It closes the view, removes itself as an observer from the game, and schedules itself for deletion.
+     */
     void endOfGame();
 public:
     /**
@@ -33,7 +39,11 @@ public:
      */
     TetrisView(std::shared_ptr<GameController> game);
 
+    /**
+     * @brief Destructor for TetrisView.
+     */
     virtual ~TetrisView() = default;
+
     /**
      * Start the game.
      * @param myQtApp The Qt application.
@@ -42,14 +52,23 @@ public:
     int start(QApplication* myQtApp);
 
     /**
-     * Update the view.
+     * @brief Updates the view.
+     *
+     * This method is called to update the view, typically in response to changes in the game state.
      */
     void update() override;
 
 protected:
+    /**
+     * @brief Handles the close event of the widget.
+     * @param event The close event.
+     */
     void closeEvent(QCloseEvent* event) override;
 
 signals:
+    /**
+     * @brief Signal emitted to update the Qt view.
+     */
     void updateQt();
 };
 

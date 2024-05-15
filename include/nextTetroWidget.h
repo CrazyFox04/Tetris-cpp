@@ -29,8 +29,8 @@ public:
     void update();
 protected:
     /**
-     *
-     * @param event
+     * Paint the tetromino inside.
+     * @param event The paint event.
      */
     void paintEvent(QPaintEvent *event) override;
 
