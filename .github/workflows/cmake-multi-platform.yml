@@ -67,14 +67,12 @@ jobs:
       if: success()
       run: |
         cd ${{github.workspace}}/build
+        # Package compiled files into a zip archive
         zip -r tetris-${{ matrix.os }}.zip .
 
-    - name: Publish Release
-      if: success()
-      uses: softprops/action-gh-release@v1
+    - name: Upload to Release Action
+      uses: Shopify/upload-to-release@v2.0.0
       with:
-        files: |
-          ${{github.workspace}}/build/tetris-${{ matrix.os }}.zip
-        token: ${{ secrets.GITHUB_TOKEN }}
-        release_name: "Tetris"
-        body: "$(date +%Y-%m-%d)"
+        name: $(date +%Y-%m-%d)"
+        path: ${{github.workspace}}/build
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
