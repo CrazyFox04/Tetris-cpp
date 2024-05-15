@@ -1,0 +1,59 @@
+name: CMake Multi-Platform Build Tetris
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            cxx: g++
+            cc: gcc
+          - os: macos-latest
+            cxx: clang++
+            cc: clang
+          - os: windows-latest
+            cxx: cl
+            cc: cl
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+          sudo apt-get update
+          sudo apt-get install -y libboost-all-dev build-essential libgl1-mesa-dev qt6-base-dev
+        elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+          brew install boost qt
+          echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> $GITHUB_ENV
+        elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+          choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' -y
+          choco install qt6-base-dev -y
+          choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --includeOptional" -y
+          QT_PATH=$(ls -d C:/Qt/6*/msvc*/bin | sort -V | tail -n 1)
+          echo "$QT_PATH" >> $GITHUB_PATH
+        fi
+
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{github.workspace}}/build
+
+    - name: Configure CMake
+      shell: bash
+      run: cmake $GITHUB_WORKSPACE -B $GITHUB_WORKSPACE/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} -DCMAKE_C_COMPILER=${{ matrix.cc }}
+
+    - name: Build
+      shell: bash
+      run: cmake --build $GITHUB_WORKSPACE/build --config Release
+
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      run: ctest -C Release
