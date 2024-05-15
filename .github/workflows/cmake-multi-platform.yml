@@ -76,4 +76,3 @@ jobs:
         asset_path: ${{ github.workspace }}/build/tetris-${{ matrix.os }}.zip
         asset_name: tetris-${{ matrix.os }}.zip
         asset_content_type: application/zip
-        token: ${{ secrets.GITHUB_TOKEN }}
