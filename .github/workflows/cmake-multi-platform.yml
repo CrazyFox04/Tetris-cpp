@@ -66,13 +66,14 @@ jobs:
     - name: Package artifacts
       if: success()
       run: |
-        cd ${{github.workspace}}/build
-        # Package compiled files into a zip archive
+        cd ${{ github.workspace }}/build
         zip -r tetris-${{ matrix.os }}.zip .
 
     - name: Upload to Release Action
-      uses: Shopify/upload-to-release@v2.0.0
+      uses: actions/upload-release-asset@v1
       with:
-        name: $(date +%Y-%m-%d)"
-        path: ${{github.workspace}}/build
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ${{ github.workspace }}/build/tetris-${{ matrix.os }}.zip
+        asset_name: tetris-${{ matrix.os }}.zip
+        asset_content_type: application/zip
+        token: ${{ secrets.GITHUB_TOKEN }}
