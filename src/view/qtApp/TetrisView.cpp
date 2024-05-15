@@ -8,6 +8,7 @@ TetrisView::TetrisView(std::shared_ptr<GameController> game) : mainLayout(new QH
     mainLayout->addWidget(myInfoBox);
     setLayout(mainLayout);
     setStyleSheet("background-color: #84A98C;");
+    myBoardBox->setFocus();
 }
 
 int TetrisView::start(QApplication *myQtApp) {

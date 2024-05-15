@@ -12,7 +12,6 @@ BoardBox::BoardBox(std::shared_ptr<GameController> game, QWidget *parent)
     connect(dynamic_cast<const QObject *>(parent), SIGNAL(updateQt()), this, SLOT(updateQt()));
     setFixedSize((game->getBoard().getWidth() + 2) * 30, game->getBoard().getHeight() * 30);
     setStyleSheet("background-color: #52796F;");
-    setFocusPolicy(Qt::StrongFocus);
     layout = new QGridLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(dropVisualizationTetro, 0, 0);
