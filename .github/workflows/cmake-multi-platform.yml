@@ -26,21 +26,26 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install dependencies
+    - name: Install dependencies (Ubuntu)
+      if: matrix.os == 'ubuntu-latest'
       run: |
-        if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-          sudo apt-get update
-          sudo apt-get install -y libboost-all-dev build-essential libgl1-mesa-dev qt6-base-dev
-        elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
-          brew install boost qt
-          echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> $GITHUB_ENV
-        elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-          choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' -y
-          choco install qt6-base-dev -y
-          choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --includeOptional" -y
-          QT_PATH=$(ls -d C:/Qt/6*/msvc*/bin | sort -V | tail -n 1)
-          echo "$QT_PATH" >> $GITHUB_PATH
-        fi
+        sudo apt-get update
+        sudo apt-get install -y libboost-all-dev build-essential libgl1-mesa-dev qt6-base-dev
+
+    - name: Install dependencies (macOS)
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew install boost qt
+        echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> $GITHUB_ENV
+
+    - name: Install dependencies (Windows)
+      if: matrix.os == 'windows-latest'
+      run: |
+        choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' -y
+        choco install qt6-base-dev -y
+        choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --includeOptional" -y
+        $qtPath = Get-ChildItem 'C:\Qt\6*\msvc*\bin' | Sort-Object Name | Select-Object -Last 1
+        echo "$qtPath" >> $GITHUB_PATH
 
     - name: Create Build Environment
       run: cmake -E make_directory ${{github.workspace}}/build
