@@ -1,17 +1,18 @@
 # Tetris Project
 
 This project is a Tetris game implementation in C++ using modern CMake. It consists of various modules such as model,
-view, tools, and controller, each responsible for different aspects of the game.
+console view, QT view, tools, and controller, each responsible for different aspects of the game.
 
 ## Prerequisites
 
 - CMake 3.27 or higher
 - C++ compiler with C++20 support
+- QT6 (optional, only needed for the QT view)
 
 ## Build
 
 This project uses modern CMake to manage the build process.
-The project is composed of <u>**4 libraries**</u> that can be built separately and a main executable that links all the
+The project is composed of <u>**5 libraries**</u> that can be built separately and a main executable that links all the
 libraries together.
 
 ### <u style="color: red">First step</u> : Configure build directory
@@ -57,7 +58,11 @@ cmmake --build . --target tetris_tools
 #### View package
 
 ```bash
-cmake --build . --target tetris_view
+cmake --build . --target tetris_view_console
+```
+
+```bash
+cmake --build . --target tetris_view_qtApp
 ```
 
 #### Controller package
@@ -71,6 +76,9 @@ cmake --build . --target tetris_controller
 ```bash
 cmake --build . --target tetris
 ```
+The main executable will link all the libraries together. 
+If you compile it with Qt, the main executable will automatically launch the QT view.
+In this case, you can specify -c to launch the console view instead.
 
 #### Test executable
 
@@ -88,6 +96,7 @@ After building the project, you can run the main executable by running the follo
 cd src/
 ./tetris
 ```
+If you want to run the console view instead of the QT view, you can specify the -c option: `./tetris -c`
 
 ### Test executable
 

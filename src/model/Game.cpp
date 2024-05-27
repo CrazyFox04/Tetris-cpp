@@ -84,6 +84,8 @@ void Game::moveActiveTetromino(Direction2D direction) {
             }
         }
         notifyObservers();
+    } else {
+        notifyObservers();
     }
     mutex.unlock();
 }
